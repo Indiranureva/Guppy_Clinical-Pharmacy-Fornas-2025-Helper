@@ -20,6 +20,7 @@ import json
 import streamlit as st
 
 from guppy.backend.engine import fornas_matcher as fm
+from guppy.backend.engine import pnpk_engine as pe
 from guppy.backend.engine.clinical_literature import ClinicalLiteratureScout
 from guppy.backend.security.sanitizer import InputSanitizer
 from guppy.backend.config import (
@@ -339,6 +340,17 @@ with tab1:
                         unsafe_allow_html=True,
                     )
 
+                    # Tampilkan Referensi PNPK 2025 jika terkait
+                    matched_pnpk = pe.get_pnpk_by_drug(item["zat_aktif"])
+                    if matched_pnpk:
+                        st.markdown("**📚 Pedoman Terkait (PNPK 2025):**")
+                        for p in matched_pnpk:
+                            st.markdown(
+                                f'<div class="clinical-ok">🏛️ <b>{p["title"]}</b> ({p["kmk"]})<br>'
+                                f'<small>Status: Regulasi Klinis Resmi Kemenkes RI · <a href="{p["source_url"]}" target="_blank" style="color: #38b6ff; text-decoration: underline;">Buka Sumber di Portal Kemenkes ↗</a></small></div>',
+                                unsafe_allow_html=True,
+                            )
+
                     # Tampilkan Restriksi Zat Aktif jika ada
                     if item.get("restriksi_zat_aktif"):
                         st.markdown("**📋 Restriksi Tingkat Zat Aktif:**")
@@ -461,6 +473,28 @@ with tab2:
                     for w in ev["peringatan"]:
                         st.markdown(f'<div class="clinical-danger">⚠️ {w}</div>', unsafe_allow_html=True)
 
+                # Referensi PNPK Terkait untuk Evaluasi Resep
+                eval_pnpk = pe.get_pnpk_by_drug(safe_drug)
+                if eval_pnpk:
+                    st.markdown("**🏛️ Dukungan Regulasi Klinis Nasional (PNPK 2025):**")
+                    for p in eval_pnpk:
+                        recs = p.get("clinical_recommendations", {})
+                        recs_txt = []
+                        for fl in recs.get("first_line", []):
+                            if safe_drug.lower() in fl.get("zat_aktif", "").lower():
+                                recs_txt.append(f"<b>Lini Pertama:</b> {fl.get('keterangan', '-')}")
+                        for sl in recs.get("second_line_or_escalation", []):
+                            if safe_drug.lower() in sl.get("zat_aktif", "").lower():
+                                recs_txt.append(f"<b>Lini Kedua / Eskalasi:</b> {sl.get('keterangan', '-')}")
+                        
+                        detail_rec = "<br>".join(recs_txt) if recs_txt else p.get("summary", "")
+                        st.markdown(
+                            f'<div class="clinical-ok">📌 <b>{p["title"]}</b> ({p["kmk"]})<br>'
+                            f'{detail_rec}<br>'
+                            f'<small><a href="{p["source_url"]}" target="_blank" style="color: #38b6ff; text-decoration: underline;">Tinjau Dokumen Resmi di Portal Kemenkes ↗</a></small></div>',
+                            unsafe_allow_html=True,
+                        )
+
             # Notifikasi
             notifs = res.get("notifikasi", [])
             if notifs:
@@ -511,6 +545,31 @@ with tab3:
                 if target_clean in u_code or u_code in target_clean:
                     matched_drugs.append(d)
                     break
+
+        # Tampilkan Rekomendasi Terapi PNPK 2025 Resmi
+        pnpk_for_icd = pe.get_pnpk_by_icd10(target_code)
+        if pnpk_for_icd:
+            st.markdown("#### 🏛️ Panduan Lini Terapi Resmi (PNPK 2025 Kemenkes)")
+            for p in pnpk_for_icd:
+                with st.expander(f"📖 {p['title']} ({p['kmk']})", expanded=True):
+                    st.caption(f"Status: Standar Baku Emas Kemenkes RI · <a href='{p['source_url']}' target='_blank' style='color: #38b6ff;'>Buka Dokumen di Portal Kemenkes ↗</a>", unsafe_allow_html=True)
+                    st.write(p.get("summary", ""))
+                    
+                    recs = p.get("clinical_recommendations", {})
+                    col_r1, col_r2 = st.columns(2)
+                    with col_r1:
+                        st.markdown("**🟢 Rekomendasi Lini Pertama (First-Line):**")
+                        for fl in recs.get("first_line", []):
+                            st.markdown(f"- **{fl['zat_aktif']}** ({fl.get('sediaan', '-')})<br>&nbsp;&nbsp;↳ <em>{fl.get('keterangan', '-')}</em>", unsafe_allow_html=True)
+                    with col_r2:
+                        st.markdown("**🟡 Lini Kedua / Eskalasi / Alternatif:**")
+                        for sl in recs.get("second_line_or_escalation", []):
+                            st.markdown(f"- **{sl['zat_aktif']}** ({sl.get('sediaan', '-')})<br>&nbsp;&nbsp;↳ <em>{sl.get('keterangan', '-')}</em>", unsafe_allow_html=True)
+                    
+                    if recs.get("safety_and_restrictions"):
+                        st.markdown("**⚠️ Batasan & Keamanan Klinis:**")
+                        for sr in recs["safety_and_restrictions"]:
+                            st.markdown(f"- <em>{sr}</em>", unsafe_allow_html=True)
 
         if matched_drugs:
             st.success(f"Ditemukan **{len(matched_drugs)}** obat dalam Fornas 2025 terkait diagnosis `{target_code}`:")
@@ -572,41 +631,99 @@ with tab4:
 # TAB 5: BASIS HUKUM REGULASI FARMASI KLINIS
 # ═══════════════════════════════════════════════════════════════
 with tab5:
-    st.markdown('<div class="section-header">Basis Hukum & Ketentuan Regulasi Farmasi Klinis Indonesia</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-header">Basis Hukum Regulasi & Pedoman Nasional Pelayanan Kedokteran (PNPK)</div>', unsafe_allow_html=True)
     st.markdown(
-        "Akses teks lengkap ketentuan perundang-undangan farmasi klinis Indonesia, termasuk **KMK No. HK.01.07/MENKES/1199/2025 (Fornas 2025)**, "
-        "**UU No. 17 Tahun 2023 tentang Kesehatan**, dan pedoman peresepan obat esensial JKN."
+        "Akses teks hierarki perundang-undangan farmasi klinis Indonesia (**UU 17/2023**, **KMK Fornas 1199/2025**) "
+        "serta integrasi **Pedoman Nasional Pelayanan Kedokteran (PNPK 2025)** resmi Kementerian Kesehatan RI."
     )
 
-    reg_q = st.text_input("Cari Pasal / Diktum / Kata Kunci:", value="1199/2025", placeholder="e.g. 1199/2025, obat luar fornas, izin edar")
-    clean_reg_q = InputSanitizer.clean_text(reg_q).lower() if reg_q else ""
+    reg_subtab1, reg_subtab2 = st.tabs([
+        "🏛️ Pedoman Nasional Pelayanan Kedokteran (PNPK 2025)",
+        "📜 Regulasi Pokok & Fornas 2025 (UU & Kepmenkes)",
+    ])
 
-    try:
-        with open(REGULATIONS_DB_PATH, "r", encoding="utf-8") as f:
-            reg_db = json.load(f)
+    with reg_subtab1:
+        st.markdown("#### 📚 Kompilasi PNPK Kemenkes RI 2025")
+        st.caption(
+            "Ringkasan klinis esensial (First-Line & Second-Line) dari Keputusan Menteri Kesehatan RI tahun 2025. "
+            "Seluruh hak cipta dokumen dimiliki oleh Kementerian Kesehatan RI. Akses dokumen lengkap melalui portal resmi Kemenkes."
+        )
 
-        matched_articles = []
-        for reg in reg_db.get("regulations", []):
-            for art in reg.get("articles", []):
-                match = (
-                    not clean_reg_q
-                    or clean_reg_q in reg["title"].lower()
-                    or clean_reg_q in reg["number"].lower()
-                    or clean_reg_q in art["article"].lower()
-                    or any(clean_reg_q in p.lower() for p in art.get("paragraphs", []))
-                    or any(clean_reg_q in kw.lower() for kw in art.get("keywords", []))
+        pnpk_list = pe.get_pnpk_db()
+        pnpk_filter = st.text_input("Saring PNPK (Penyakit / Obat / KMK):", value="", placeholder="e.g. Pneumonia, ISK, Osteoartritis, Seftriakson...")
+        clean_pf = pnpk_filter.strip().lower()
+
+        filtered_pnpk = []
+        for p in pnpk_list:
+            if not clean_pf or (
+                clean_pf in p["title"].lower()
+                or clean_pf in p["kmk"].lower()
+                or clean_pf in p.get("summary", "").lower()
+                or any(clean_pf in d.lower() for d in p.get("drugs_involved", []))
+            ):
+                filtered_pnpk.append(p)
+
+        st.write(f"Menampilkan **{len(filtered_pnpk)}** dari **{len(pnpk_list)}** dokumen PNPK 2025:")
+        for p in filtered_pnpk:
+            with st.expander(f"🩺 {p['title']} — {p['kmk']}", expanded=False):
+                st.markdown(f"**Nomor Kepmenkes:** `{p['kmk']}`")
+                st.markdown(f"**Status & Tahun:** Ditetapkan Tahun {p['year']} oleh Menteri Kesehatan RI")
+                st.markdown(f'<div class="clinical-ok">{p["summary"]}</div>', unsafe_allow_html=True)
+
+                recs = p.get("clinical_recommendations", {})
+                col_p1, col_p2 = st.columns(2)
+                with col_p1:
+                    st.markdown("**🟢 Rekomendasi Terapi Lini Pertama:**")
+                    for fl in recs.get("first_line", []):
+                        st.markdown(f"- **{fl['zat_aktif']}** ({fl.get('sediaan', '-')})<br>&nbsp;&nbsp;↳ <em>{fl.get('keterangan', '-')}</em>", unsafe_allow_html=True)
+                with col_p2:
+                    st.markdown("**🟡 Lini Kedua / Eskalasi:**")
+                    for sl in recs.get("second_line_or_escalation", []):
+                        st.markdown(f"- **{sl['zat_aktif']}** ({sl.get('sediaan', '-')})<br>&nbsp;&nbsp;↳ <em>{sl.get('keterangan', '-')}</em>", unsafe_allow_html=True)
+
+                if recs.get("safety_and_restrictions"):
+                    st.markdown("**⚠️ Batasan Peresepan & Keselamatan Pasien:**")
+                    for sr in recs["safety_and_restrictions"]:
+                        st.markdown(f"- <em>{sr}</em>", unsafe_allow_html=True)
+
+                st.markdown("---")
+                st.markdown(
+                    f"🔗 **Tautan Resmi Kemenkes:** "
+                    f"<a href='{p['source_url']}' target='_blank' style='display: inline-block; padding: 6px 14px; background: rgba(56, 182, 255, 0.15); border: 1px solid rgba(56, 182, 255, 0.4); border-radius: 8px; color: #38b6ff; text-decoration: none; font-weight: 500;'>"
+                    f"Buka Dokumen Resmi di Portal Kemenkes RI ↗</a>",
+                    unsafe_allow_html=True,
                 )
-                if match:
-                    matched_articles.append((reg, art))
 
-        st.write(f"Ditemukan **{len(matched_articles)}** ketentuan regulasi:")
-        for reg, art in matched_articles:
-            with st.expander(f"📜 {reg['number']} — {art['article']}", expanded=False):
-                st.markdown(f"**{reg['title']}** *(Status: {reg.get('status', '-')})*")
-                st.caption(f"Hierarki: {reg.get('hierarchy', '-')} | Bab: {art.get('chapter', '-')}")
-                for p in art.get("paragraphs", []):
-                    st.markdown(f'<div class="clinical-ok">📖 {p}</div>', unsafe_allow_html=True)
-                if art.get("keywords"):
-                    st.caption("Kata Kunci: " + " · ".join(art["keywords"]))
-    except Exception as e:
-        st.error(f"Gagal memuat database regulasi: {e}")
+    with reg_subtab2:
+        reg_q = st.text_input("Cari Pasal / Diktum / Kata Kunci:", value="1199/2025", placeholder="e.g. 1199/2025, obat luar fornas, izin edar")
+        clean_reg_q = InputSanitizer.clean_text(reg_q).lower() if reg_q else ""
+
+        try:
+            with open(REGULATIONS_DB_PATH, "r", encoding="utf-8") as f:
+                reg_db = json.load(f)
+
+            matched_articles = []
+            for reg in reg_db.get("regulations", []):
+                for art in reg.get("articles", []):
+                    match = (
+                        not clean_reg_q
+                        or clean_reg_q in reg["title"].lower()
+                        or clean_reg_q in reg["number"].lower()
+                        or clean_reg_q in art["article"].lower()
+                        or any(clean_reg_q in p.lower() for p in art.get("paragraphs", []))
+                        or any(clean_reg_q in kw.lower() for kw in art.get("keywords", []))
+                    )
+                    if match:
+                        matched_articles.append((reg, art))
+
+            st.write(f"Ditemukan **{len(matched_articles)}** ketentuan regulasi:")
+            for reg, art in matched_articles:
+                with st.expander(f"📜 {reg['number']} — {art['article']}", expanded=False):
+                    st.markdown(f"**{reg['title']}** *(Status: {reg.get('status', '-')})*")
+                    st.caption(f"Hierarki: {reg.get('hierarchy', '-')} | Bab: {art.get('chapter', '-')}")
+                    for p in art.get("paragraphs", []):
+                        st.markdown(f'<div class="clinical-ok">📖 {p}</div>', unsafe_allow_html=True)
+                    if art.get("keywords"):
+                        st.caption("Kata Kunci: " + " · ".join(art["keywords"]))
+        except Exception as e:
+            st.error(f"Gagal memuat database regulasi: {e}")

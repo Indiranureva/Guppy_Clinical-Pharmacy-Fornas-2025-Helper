@@ -1,0 +1,230 @@
+[
+  {
+    "id": "PNPK-PNEUMONIA-2025",
+    "kmk": "HK.01.07/MENKES/1168/2025",
+    "title": "PNPK Tata Laksana Pneumonia pada Dewasa",
+    "year": 2025,
+    "source_url": "https://kemkes.go.id/id/pedoman-kemenkes-pneumonia-pada-dewasa",
+    "icd10": ["J13", "J14", "J15", "J18"],
+    "summary": "Pedoman tata laksana komprehensif penanganan Community-Acquired Pneumonia (CAP) dan Hospital-Acquired Pneumonia (HAP) pada pasien dewasa di fasilitas kesehatan Indonesia.",
+    "clinical_recommendations": {
+      "first_line": [
+        {"zat_aktif": "Amoksisilin", "sediaan": "Oral", "keterangan": "Lini pertama rawat jalan tanpa komorbiditas (dosis tinggi 3x1000 mg)"},
+        {"zat_aktif": "Azitromisin", "sediaan": "Oral", "keterangan": "Alternatif lini pertama / kombinasi makrolida pada rawat jalan"},
+        {"zat_aktif": "Seftriakson", "sediaan": "Injeksi / Infus", "keterangan": "Lini pertama rawat inap non-ICU (kombinasi makrolida azitromisin)"},
+        {"zat_aktif": "Sefotaksim", "sediaan": "Injeksi / Infus", "keterangan": "Alternatif sefalosporin generasi 3 untuk rawat inap"}
+      ],
+      "second_line_or_escalation": [
+        {"zat_aktif": "Levofloksasin", "sediaan": "Oral / Infus", "keterangan": "Fluorokuinolon respirasi untuk pasien rawat jalan dengan komorbid (DM, CKD, PPOK) atau gagal terapi lini pertama"},
+        {"zat_aktif": "Moksifloksasin", "sediaan": "Oral / Infus", "keterangan": "Fluorokuinolon respirasi alternatif"},
+        {"zat_aktif": "Meropenem", "sediaan": "Injeksi", "keterangan": "Eskalasi rawat inap ICU / kecurigaan patogen resisten multidrug (MDR) / Pseudomonas"},
+        {"zat_aktif": "Piperasilin-Tazobaktam", "sediaan": "Injeksi", "keterangan": "Pilihan antipseudomonas pada kasus pneumonia berat"}
+      ],
+      "safety_and_restrictions": [
+        "Penggunaan antibiotik empiris dievaluasi dalam 48-72 jam klinis (de-eskalasi).",
+        "Durasi terapi antibiotik CAP tanpa komplikasi umumnya 5-7 hari bila pasien sudah afebris >48 jam.",
+        "Kombinasi makrolida + beta-laktam menurunkan mortalitas pada rawat inap sedang-berat."
+      ]
+    },
+    "drugs_involved": ["amoksisilin", "azitromisin", "seftriakson", "sefotaksim", "levofloksasin", "moksifloksasin", "meropenem", "ampisilin-sulbaktam"]
+  },
+  {
+    "id": "PNPK-ISK-2025",
+    "kmk": "HK.01.07/MENKES/762/2025",
+    "title": "PNPK Tata Laksana Infeksi Saluran Kemih",
+    "year": 2025,
+    "source_url": "https://kemkes.go.id/id/pedoman-nasional-pelayanan-klinis-tata-laksana-infeksi-saluran-kemih",
+    "icd10": ["N39.0", "N30.0", "N10"],
+    "summary": "Pedoman klinis penatalaksanaan infeksi saluran kemih (sistitis tanpa komplikasi, ISK terkomplikasi, dan pielonefritis akut).",
+    "clinical_recommendations": {
+      "first_line": [
+        {"zat_aktif": "Kotrimoksazol", "sediaan": "Oral", "keterangan": "Lini pertama sistitis akut tanpa komplikasi (bila resistensi lokal E. coli <20%)"},
+        {"zat_aktif": "Fosfomisin", "sediaan": "Oral sachet 3g", "keterangan": "Dosis tunggal lini pertama sistitis akut tanpa komplikasi"},
+        {"zat_aktif": "Nitrofurantoin", "sediaan": "Oral", "keterangan": "Lini pertama sistitis tanpa komplikasi (hindari pada CKD eGFR <30)"}
+      ],
+      "second_line_or_escalation": [
+        {"zat_aktif": "Siprofloksasin", "sediaan": "Oral / Infus", "keterangan": "Lini pertama pielonefritis atau ISK terkomplikasi; TIDAK direkomendasikan untuk sistitis ringan tanpa komplikasi"},
+        {"zat_aktif": "Levofloksasin", "sediaan": "Oral / Infus", "keterangan": "Pielonefritis akut rawat jalan / rawat inap"},
+        {"zat_aktif": "Seftriakson", "sediaan": "Injeksi", "keterangan": "Lini pertama parenteral untuk pielonefritis akut rawat inap"}
+      ],
+      "safety_and_restrictions": [
+        "Fluorokuinolon dibatasi ketat untuk mencegah resistensi dan risiko efek samping neurologis/tendonitis.",
+        "Pemeriksaan kultur urin dianjurkan pada ISK terkomplikasi dan pielonefritis sebelum antibiotik dimulai."
+      ]
+    },
+    "drugs_involved": ["kotrimoksazol", "fosfomisin", "nitrofurantoin", "siprofloksasin", "levofloksasin", "seftriakson", "gentamisin"]
+  },
+  {
+    "id": "PNPK-OSTEOARTRITIS-2025",
+    "kmk": "HK.01.07/MENKES/1167/2025",
+    "title": "PNPK Tata Laksana Osteoartritis",
+    "year": 2025,
+    "source_url": "https://kemkes.go.id/id/pnpk-tata-laksana-osteoartritis",
+    "icd10": ["M15", "M16", "M17", "M19"],
+    "summary": "Panduan terapi osteoartritis lutut, panggul, dan tangan dengan modalitas farmakologi dan non-farmakologi berjenjang.",
+    "clinical_recommendations": {
+      "first_line": [
+        {"zat_aktif": "Parasetamol", "sediaan": "Oral (hingga 3-4 g/hari)", "keterangan": "Analgetik oral lini pertama untuk nyeri derajat ringan-sedang"},
+        {"zat_aktif": "Diklofenak", "sediaan": "Topikal (gel)", "keterangan": "Lini pertama OA lutut perifer karena risiko sistemik minimal"}
+      ],
+      "second_line_or_escalation": [
+        {"zat_aktif": "Meloksikam", "sediaan": "Oral", "keterangan": "OAINS selektif COX-2 bila parasetamol tidak adekuat (gunakan dosis efektif terendah durasi tersingkat)"},
+        {"zat_aktif": "Selekoksib", "sediaan": "Oral", "keterangan": "Pilihan OAINS pada pasien dengan risiko perdarahan gastrointestinal tinggi"},
+        {"zat_aktif": "Tramadol", "sediaan": "Oral", "keterangan": "Analgetik sentral kombinasi parasetamol bila terdapat kontraindikasi OAINS"}
+      ],
+      "safety_and_restrictions": [
+        "Penggunaan OAINS oral pada lansia (>65 tahun) atau riwayat ulkus wajib disertai PPI (Omeprazol/Lansoprazol).",
+        "Hindari OAINS non-selektif pada pasien gagal ginjal kronik atau penyakit kardiovaskular tidak stabil."
+      ]
+    },
+    "drugs_involved": ["parasetamol", "diklofenak", "meloksikam", "selekoksib", "ibuprofen", "tramadol", "omeprazol"]
+  },
+  {
+    "id": "PNPK-SKIZOFRENIA-2025",
+    "kmk": "HK.01.07/MENKES/970/2025",
+    "title": "PNPK Tata Laksana Skizofrenia",
+    "year": 2025,
+    "source_url": "https://kemkes.go.id/id/pnpk-tata-laksana-skizofrenia-2025",
+    "icd10": ["F20", "F20.0", "F20.9"],
+    "summary": "Pedoman terapi fase akut, stabilisasi, dan pemeliharaan skizofrenia dengan antipsikotik atipikal (APG-II) dan tipikal (APG-I).",
+    "clinical_recommendations": {
+      "first_line": [
+        {"zat_aktif": "Risperidon", "sediaan": "Oral (tab 1mg, 2mg)", "keterangan": "Lini pertama APG-II dengan profil efikasi gejala positif dan negatif yang seimbang"},
+        {"zat_aktif": "Haloperidol", "sediaan": "Oral / Injeksi", "keterangan": "Lini pertama APG-I untuk agitasi akut atau kontrol gejala psikotik dominan positif"},
+        {"zat_aktif": "Olanzapin", "sediaan": "Oral", "keterangan": "Alternatif lini pertama APG-II (perhatikan risiko sindrom metabolik)"}
+      ],
+      "second_line_or_escalation": [
+        {"zat_aktif": "Klozapin", "sediaan": "Oral", "keterangan": "Baku emas untuk skizofrenia resisten terapi (setelah gagal dengan sekurang-kurangnya 2 antipsikotik berbeda termasuk 1 APG-II)"},
+        {"zat_aktif": "Aripiprazol", "sediaan": "Oral", "keterangan": "Pilihan antipsikotik profil metabolik rendah / hiperprolaktinemia"}
+      ],
+      "safety_and_restrictions": [
+        "Penggunaan Klozapin wajib memantau hitung leukosit dan neutrofil absolut (ANC) secara berkala.",
+        "Monoterapi antipsikotik sangat diutamakan sebelum mempertimbangkan polifarmasi."
+      ]
+    },
+    "drugs_involved": ["risperidon", "haloperidol", "olanzapin", "klozapin", "aripiprazol", "klorpromazin", "triheksifenidil"]
+  },
+  {
+    "id": "PNPK-SIROSIS-2025",
+    "kmk": "HK.01.07/MENKES/778/2025",
+    "title": "PNPK Tata Laksana Sirosis Hati pada Dewasa",
+    "year": 2025,
+    "source_url": "https://kemkes.go.id/id/pedoman-nasional-pelayanan-klinis-tata-laksana-sirosis-hati-pada-dewasa",
+    "icd10": ["K74.6", "K74", "K70.3"],
+    "summary": "Pedoman penatalaksanaan komplikasi sirosis hati: asites, spontaneous bacterial peritonitis (SBP), varises esofagus, dan ensefalopati hepatikum.",
+    "clinical_recommendations": {
+      "first_line": [
+        {"zat_aktif": "Spironolakton", "sediaan": "Oral", "keterangan": "Antagonis aldosteron lini pertama untuk penanganan asites sirosis (rasio 100mg spironolakton : 40mg furosemid)"},
+        {"zat_aktif": "Furosemid", "sediaan": "Oral", "keterangan": "Diuretik loop kombinasi dengan spironolakton"},
+        {"zat_aktif": "Propranolol", "sediaan": "Oral", "keterangan": "Beta-bloker non-selektif lini pertama profilaksis perdarahan varises esofagus"},
+        {"zat_aktif": "Laktulosa", "sediaan": "Sirup / Larutan", "keterangan": "Lini pertama pencegahan dan terapi ensefalopati hepatikum"}
+      ],
+      "second_line_or_escalation": [
+        {"zat_aktif": "Seftriakson", "sediaan": "Injeksi", "keterangan": "Profilaksis infeksi pada perdarahan varises gastrointestinal akut dan terapi SBP"},
+        {"zat_aktif": "Albumin", "sediaan": "Infus", "keterangan": "Penggantian volume pada parasentesis volume besar (>5 Liter) dan sindrom hepatorenal"}
+      ],
+      "safety_and_restrictions": [
+        "Kontraindikasi penggunaan OAINS dan obat nefrotoksik pada sirosis (risiko tinggi sindrom hepatorenal).",
+        "Pemantauan elektrolit (K, Na) dan fungsi ginjal ketat saat terapi diuretik kombinasi."
+      ]
+    },
+    "drugs_involved": ["spironolakton", "furosemid", "propranolol", "laktulosa", "seftriakson", "albumin human"]
+  },
+  {
+    "id": "PNPK-OBESITAS-2025",
+    "kmk": "HK.01.07/MENKES/509/2025",
+    "title": "PNPK Tata Laksana Obesitas Dewasa",
+    "year": 2025,
+    "source_url": "https://kemkes.go.id/id/pnpk-tata-laksana-obesitas-dewasa",
+    "icd10": ["E66", "E66.0", "E66.9"],
+    "summary": "Pendekatan komprehensif manajemen obesitas pada dewasa berbasis modifikasi gaya hidup intensif, farmakoterapi, dan indikasi bedah metabolik.",
+    "clinical_recommendations": {
+      "first_line": [
+        {"zat_aktif": "Modifikasi Gaya Hidup & Nutrisi", "sediaan": "Non-Farmakologi", "keterangan": "Intervensi diet defisit 500-750 kkal/hari dan aktivitas fisik aerobik minimal 150 menit/minggu"}
+      ],
+      "second_line_or_escalation": [
+        {"zat_aktif": "Metformin", "sediaan": "Oral", "keterangan": "Diindikasikan pada obesitas dengan prediabetes / resistensi insulin / PCOS"},
+        {"zat_aktif": "Orlistat", "sediaan": "Oral", "keterangan": "Inhibitor lipase gastrointestinal untuk penurunan berat badan jangka panjang pada IMT >= 30 atau >= 27 dengan komorbiditas"},
+        {"zat_aktif": "Agonis Reseptor GLP-1", "sediaan": "Injeksi", "keterangan": "Liraglutid / Semaglutid untuk kendali glikemik dan berat badan pada obesitas komorbid DMT2"}
+      ],
+      "safety_and_restrictions": [
+        "Farmakoterapi hanya dipertimbangkan jika penurunan BB <5% setelah 3-6 bulan intervensi gaya hidup intensif.",
+        "Evaluasi efektivitas obat pada bulan ke-3 (hentikan bila penurunan BB <5%)."
+      ]
+    },
+    "drugs_involved": ["metformin", "orlistat", "liraglutid", "semaglutid"]
+  },
+  {
+    "id": "PNPK-LEUKEMIA-ANAK-2025",
+    "kmk": "HK.01.07/MENKES/986/2025",
+    "title": "PNPK Tata Laksana Leukemia Limfoblastik Akut Anak",
+    "year": 2025,
+    "source_url": "https://kemkes.go.id/id/pnpk-tata-laksana-leukemia-limfoblastik-akut-anak",
+    "icd10": ["C91.0"],
+    "summary": "Protokol nasional kemoterapi bertingkat (induksi, konsolidasi, pemeliharaan) pada LLA anak sesuai stratifikasi risiko.",
+    "clinical_recommendations": {
+      "first_line": [
+        {"zat_aktif": "Vinkristin", "sediaan": "Injeksi [Ca]", "keterangan": "Komponen utama fase induksi remisi"},
+        {"zat_aktif": "Deksametason", "sediaan": "Oral / Injeksi", "keterangan": "Kortikosteroid pilihan fase induksi karena penetrasi SSP yang unggul"},
+        {"zat_aktif": "Metotreksat", "sediaan": "Injeksi / Intratekal [Ca]", "keterangan": "Profilaksis leukemia meningeal dan pemeliharaan"},
+        {"zat_aktif": "L-Asparaginase", "sediaan": "Injeksi [Ca]", "keterangan": "Enzim kemoterapi fase induksi"}
+      ],
+      "second_line_or_escalation": [
+        {"zat_aktif": "Merkaptopurin", "sediaan": "Oral [Ca]", "keterangan": "Tulang punggung fase rumatan (maintenance)"},
+        {"zat_aktif": "Sitarabin", "sediaan": "Injeksi [Ca]", "keterangan": "Kemoterapi intratekal kombinasi atau konsolidasi risiko tinggi"}
+      ],
+      "safety_and_restrictions": [
+        "Wajib diresepkan oleh Dokter Spesialis Anak Konsultan Hematologi-Onkologi (Sp.A(K)).",
+        "Wajib skrining TLS (Tumor Lysis Syndrome) dan profilaksis dengan hidrasi dan alopurinol."
+      ]
+    },
+    "drugs_involved": ["vinkristin", "deksametason", "metotreksat", "merkaptopurin", "sitarabin", "alopurinol"]
+  },
+  {
+    "id": "PNPK-PERIODONTAL-2025",
+    "kmk": "HK.01.07/MENKES/978/2025",
+    "title": "PNPK Tata Laksana Penyakit Periodontal",
+    "year": 2025,
+    "source_url": "https://kemkes.go.id/id/pedoman-nasional-pelayanan-klinis-tata-laksana-penyakit-periodontal",
+    "icd10": ["K05", "K05.0", "K05.3"],
+    "summary": "Tata laksana periodontitis dan gingivitis dengan terapi mekanik (scaling & root planing) dan medikamentosa antimikroba terarah.",
+    "clinical_recommendations": {
+      "first_line": [
+        {"zat_aktif": "Klorheksidin", "sediaan": "Obat kumur 0.12% - 0.2%", "keterangan": "Antiseptik topikal lini pertama pasca-instrumentasi periodontal"},
+        {"zat_aktif": "Amoksisilin", "sediaan": "Oral", "keterangan": "Antibiotik adjuvan sistemik (kombinasi metronidazol) hanya pada periodontitis agresif/berat"}
+      ],
+      "second_line_or_escalation": [
+        {"zat_aktif": "Metronidazol", "sediaan": "Oral", "keterangan": "Kombinasi dengan amoksisilin untuk eliminasi patogen anaerobik gram negatif"},
+        {"zat_aktif": "Doksisiklin", "sediaan": "Oral", "keterangan": "Alternatif pada pasien alergi penisilin atau sebagai subantimicrobial dose (SDD) modulator"}
+      ],
+      "safety_and_restrictions": [
+        "Antibiotik sistemik TIDAK direkomendasikan untuk gingivitis ringan atau periodontitis kronik tanpa komplikasi sistemik."
+      ]
+    },
+    "drugs_involved": ["klorheksidin", "amoksisilin", "metronidazol", "doksisiklin"]
+  },
+  {
+    "id": "PNPK-ULKUS-KORNEA-2025",
+    "kmk": "HK.01.07/MENKES/723/2025",
+    "title": "PNPK Tatalaksana Ulkus Kornea Bakteri",
+    "year": 2025,
+    "source_url": "https://kemkes.go.id/id/pedoman-nasional-pelayanan-klinis-tatalaksana-ulkus-kornea-bakteri",
+    "icd10": ["H16.0"],
+    "summary": "Pedoman terapi antimikroba topikal dosis intensif pada ulkus kornea bakteri untuk mencegah perforasi dan kehilangan penglihatan.",
+    "clinical_recommendations": {
+      "first_line": [
+        {"zat_aktif": "Moksifloksasin", "sediaan": "Tetes mata 0.5%", "keterangan": "Fluorokuinolon topikal generasi 4 monoterapi dosis loading 5-15 menit pada jam pertama"},
+        {"zat_aktif": "Levofloksasin", "sediaan": "Tetes mata", "keterangan": "Alternatif fluorokuinolon topikal empiris spektrum luas"}
+      ],
+      "second_line_or_escalation": [
+        {"zat_aktif": "Gentamisin", "sediaan": "Tetes mata diperkuat (fortified 1.5%)", "keterangan": "Kombinasi dengan sefazolin tetes mata diperkuat untuk ulkus sentral berat/ancaman perforasi"},
+        {"zat_aktif": "Sefazolin", "sediaan": "Tetes mata diperkuat (fortified 5%)", "keterangan": "Cakupan khusus bakteri gram positif (Staphylococcus/Streptococcus)"}
+      ],
+      "safety_and_restrictions": [
+        "KONTRAINDIKASI MUTLAK kortikosteroid topikal pada fase infeksi aktif sebelum terjadi re-epitelisasi.",
+        "Rujuk segera ke Dokter Spesialis Mata (Sp.M) untuk kerokan kornea dan evaluasi slit-lamp."
+      ]
+    },
+    "drugs_involved": ["moksifloksasin", "levofloksasin", "gentamisin", "sefazolin"]
+  }
+]
