@@ -1,0 +1,121 @@
+{
+  "dossier_standard": "ASEAN Common Technical Dossier (ACTD)",
+  "authority": "Badan Pengawas Obat dan Makanan (BPOM RI)",
+  "regulatory_reference": "Peraturan BPOM No. 24 Tahun 2017 jo. PerBPOM No. 13 Tahun 2022",
+  "parts": [
+    {
+      "part_id": "Part_I",
+      "part_title": "Administrative Data and Product Information",
+      "sections": [
+        {
+          "code": "I.A",
+          "title": "Surat Pengantar (Cover Letter)",
+          "mandatory_for": ["New_Drug", "Generic", "Variation_Major", "Variation_Minor"]
+        },
+        {
+          "code": "I.B",
+          "title": "Formulir Pendaftaran & Dokumen Legal Industri",
+          "mandatory_for": ["New_Drug", "Generic", "Variation_Major"]
+        },
+        {
+          "code": "I.C",
+          "title": "Sertifikat CPOB / GMP Certificate & SMF Valid",
+          "mandatory_for": ["New_Drug", "Generic"]
+        },
+        {
+          "code": "I.D",
+          "title": "Certificate of Pharmaceutical Product (CPP) / Free Sale Certificate",
+          "mandatory_for": ["Import_Drug", "License_Drug"]
+        },
+        {
+          "code": "I.E",
+          "title": "Perjanjian Kerjasama / Lisensi / Toll Manufacturing",
+          "mandatory_for": ["License_Drug", "Contract_Manufacturing"]
+        },
+        {
+          "code": "I.F",
+          "title": "Informasi Produk (SmPC / Brosur Dokter & PIL / Brosur Pasien)",
+          "mandatory_for": ["New_Drug", "Generic", "Variation_Major"]
+        },
+        {
+          "code": "I.G",
+          "title": "Rancangan Kemasan (Etiket, Strip/Blister, Dus Luar, Barcode 2D QR BPOM)",
+          "mandatory_for": ["New_Drug", "Generic", "Variation_Major", "Variation_Minor"]
+        }
+      ]
+    },
+    {
+      "part_id": "Part_II",
+      "part_title": "Quality Document (CMC)",
+      "sections": [
+        {
+          "code": "II.A",
+          "title": "Ringkasan Mutu Keseluruhan (Quality Overall Summary - QOS)",
+          "mandatory_for": ["New_Drug", "Generic", "Variation_Major"]
+        },
+        {
+          "code": "II.B.1-8",
+          "title": "Substansi Obat / API (Sifat, Produsen, Proses Sintesis, Karakterisasi, Spesifikasi FI/USP, Stabilitas)",
+          "mandatory_for": ["New_Drug", "Generic"]
+        },
+        {
+          "code": "II.C.1-2",
+          "title": "Pengembangan Farmasetika & Formula Produk Jadi (Kompatibilitas Eksipien, Disolusi)",
+          "mandatory_for": ["New_Drug", "Generic"]
+        },
+        {
+          "code": "II.C.3-6",
+          "title": "Proses Manufaktur Produk Jadi, Kontrol Proses (IPC), & Laporan Validasi Proses (Min. 3 Bets)",
+          "mandatory_for": ["New_Drug", "Generic", "Variation_Major"]
+        },
+        {
+          "code": "II.C.7",
+          "title": "Kontrol Eksipien (Sertifikasi Analisis / COA, Monograf FI VI)",
+          "mandatory_for": ["New_Drug", "Generic"]
+        },
+        {
+          "code": "II.C.8-9",
+          "title": "Spesifikasi Produk Jadi, Metode Pengujian, & Validasi Metode Analisis",
+          "mandatory_for": ["New_Drug", "Generic", "Variation_Major"]
+        },
+        {
+          "code": "II.C.10",
+          "title": "Sistem Penutup Wadah / Container Closure System (Material Contact & Permeabilitas)",
+          "mandatory_for": ["New_Drug", "Generic", "Variation_Major"]
+        },
+        {
+          "code": "II.C.11",
+          "title": "Data Stabilitas Zona IVb (Real-Time 30°C/75% RH min. 12 bln & Accelerated 40°C/75% RH min. 6 bln)",
+          "mandatory_for": ["New_Drug", "Generic", "Variation_Major"]
+        }
+      ]
+    },
+    {
+      "part_id": "Part_III",
+      "part_title": "Nonclinical Document",
+      "sections": [
+        {
+          "code": "III.A-G",
+          "title": "Laporan Nonklinik (Farmakodinamik, Toksisitas Akut, Kronik, Mutagenisitas, Karsinogenisitas)",
+          "mandatory_for": ["New_Chemical_Entity", "New_Biologic", "New_Indication"]
+        }
+      ]
+    },
+    {
+      "part_id": "Part_IV",
+      "part_title": "Clinical Document",
+      "sections": [
+        {
+          "code": "IV.A-B",
+          "title": "Uji Klinik Khasiat & Keamanan (Fase I - III)",
+          "mandatory_for": ["New_Chemical_Entity", "New_Biologic", "New_Indication"]
+        },
+        {
+          "code": "IV.C",
+          "title": "Laporan Uji Bioekivalensi (BE) In Vivo / Uji Disolusi Terbanding (UDT / Biowaiver BCS I & III)",
+          "mandatory_for": ["Generic_Solid_Oral_Systemic"]
+        }
+      ]
+    }
+  ]
+}

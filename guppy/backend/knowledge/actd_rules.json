@@ -1,0 +1,60 @@
+{
+  "rules": [
+    {
+      "id": "RULE-ACTD-I-GMP",
+      "part": "Part_I",
+      "section": "I.C",
+      "title": "Sertifikat CPOB / GMP Valid",
+      "severity": "CRITICAL",
+      "description": "Fasilitas produksi sediaan dan bentuk sediaan wajib memiliki Sertifikat CPOB aktif yang mencakup lini produksi bersangkutan.",
+      "citation": "UU No. 17/2023 Pasal 146 jo. PerBPOM No. 24/2017",
+      "check_field": "gmp_certificate_valid",
+      "remediation": "Perbarui sertifikat CPOB atau ajukan permohonan sertifikasi ulang ke BPOM sebelum proses registrasi."
+    },
+    {
+      "id": "RULE-ACTD-I-BARCODE",
+      "part": "Part_I",
+      "section": "I.G",
+      "title": "2D Barcode (QR Code) Penandaan BPOM",
+      "severity": "MODERATE",
+      "description": "Rancangan kemasan (etiket, strip/blister, dan dus luar) wajib memuat ruang dan format 2D Barcode untuk otentikasi BPOM.",
+      "citation": "PerBPOM No. 31/2018 & PerBPOM No. 22/2022",
+      "check_field": "barcode_2d_present",
+      "remediation": "Revisi mock-up kemasan dengan menyediakan area cetak 2D QR Code dan simbol golongan obat yang sesuai."
+    },
+    {
+      "id": "RULE-ACTD-II-STABILITY-ZONE",
+      "part": "Part_II",
+      "section": "II.C.11",
+      "title": "Stabilitas Kondisi Iklim Zona IVb (30°C/75% RH)",
+      "severity": "CRITICAL",
+      "description": "Data stabilitas jangka panjang wajib dilakukan pada kondisi Zona IVb (30°C ± 2°C / 75% ± 5% RH) minimal 12 bulan pada saat penyerahan dokumen registrasi baru.",
+      "citation": "PerBPOM No. 24/2017 Lampiran 3 & ASEAN Stability Guideline",
+      "check_field": "stability_zone_ivb",
+      "remediation": "Pengujian pada Zona II (25°C/60% RH) ditolak untuk pasar Indonesia. Wajib menempatkan bets pada kondisi 30°C/75% RH dan menyediakan minimal 12 bulan real-time serta 6 bulan accelerated (40°C/75% RH)."
+    },
+    {
+      "id": "RULE-ACTD-II-VALIDATION-BATCHES",
+      "part": "Part_II",
+      "section": "II.C.6",
+      "title": "Validasi Proses Manufaktur Minimal 3 Bets",
+      "severity": "MAJOR",
+      "description": "Proses pembuatan produk jadi wajib divalidasi minimal 3 bets berturut-turut pada skala komersial (atau komitmen validasi untuk skala pilot).",
+      "citation": "Pedoman CPOB 2018 Aneks 8 & ACTD Part II.C",
+      "check_field": "validation_batches_count",
+      "min_value": 3,
+      "remediation": "Selesaikan laporan validasi proses pada 3 bets komersial berurutan dengan parameter kritis proses (CPP) dan atribut mutu kritis (CQA) yang konsisten."
+    },
+    {
+      "id": "RULE-ACTD-IV-BE-STUDY",
+      "part": "Part_IV",
+      "section": "IV.C",
+      "title": "Uji Bioekivalensi (BE) In Vivo atau Justifikasi Biowaiver",
+      "severity": "CRITICAL",
+      "description": "Obat copy bentuk oral lepas cepat dengan kerja sistemik wajib melampirkan laporan uji BE in vivo terhadap komparator, ATAU data kelarutan dan disolusi terbanding (UDT f2 >= 50 atau disolusi sangat cepat >85% dalam 15 menit) untuk BCS Biowaiver Kelas I atau III.",
+      "citation": "Keputusan KaBPOM No. HK.00.05.3.1818 jo. Pedoman BE 2022",
+      "check_field": "be_study_or_biowaiver_valid",
+      "remediation": "Lakukan uji BE in vivo di sentra uji terakreditasi BPOM atau lengkapi data uji kelarutan di 3 pH dan profil disolusi terbanding untuk memenuhi kriteria biowaiver."
+    }
+  ]
+}

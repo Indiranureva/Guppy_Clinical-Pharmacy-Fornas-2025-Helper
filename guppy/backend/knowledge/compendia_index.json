@@ -1,0 +1,91 @@
+{
+  "compendia": {
+    "FI_VI": {
+      "name": "Farmakope Indonesia Edisi VI (2020) & Suplemen",
+      "monographs": [
+        {
+          "inn": "Metformin Hydrochloride",
+          "indonesian_name": "Metformin Hidroklorida",
+          "cas": "1115-70-4",
+          "formula": "C4H11N5.HCl",
+          "molecular_weight": 165.62,
+          "bcs_class": "Class III (High Solubility, Low Permeability)",
+          "dosage_forms": [
+            {
+              "form": "Tablet Metformin Hidroklorida",
+              "assay_limits": "Tidak kurang dari 95.0% dan tidak lebih dari 105.0% dari jumlah yang tertera pada etiket",
+              "dissolution": {
+                "medium": "Dapar fosfat pH 6.8",
+                "volume_ml": 900,
+                "apparatus": "Tipe 1 (Keranjang) 100 rpm atau Tipe 2 (Dayung) 50 rpm",
+                "time_minutes": 45,
+                "tolerance_Q": "Tidak kurang dari 70% (Q) terlarut dalam 45 menit"
+              },
+              "related_substances": "Impuritas A (Sianoguanidin): tidak lebih dari 0.05%; Impuritas lainnya: tidak lebih dari 0.1%",
+              "be_requirement": "Wajib Uji Bioekivalensi in vivo ATAU Uji Disolusi Terbanding (Biowaiver jika terbukti disolusi sangat cepat >85% dalam 15 menit di 3 pH)"
+            }
+          ]
+        },
+        {
+          "inn": "Paracetamol",
+          "indonesian_name": "Parasetamol / Asetaminofen",
+          "cas": "103-90-2",
+          "formula": "C8H9NO2",
+          "molecular_weight": 151.16,
+          "bcs_class": "Class I / borderline Class IV depending on solubility data",
+          "dosage_forms": [
+            {
+              "form": "Tablet Parasetamol",
+              "assay_limits": "Tidak kurang dari 90.0% dan tidak lebih dari 110.0% dari jumlah yang tertera pada etiket",
+              "dissolution": {
+                "medium": "Dapar fosfat pH 5.8",
+                "volume_ml": 900,
+                "apparatus": "Tipe 2 (Dayung) 50 rpm",
+                "time_minutes": 30,
+                "tolerance_Q": "Tidak kurang dari 80% (Q) terlarut dalam 30 menit"
+              },
+              "related_substances": "4-Aminofenol tidak lebih dari 0.005% (50 ppm)",
+              "be_requirement": "Dapat dipertimbangkan Biowaiver BCS Kelas I jika disolusi cepat dan eksipien konvensional"
+            }
+          ]
+        },
+        {
+          "inn": "Amlodipine Besylate",
+          "indonesian_name": "Amlodipin Besilat",
+          "cas": "111470-99-6",
+          "formula": "C20H25ClN2O5.C6H6O3S",
+          "molecular_weight": 567.05,
+          "bcs_class": "Class I",
+          "dosage_forms": [
+            {
+              "form": "Tablet Amlodipin Besilat",
+              "assay_limits": "90.0% - 110.0%",
+              "dissolution": {
+                "medium": "Asam klorida 0.01 N",
+                "volume_ml": 500,
+                "apparatus": "Tipe 2 (Dayung) 75 rpm",
+                "time_minutes": 30,
+                "tolerance_Q": "Tidak kurang dari 75% (Q)"
+              },
+              "related_substances": "Total impuritas tidak lebih dari 0.5%",
+              "be_requirement": "Wajib Uji Bioekivalensi in vivo terhadap Norvasc®"
+            }
+          ]
+        }
+      ]
+    },
+    "FHI_II": {
+      "name": "Farmakope Herbal Indonesia Edisi II (2017)",
+      "monographs": [
+        {
+          "plant_name": "Curcuma xanthorrhiza Roxb. (Temulawak)",
+          "extract_name": "Ekstrak Kental Rimpang Temulawak",
+          "marker_compound": "Kurkuminoid (Kurkumin) dan Xantorizol",
+          "assay_limits": "Kadar kurkuminoid tidak kurang dari 4.0% dihitung sebagai kurkumin",
+          "microbial_limits": "ALT < 10^4 koloni/g, AKK < 10^3 koloni/g, Bebas Salmonella & E. coli",
+          "heavy_metals": "Pb <= 10 mg/kg, Cd <= 0.3 mg/kg, As <= 5 mg/kg, Hg <= 0.5 mg/kg"
+        }
+      ]
+    }
+  }
+}

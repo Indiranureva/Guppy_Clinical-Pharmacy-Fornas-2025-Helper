@@ -1,0 +1,41 @@
+{
+  "audit_name": "Checklist Kesiapan Inspeksi CPOB (PerBPOM No. 34 Tahun 2018)",
+  "authority": "Badan Pengawas Obat dan Makanan (BPOM RI)",
+  "chapters": [
+    {
+      "chapter": "Bab 1: Sistem Mutu Industri Farmasi",
+      "items": [
+        {"id": "CPOB-1.1", "question": "Apakah industri farmasi memiliki Pengkajian Mutu Produk (PQR) tahunan untuk semua produk yang diedarkan?", "criticality": "Major"},
+        {"id": "CPOB-1.2", "question": "Apakah sistem Manajemen Risiko Mutu (ICH Q9) diterapkan dalam penanganan deviasi, CAPA, dan perubahan?", "criticality": "Critical"}
+      ]
+    },
+    {
+      "chapter": "Bab 3: Bangunan dan Fasilitas",
+      "items": [
+        {"id": "CPOB-3.1", "question": "Apakah sistem HVAC/AHU terkualifikasi dan memelihara perbedaan tekanan udara (differential pressure) yang tepat?", "criticality": "Critical"},
+        {"id": "CPOB-3.2", "question": "Apakah terdapat pemisahan fisik yang ketat untuk fasilitas produk betalaktam, sefalosporin, atau hormon?", "criticality": "Critical"}
+      ]
+    },
+    {
+      "chapter": "Bab 6: Produksi & Validasi Proses",
+      "items": [
+        {"id": "CPOB-6.1", "question": "Apakah laporan validasi proses mencakup sekurang-kurangnya 3 bets komersial berturut-turut dengan hasil memenuhi CQA?", "criticality": "Critical"},
+        {"id": "CPOB-6.2", "question": "Apakah validasi pembersihan (cleaning validation) membuktikan batas residu bahan aktif dan deterjen di bawah batas toksikologis PDE?", "criticality": "Major"}
+      ]
+    },
+    {
+      "chapter": "Aneks 1: Produk Steril & CCS",
+      "items": [
+        {"id": "CPOB-A1.1", "question": "Apakah dokumen Contamination Control Strategy (CCS) terintegrasi telah disusun dan ditinjau secara berkala?", "criticality": "Critical"},
+        {"id": "CPOB-A1.2", "question": "Apakah pengujian integritas filter sterilisasi pra dan pasca penggunaan (PUPSIT) telah diimplementasikan atau didukung kajian risiko?", "criticality": "Critical"}
+      ]
+    },
+    {
+      "chapter": "Bab 10: Integritas Data & Sistem Komputer",
+      "items": [
+        {"id": "CPOB-10.1", "question": "Apakah audit trail instrumen analitik (HPLC/GC/Spectro) selalu aktif dan dikaji secara rutin sebelum rilis bets?", "criticality": "Critical"},
+        {"id": "CPOB-10.2", "question": "Apakah setiap personil menggunakan akun login individual dengan hak akses berbasis peran (tidak ada akun bersama)?", "criticality": "Critical"}
+      ]
+    }
+  ]
+}

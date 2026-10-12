@@ -1,0 +1,119 @@
+/* Guppy Regulatory Helper Theme Styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Header & Banner */
+.guppy-header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f766e 100%);
+    padding: 1.75rem 2rem;
+    border-radius: 12px;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.guppy-header h1 {
+    font-size: 2.1rem;
+    font-weight: 700;
+    margin: 0;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.guppy-header p {
+    font-size: 0.95rem;
+    color: #cbd5e1;
+    margin-top: 0.4rem;
+    margin-bottom: 0;
+}
+
+/* Scorecard Banner */
+.scorecard-banner {
+    padding: 1.25rem 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.scorecard-compliant {
+    background: #ecfdf5;
+    border: 1px solid #6ee7b7;
+    color: #065f46;
+}
+
+.scorecard-critical {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+}
+
+.scorecard-major {
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    color: #92400e;
+}
+
+/* Badges */
+.badge-critical {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    border: 1px solid #f87171;
+}
+
+.badge-major {
+    background-color: #fef3c7;
+    color: #b45309;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    border: 1px solid #fbbf24;
+}
+
+.badge-pass {
+    background-color: #d1fae5;
+    color: #047857;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    border: 1px solid #34d399;
+}
+
+/* Findings Card */
+.finding-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.85rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.finding-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
+}
+
+/* Legal Citation Box */
+.citation-box {
+    background-color: #f8fafc;
+    border-left: 4px solid #0284c7;
+    padding: 0.75rem 1rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.88rem;
+    color: #334155;
+    margin: 0.5rem 0;
+}

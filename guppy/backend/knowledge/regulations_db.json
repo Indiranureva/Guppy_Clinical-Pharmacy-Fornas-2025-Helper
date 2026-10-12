@@ -1,0 +1,383 @@
+{
+  "regulations": [
+    {
+      "id": "KMK-1199-2025",
+      "hierarchy": "Keputusan Menteri Kesehatan",
+      "number": "Nomor HK.01.07/MENKES/1199/2025",
+      "title": "Formularium Nasional",
+      "promulgated_year": 2025,
+      "status": "Ditetapkan 31 Desember 2025, Penerapan mulai 1 April 2026",
+      "authority": "Menteri Kesehatan Republik Indonesia",
+      "articles": [
+        {
+          "chapter": "Diktum Keputusan Menteri Kesehatan",
+          "article": "Diktum KEDUA, KETIGA, KEEMPAT",
+          "paragraphs": [
+            "KEDUA: Formularium Nasional merupakan daftar obat terpilih yang dibutuhkan dan digunakan sebagai acuan penulisan resep pada pelaksanaan pelayanan kesehatan dalam penyelenggaraan program jaminan kesehatan.",
+            "KETIGA: Formularium Nasional memuat daftar obat esensial nasional yang merupakan daftar obat esensial terpilih yang paling dibutuhkan dan harus tersedia di fasilitas pelayanan kesehatan tingkat pertama (FPKTP) dan fasilitas pelayanan kesehatan tingkat lanjut (FPKTL).",
+            "KEEMPAT: Daftar obat esensial nasional harus diterapkan secara konsisten dan terus-menerus dalam pemberian pelayanan kesehatan di fasilitas pelayanan kesehatan."
+          ],
+          "keywords": [
+            "fornas 2025",
+            "acuan penulisan resep",
+            "jkn",
+            "bpjs",
+            "obat esensial nasional",
+            "fpktp",
+            "fpktl"
+          ]
+        },
+        {
+          "chapter": "Diktum Keputusan Menteri Kesehatan",
+          "article": "Diktum KELIMA (Obat di Luar Fornas)",
+          "paragraphs": [
+            "KELIMA: Dalam hal obat yang dibutuhkan tidak tercantum dalam Formularium Nasional, dapat digunakan obat lain secara terbatas berdasarkan persetujuan kepala atau direktur fasilitas pelayanan kesehatan setempat sesuai dengan ketentuan peraturan perundang-undangan."
+          ],
+          "keywords": [
+            "obat luar fornas",
+            "persetujuan direktur",
+            "penggunaan terbatas",
+            "justifikasi obat",
+            "diktum kelima"
+          ]
+        },
+        {
+          "chapter": "Diktum Keputusan Menteri Kesehatan",
+          "article": "Diktum KETUJUH & KEDELAPAN (Pencabutan & Keberlakuan)",
+          "paragraphs": [
+            "KETUJUH: Mencabut dan menyatakan tidak berlaku KMK No. HK.01.07/Menkes/2197/2023 dan KMK No. HK.01.07/Menkes/1818/2024 tentang Formularium Nasional.",
+            "KEDELAPAN: Penerapan Formularium Nasional mulai berlaku pada tanggal 1 April 2026."
+          ],
+          "keywords": [
+            "pencabutan fornas 2023",
+            "berlaku 1 april 2026",
+            "kmk 2197/2023",
+            "kmk 1818/2024"
+          ]
+        },
+        {
+          "chapter": "Lampiran Bagian A: Ketentuan Penulisan",
+          "article": "Ketentuan Simbol & Restriksi (Butir d - m)",
+          "paragraphs": [
+            "Simbol [P]: Obat disediakan oleh Program Kemenkes atau BKKBN.",
+            "Simbol [Ca]: Obat antineoplastik dan imunomodulator untuk terapi kanker.",
+            "Tanda centang (v) FPKTP: Dipakai di fasilitas kesehatan primer; tanda centang (v) dan PP: Dipakai di Puskesmas Perawatan.",
+            "Tanda centang (v) FPKTL: Dipakai di fasilitas kesehatan rujukan tingkat lanjutan (spesialistik/subspesialistik).",
+            "Tanda asterisk (*): Disediakan/diberikan oleh FPKTP/apotek PRB untuk Program Rujuk Balik BPJS Kesehatan.",
+            "Tanda centang asterisk (v*): Initial treatment dilakukan di FPKTL, selanjutnya dapat diberikan oleh FPKTP/apotek PRB.",
+            "Ketentuan Restriksi (Butir k): Restriksi di bawah kelas terapi berlaku untuk semua item di kelas; di bawah zat aktif berlaku untuk semua bentuk/kekuatan; di bawah sediaan tertentu hanya berlaku untuk sediaan tersebut.",
+            "Peresepan Maksimal: Dituliskan di samping sediaan/kekuatan sebagai batas kuantitas pemberian obat.",
+            "Kolom OEN: Menunjukkan Obat Esensial Nasional."
+          ],
+          "keywords": [
+            "simbol p",
+            "simbol ca",
+            "tanda bintang prb",
+            "rujuk balik",
+            "restriksi penggunaan",
+            "peresepan maksimal",
+            "oen",
+            "aturan butir k"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "UU-17-2023",
+      "hierarchy": "Undang-Undang",
+      "number": "Nomor 17 Tahun 2023",
+      "title": "Undang-Undang tentang Kesehatan",
+      "promulgated_year": 2023,
+      "status": "Berlaku Penuh (Omnibus Law)",
+      "authority": "Pemerintah Republik Indonesia / DPR RI",
+      "articles": [
+        {
+          "chapter": "BAB VIII: Sediaan Farmasi, Alat Kesehatan, dan PKRT",
+          "article": "Pasal 138",
+          "paragraphs": [
+            "(1) Sediaan farmasi, alat kesehatan, dan PKRT harus memenuhi standar dan/atau persyaratan keamanan, khasiat/kemanfaatan, dan mutu.",
+            "(2) Standar dan/atau persyaratan sebagaimana dimaksud pada ayat (1) untuk sediaan farmasi berupa obat dan bahan obat mengacu pada Farmakope Indonesia atau standar lain yang diakui secara resmi."
+          ],
+          "keywords": [
+            "standar mutu",
+            "farmakope indonesia",
+            "izin edar",
+            "obat dan bahan obat"
+          ]
+        },
+        {
+          "chapter": "BAB VIII: Sediaan Farmasi, Alat Kesehatan, dan PKRT",
+          "article": "Pasal 145",
+          "paragraphs": [
+            "(1) Setiap sediaan farmasi, alat kesehatan, dan PKRT yang diedarkan wajib memiliki izin edar.",
+            "(2) Izin edar sebagaimana dimaksud pada ayat (1) diberikan setelah memenuhi persyaratan keamanan, khasiat/kemanfaatan, dan mutu sesuai dengan ketentuan peraturan perundang-undangan."
+          ],
+          "keywords": [
+            "izin edar",
+            "nie",
+            "kewajiban izin edar",
+            "peredaran obat"
+          ]
+        },
+        {
+          "chapter": "BAB VIII: Sediaan Farmasi, Alat Kesehatan, dan PKRT",
+          "article": "Pasal 146",
+          "paragraphs": [
+            "(1) Pembuatan sediaan farmasi wajib memenuhi standar Cara Pembuatan yang Baik (CPOB / CPOTB / CPKB).",
+            "(2) Industri Farmasi wajib menerapkan Cara Pembuatan Obat yang Baik (CPOB) yang dibuktikan dengan sertifikat CPOB yang sah."
+          ],
+          "keywords": [
+            "cpob",
+            "cpotb",
+            "sertifikat cpob",
+            "fasilitas produksi"
+          ]
+        },
+        {
+          "chapter": "BAB XX: Ketentuan Pidana",
+          "article": "Pasal 435",
+          "paragraphs": [
+            "Setiap orang yang memproduksi atau mengedarkan sediaan farmasi dan/atau alat kesehatan yang tidak memenuhi standar dan/atau persyaratan keamanan, khasiat/kemanfaatan, dan mutu sebagaimana dimaksud dalam Pasal 138 ayat (2) dan ayat (3) dipidana dengan pidana penjara paling lama 12 (dua belas) tahun atau pidana denda paling banyak Rp5.000.000.000,00 (lima miliar rupiah)."
+          ],
+          "keywords": [
+            "sanksi pidana",
+            "tanpa standar mutu",
+            "pemalsuan obat",
+            "denda"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PERBPOM-24-2017",
+      "hierarchy": "Peraturan Badan Pengawas Obat dan Makanan",
+      "number": "Nomor 24 Tahun 2017 (jo. PerBPOM 13/2022)",
+      "title": "Kriteria dan Tata Laksana Registrasi Obat",
+      "promulgated_year": 2017,
+      "status": "Berlaku (telah diubah sebagian oleh PerBPOM No. 15/2019 dan PerBPOM No. 13/2022)",
+      "authority": "Badan Pengawas Obat dan Makanan (BPOM RI)",
+      "articles": [
+        {
+          "chapter": "BAB II: Kategori Registrasi",
+          "article": "Pasal 4",
+          "paragraphs": [
+            "(1) Registrasi obat terdiri atas Registrasi Baru, Registrasi Variasi, dan Registrasi Ulang.",
+            "(2) Registrasi Baru meliputi: Kategori 1 (Obat Baru dan Produk Biologi), Kategori 2 (Obat Copy dengan entitas yang telah disetujui), Kategori 3 (Sediaan Lain yang Mengandung Obat)."
+          ],
+          "keywords": [
+            "kategori 1",
+            "kategori 2",
+            "kategori 3",
+            "obat baru",
+            "obat copy",
+            "registrasi baru"
+          ]
+        },
+        {
+          "chapter": "BAB II: Kategori Registrasi",
+          "article": "Pasal 5",
+          "paragraphs": [
+            "(1) Registrasi Variasi meliputi: Kategori 4 (Variasi Mayor - VaMa), Kategori 5 (Variasi Minor dengan Persetujuan - VaMi-B), Kategori 6 (Variasi Minor dengan Notifikasi - VaMi-A)."
+          ],
+          "keywords": [
+            "variasi mayor",
+            "variasi minor",
+            "vami-a",
+            "vami-b",
+            "vama",
+            "perubahan pasca izin edar"
+          ]
+        },
+        {
+          "chapter": "BAB III: Persyaratan Registrasi",
+          "article": "Pasal 8 & Lampiran 3 (Pedoman Stabilitas)",
+          "paragraphs": [
+            "(1) Dokumen teknis registrasi obat disusun sesuai format ASEAN Common Technical Dossier (ACTD).",
+            "(2) Pengujian stabilitas sediaan obat jadi wajib mengacu pada Kondisi Iklim Zona IVb (30°C ± 2°C / 75% ± 5% RH) untuk pengujian jangka panjang (real-time long term) dan 40°C ± 2°C / 75% ± 5% RH untuk pengujian dipercepat (accelerated).",
+            "(3) Minimal data stabilitas jangka panjang yang diserahkan saat registrasi adalah 12 bulan untuk formula baru atau obat copy."
+          ],
+          "keywords": [
+            "actd",
+            "zona ivb",
+            "stabilitas",
+            "real time",
+            "accelerated",
+            "30 derajat 75 rh"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PERBPOM-31-2018",
+      "hierarchy": "Peraturan Badan Pengawas Obat dan Makanan",
+      "number": "Nomor 31 Tahun 2018 (jo. PerBPOM 22/2022)",
+      "title": "Label dan Penandaan Obat",
+      "promulgated_year": 2018,
+      "status": "Berlaku Penuh",
+      "authority": "BPOM RI",
+      "articles": [
+        {
+          "chapter": "BAB II: Ketentuan Umum Penandaan",
+          "article": "Pasal 3",
+          "paragraphs": [
+            "(1) Penandaan obat harus memuat informasi yang lengkap, objektif, dan tidak menyesatkan.",
+            "(2) Penandaan wajib menggunakan Bahasa Indonesia yang baik dan benar, sekurang-kurangnya untuk nama obat, bentuk sediaan, kekuatan sediaan, nama dan alamat industri farmasi, nomor izin edar, nomor bets, tanggal kedaluwarsa, dan batas peringatan."
+          ],
+          "keywords": [
+            "penandaan",
+            "bahasa indonesia",
+            "nomor izin edar",
+            "kadaluwarsa",
+            "nomor bets"
+          ]
+        },
+        {
+          "chapter": "BAB IV: Ketentuan 2D Barcode",
+          "article": "Pasal 18 & PerBPOM 22/2022",
+          "paragraphs": [
+            "(1) Setiap kemasan obat yang diedarkan wajib mencantumkan 2D Barcode (QR Code) otentikasi BPOM.",
+            "(2) Barcode 2D pada kemasan primer dan sekunder berfungsi untuk keperluan identifikasi, penelusuran (track & trace), dan pencegahan pemalsuan obat."
+          ],
+          "keywords": [
+            "2d barcode",
+            "qr code bpom",
+            "track and trace",
+            "kemasan obat"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SK-KABPOM-BE-1818",
+      "hierarchy": "Keputusan Kepala BPOM",
+      "number": "HK.00.05.3.1818 (jo. Pedoman BE BPOM 2022)",
+      "title": "Pedoman Uji Bioekivalensi dan Daftar Obat Wajib Ekivalensi",
+      "promulgated_year": 2005,
+      "status": "Berlaku dengan pedoman operasional terkini",
+      "authority": "BPOM RI",
+      "articles": [
+        {
+          "chapter": "Ketentuan Uji Ekivalensi In Vivo",
+          "article": "Bagian I & Lampiran Obat Wajib Uji BE",
+          "paragraphs": [
+            "(1) Obat copy oral lepas cepat dengan kerja sistemik wajib memenuhi uji Bioekivalensi (BE) in vivo terhadap produk inovator pembanding resmi.",
+            "(2) Kriteria penerimaan BE: 90% Confidence Interval untuk rasio rata-rata geometrik (Test/Reference) dari AUC(0-t) dan Cmax harus berada dalam rentang 80.00% - 125.00%.",
+            "(3) Pembebasan uji BE in vivo (Biowaiver) dapat diberikan berdasarkan Biopharmaceutics Classification System (BCS) untuk BCS Kelas I dan BCS Kelas III dengan pembuktian disolusi terbanding (UDT) sangat cepat di media pH 1.2, 4.5, dan 6.8."
+          ],
+          "keywords": [
+            "bioekivalensi",
+            "be in vivo",
+            "biowaiver",
+            "bcs class 1",
+            "bcs class 3",
+            "disolusi terbanding",
+            "f2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PERBPOM-SUPLEMEN-2020",
+      "hierarchy": "Peraturan Badan Pengawas Obat dan Makanan",
+      "number": "Nomor 17 Tahun 2019 / PerBPOM Batas Suplemen 2021",
+      "title": "Batas Maksimum Vitamin dan Mineral dalam Suplemen Kesehatan",
+      "promulgated_year": 2021,
+      "status": "Berlaku Penuh",
+      "authority": "BPOM RI",
+      "articles": [
+        {
+          "chapter": "Batas Maksimum Asupan Harian",
+          "article": "Lampiran Batas Vitamin & Mineral",
+          "paragraphs": [
+            "(1) Vitamin C: Batas maksimum harian untuk Suplemen Kesehatan adalah 1000 mg/hari. Dosis di atas 1000 mg atau sediaan injeksi wajib didaftarkan sebagai Obat Keras.",
+            "(2) Vitamin D3 (Cholecalciferol): Batas maksimum harian untuk Suplemen Kesehatan adalah 4000 IU/hari. Sediaan dengan kadar > 4000 IU (misal 5000 IU tablet) wajib didaftarkan sebagai Obat Keras.",
+            "(3) Zink: Batas maksimum harian dalam suplemen adalah 30 mg elemental Zn per hari.",
+            "(4) Asam Folat: Batas maksimum harian dalam suplemen adalah 800 mcg/hari (kecuali formula khusus ibu hamil/obat keras)."
+          ],
+          "keywords": [
+            "suplemen kesehatan",
+            "vitamin c 1000mg",
+            "vitamin d 4000 iu",
+            "batas harian",
+            "obat keras"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "PERBPOM-34-2018",
+      "hierarchy": "Peraturan Badan Pengawas Obat dan Makanan",
+      "number": "Nomor 34 Tahun 2018 (jo. Pembaruan Aneks CPOB 2024)",
+      "title": "Pedoman Cara Pembuatan Obat yang Baik (CPOB)",
+      "promulgated_year": 2018,
+      "status": "Berlaku Penuh (Harmonisasi PIC/S PE 009-14 & Pembaruan Aneks 1 Produk Steril)",
+      "authority": "Badan Pengawas Obat dan Makanan (BPOM RI)",
+      "articles": [
+        {
+          "chapter": "Pasal 2 & Ketentuan Umum",
+          "article": "Pasal 2",
+          "paragraphs": [
+            "(1) Industri Farmasi wajib menerapkan Pedoman CPOB dalam seluruh aspek pembuatan obat dan/atau bahan obat.",
+            "(2) Penerapan Pedoman CPOB sebagaimana dimaksud pada ayat (1) dibuktikan dengan Sertifikat CPOB untuk setiap bentuk sediaan yang diproduksi."
+          ],
+          "keywords": [
+            "cpob",
+            "sertifikat cpob",
+            "industri farmasi",
+            "kewajiban cpob"
+          ]
+        },
+        {
+          "chapter": "BAB I: Sistem Mutu Industri Farmasi",
+          "article": "Butir 1.1 - 1.5",
+          "paragraphs": [
+            "(1) Industri farmasi harus menetapkan, menerapkan, dan memelihara Sistem Mutu Industri Farmasi (PQS) yang efektif berdasarkan prinsip Manajemen Risiko Mutu (ICH Q9).",
+            "(2) Pengawasan mutu dan pengkajian mutu produk (PQR / Product Quality Review) wajib dilaksanakan secara berkala tiap tahun."
+          ],
+          "keywords": [
+            "sistem mutu",
+            "pqs",
+            "pqr",
+            "manajemen risiko mutu",
+            "ich q9"
+          ]
+        },
+        {
+          "chapter": "Aneks 1: Pembuatan Produk Steril",
+          "article": "Aneks 1 (Pembaruan PIC/S Annex 1)",
+          "paragraphs": [
+            "(1) Fasilitas steril wajib menerapkan Contamination Control Strategy (CCS) terintegrasi untuk mencegah kontaminasi partikulat dan mikroba.",
+            "(2) Pengujian integritas filter sterilisasi sebelum dan sesudah penggunaan (PUPSIT - Pre-Use Post-Sterilization Integrity Testing) dipersyaratkan kecuali ada kajian risiko tervalidasi.",
+            "(3) Pemisahan ketat area Grade A (LAF/Isolator), Grade B (Latar belakang steril), Grade C, dan Grade D."
+          ],
+          "keywords": [
+            "produk steril",
+            "aneks 1",
+            "pupsit",
+            "ccs",
+            "contamination control strategy",
+            "grade a",
+            "isolator"
+          ]
+        },
+        {
+          "chapter": "Aneks 8: Kualifikasi dan Validasi",
+          "article": "Aneks 8 Butir 4 - 6",
+          "paragraphs": [
+            "(1) Validasi proses tradisional wajib dilakukan sekurang-kurangnya pada 3 (tiga) bets berturut-turut pada skala komersial sebelum obat diedarkan.",
+            "(2) Pendekatan verifikasi proses berkelanjutan (Continuous Process Verification - CPV) atau pendekatan hibrida dapat diterapkan dengan pemantauan parameter proses kritis (CPP)."
+          ],
+          "keywords": [
+            "validasi proses",
+            "3 bets",
+            "aneks 8",
+            "kualifikasi",
+            "cpv",
+            "cpp",
+            "cqa"
+          ]
+        }
+      ]
+    }
+  ]
+}

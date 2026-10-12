@@ -1,0 +1,668 @@
+{
+  "metadata": {
+    "source": "Formularium Nasional (Fornas) — Keputusan Menteri Kesehatan RI",
+    "editions": [
+      "Fornas 2022 (Kepmenkes No. HK.01.07/MENKES/707/2022)",
+      "Fornas 2021 Suplemen I"
+    ],
+    "program": "Jaminan Kesehatan Nasional (JKN) – BPJS Kesehatan",
+    "last_updated": "2023",
+    "restriction_code_guide": {
+      "R": "Restricted — Hanya diberikan pada kondisi/indikasi spesifik sesuai Fornas",
+      "R-FKRTL": "Restricted to FKRTL — Hanya boleh diresepkan di Fasilitas Kesehatan Rujukan Tingkat Lanjut (RS)",
+      "R-FKTP": "Dapat diberikan di FKTP — Puskesmas/Klinik Pratama",
+      "DU": "Dokter Umum dapat meresepkan",
+      "SP": "Hanya Dokter Spesialis",
+      "SP-Sub": "Hanya Dokter Subspesialis / Konsultan"
+    }
+  },
+  "drugs": [
+    {
+      "drug_id": "FOR-001",
+      "inn": "Metformin",
+      "brand_examples": [
+        "Glucophage",
+        "Diabex",
+        "Metformin Generik"
+      ],
+      "dosage_forms": [
+        "Tablet 500 mg",
+        "Tablet 850 mg",
+        "Tablet 1000 mg"
+      ],
+      "atc_code": "A10BA02",
+      "therapeutic_class": "Antidiabetik Oral — Biguanid",
+      "facility_level": "FKTP dan FKRTL",
+      "prescriber_restriction": "DU",
+      "fornas_status": "Terdaftar dalam Fornas",
+      "restrictions": [
+        {
+          "restriction_code": "R",
+          "indication_required": "Diabetes Melitus Tipe 2 (DMT2)",
+          "icd10_codes": [
+            "E11",
+            "E11.9"
+          ],
+          "clinical_condition": "Pasien DMT2 dengan eGFR >= 30 mL/mnt/1.73m2 (tidak ada kontraindikasi ginjal berat)",
+          "contraindications": [
+            "GFR < 30 mL/mnt/1.73m2 (CKD Derajat 4-5)",
+            "Ketoasidosis Diabetik",
+            "Syok/kondisi kritis (risiko laktat asidosis)",
+            "Rencana prosedur dengan kontras iodinasi"
+          ],
+          "dose_guidance": {
+            "initial_dose": "500 mg 2x sehari atau 850 mg 1x sehari bersama makan",
+            "titration": "Naikkan 500 mg per 2 minggu sesuai toleransi",
+            "max_dose": "2000-3000 mg/hari terbagi 2-3 dosis",
+            "special_population": "Lansia: mulai dosis rendah, monitor fungsi ginjal berkala"
+          },
+          "monitoring_required": [
+            "HbA1c setiap 3 bulan",
+            "Fungsi ginjal (eGFR) setiap 6 bulan"
+          ],
+          "prescribing_notes": "Lini pertama DMT2 sesuai PNPK Kemenkes. Dapat dikombinasi dengan sulfonilurea atau insulin jika monoterapi tidak mencapai target.",
+          "legal_basis": "Kepmenkes No. HK.01.07/MENKES/707/2022 — Fornas 2022, halaman A-12",
+          "clinical_guidelines_ref": "PNPK Diabetes Melitus Tipe 2 (Kemenkes 2020)"
+        }
+      ]
+    },
+    {
+      "drug_id": "FOR-002",
+      "inn": "Amlodipine",
+      "brand_examples": [
+        "Norvasc",
+        "Amlodipine Generik",
+        "Tensivask"
+      ],
+      "dosage_forms": [
+        "Tablet 5 mg",
+        "Tablet 10 mg"
+      ],
+      "atc_code": "C08CA01",
+      "therapeutic_class": "Antihipertensi — Calcium Channel Blocker (CCB) Dihidropiridin",
+      "facility_level": "FKTP dan FKRTL",
+      "prescriber_restriction": "DU",
+      "fornas_status": "Terdaftar dalam Fornas",
+      "restrictions": [
+        {
+          "restriction_code": "R",
+          "indication_required": "Hipertensi / Angina Pektoris Stabil",
+          "icd10_codes": [
+            "I10",
+            "I20.8",
+            "I20.9"
+          ],
+          "clinical_condition": "Tekanan darah sistolik >= 140 mmHg atau diastolik >= 90 mmHg yang membutuhkan terapi farmakologis",
+          "contraindications": [
+            "Syok kardiogenik",
+            "Stenosis aorta berat",
+            "Hipersensitivitas terhadap dihidropiridin"
+          ],
+          "dose_guidance": {
+            "initial_dose": "5 mg 1x sehari",
+            "titration": "Dapat ditingkatkan menjadi 10 mg 1x sehari setelah 7-14 hari",
+            "max_dose": "10 mg/hari",
+            "special_population": "Lansia / gangguan hati: mulai 2.5 mg 1x sehari"
+          },
+          "monitoring_required": [
+            "Tekanan darah berkala (target < 130/80 mmHg untuk komorbid DM/CKD)",
+            "Edema perifer"
+          ],
+          "prescribing_notes": "CCB pilihan utama untuk hipertensi pada pasien lansia dan penyakit arteri koroner. Dapat dikombinasi dengan ACE-inhibitor/ARB.",
+          "legal_basis": "Kepmenkes No. HK.01.07/MENKES/707/2022 — Fornas 2022, halaman C-08",
+          "clinical_guidelines_ref": "PNPK Hipertensi (Kemenkes 2020), JNC-8, ISH 2020"
+        }
+      ]
+    },
+    {
+      "drug_id": "FOR-003",
+      "inn": "Omeprazole",
+      "brand_examples": [
+        "Losec",
+        "Prilosec",
+        "Omeprazole Generik"
+      ],
+      "dosage_forms": [
+        "Kapsul 20 mg",
+        "Kapsul 40 mg",
+        "Injeksi 40 mg/vial"
+      ],
+      "atc_code": "A02BC01",
+      "therapeutic_class": "Proton Pump Inhibitor (PPI) — Antitukak",
+      "facility_level": "FKTP dan FKRTL (Injeksi: FKRTL saja)",
+      "prescriber_restriction": "DU",
+      "fornas_status": "Terdaftar dalam Fornas",
+      "restrictions": [
+        {
+          "restriction_code": "R",
+          "indication_required": "GERD / Tukak Peptik / Eradikasi H. pylori / Gastroproteksi NSAID",
+          "icd10_codes": [
+            "K21.0",
+            "K21.9",
+            "K25",
+            "K27",
+            "K29.7",
+            "B96.81"
+          ],
+          "clinical_condition": "Gejala heartburn/regurgitasi asam, atau tukak lambung/duodenum terbukti endoskopi, atau penggunaan NSAID jangka panjang",
+          "contraindications": [
+            "Hipersensitivitas terhadap benzimidazol",
+            "Penggunaan bersama Nelfinavir (ARV)"
+          ],
+          "dose_guidance": {
+            "gerd": "20 mg 1x sehari, 4-8 minggu",
+            "peptic_ulcer": "20-40 mg 1x sehari selama 4-8 minggu",
+            "h_pylori": "20 mg 2x sehari sebagai bagian dari triple therapy",
+            "nsaid_prophylaxis": "20 mg 1x sehari selama penggunaan NSAID",
+            "max_dose": "40 mg/hari (Zollinger-Ellison: hingga 120 mg/hari di FKRTL)"
+          },
+          "monitoring_required": [
+            "Gejala klinis setelah 4-8 minggu",
+            "Kadar Mg serum jika >1 tahun",
+            "Densitas tulang jika jangka panjang"
+          ],
+          "prescribing_notes": "Hindari penggunaan PPI tanpa indikasi jelas. Re-evaluasi kebutuhan PPI setiap 4-8 minggu. Step-down therapy ke antasida/H2-blocker jika memungkinkan.",
+          "legal_basis": "Kepmenkes No. HK.01.07/MENKES/707/2022 — Fornas 2022, halaman A-02",
+          "clinical_guidelines_ref": "PNPK GERD (Kemenkes 2019), ACG Clinical Guideline GERD 2022"
+        }
+      ]
+    },
+    {
+      "drug_id": "FOR-004",
+      "inn": "Amoxicillin",
+      "brand_examples": [
+        "Amoxil",
+        "Amoxicillin Generik",
+        "Ospamox"
+      ],
+      "dosage_forms": [
+        "Kapsul 250 mg",
+        "Kapsul 500 mg",
+        "Sirup 125 mg/5mL"
+      ],
+      "atc_code": "J01CA04",
+      "therapeutic_class": "Antibiotik — Penisilin Spektrum Luas (Aminopenisilin)",
+      "facility_level": "FKTP dan FKRTL",
+      "prescriber_restriction": "DU",
+      "fornas_status": "Terdaftar dalam Fornas",
+      "restrictions": [
+        {
+          "restriction_code": "R",
+          "indication_required": "Infeksi bakteri yang terbukti/dicurigai sensitif terhadap Amoxicillin",
+          "icd10_codes": [
+            "J06.9",
+            "J01",
+            "J20",
+            "J18.9",
+            "N39.0",
+            "A49.9"
+          ],
+          "clinical_condition": "Infeksi saluran napas atas/bawah (pneumonia komunitas ringan-sedang), ISK tanpa komplikasi, faringitis streptokokal",
+          "contraindications": [
+            "Alergi penisilin / sefalosporin",
+            "Mononukleosis infeksiosa (risiko ruam makulopapular)"
+          ],
+          "dose_guidance": {
+            "adult_standard": "500 mg 3x sehari atau 875 mg 2x sehari, 5-7 hari",
+            "anak_per_kg": "25-50 mg/kg/hari terbagi setiap 8 jam",
+            "pneumonia_komunitas": "500 mg 3x sehari, 7-10 hari",
+            "isk_tanpa_komplikasi": "500 mg 3x sehari, 3-7 hari",
+            "max_dose": "3000 mg/hari (dewasa)"
+          },
+          "monitoring_required": [
+            "Respons klinis dalam 48-72 jam",
+            "Ruam kulit (reaksi alergi)"
+          ],
+          "prescribing_notes": "Gunakan sesuai prinsip bijak antibiotik (PPAB). Hindari pada infeksi virus. Amoxicillin-Clavulanat untuk infeksi berat atau dugaan resistensi.",
+          "legal_basis": "Kepmenkes No. HK.01.07/MENKES/707/2022 — Fornas 2022, halaman J-01",
+          "clinical_guidelines_ref": "Pedoman Penggunaan Antibiotik Kemenkes 2021 (PPAB)"
+        }
+      ]
+    },
+    {
+      "drug_id": "FOR-005",
+      "inn": "Simvastatin",
+      "brand_examples": [
+        "Zocor",
+        "Simvastatin Generik"
+      ],
+      "dosage_forms": [
+        "Tablet 10 mg",
+        "Tablet 20 mg",
+        "Tablet 40 mg"
+      ],
+      "atc_code": "C10AA01",
+      "therapeutic_class": "Hipolipidemik — Statin (HMG-CoA Reductase Inhibitor)",
+      "facility_level": "FKTP dan FKRTL",
+      "prescriber_restriction": "DU",
+      "fornas_status": "Terdaftar dalam Fornas",
+      "restrictions": [
+        {
+          "restriction_code": "R",
+          "indication_required": "Dislipidemia / Pencegahan Penyakit Kardiovaskular",
+          "icd10_codes": [
+            "E78.0",
+            "E78.1",
+            "E78.2",
+            "E78.5",
+            "Z82.49",
+            "I21"
+          ],
+          "clinical_condition": "LDL-C >= 130 mg/dL dengan risiko kardiovaskular 10-tahun >= 10%, atau LDL-C >= 190 mg/dL, atau pasca ACS/revaskularisasi",
+          "contraindications": [
+            "Kehamilan dan menyusui (teratogenik)",
+            "Penyakit hati aktif (transaminase > 3x ULN)",
+            "Inhibitor CYP3A4 kuat (itrakonazol, siklosporin, gemfibrozil)",
+            "Riwayat rabdomiolisis terkait statin"
+          ],
+          "dose_guidance": {
+            "initial_dose": "20 mg 1x sehari malam",
+            "adjustment": "10-40 mg 1x sehari malam sesuai target LDL-C",
+            "max_dose": "40 mg/hari (dosis 80 mg TIDAK direkomendasikan — risiko miopati tinggi)",
+            "high_risk_cvd": "Pertimbangkan Atorvastatin 40-80 mg untuk risiko CV sangat tinggi"
+          },
+          "monitoring_required": [
+            "Profil lipid setelah 4-6 minggu terapi",
+            "CK serum jika gejala mialgia",
+            "AST/ALT baseline"
+          ],
+          "prescribing_notes": "Dosis 80 mg TIDAK direkomendasikan karena risiko miopati. Untuk risiko CV sangat tinggi, preferensikan Atorvastatin (high-intensity statin).",
+          "legal_basis": "Kepmenkes No. HK.01.07/MENKES/707/2022 — Fornas 2022, halaman C-10",
+          "clinical_guidelines_ref": "PNPK Dislipidemia (Kemenkes 2019), ESC/EAS Guidelines 2019"
+        }
+      ]
+    },
+    {
+      "drug_id": "FOR-006",
+      "inn": "Glibenclamide",
+      "brand_examples": [
+        "Daonil",
+        "Glimel",
+        "Glibenclamide Generik"
+      ],
+      "dosage_forms": [
+        "Tablet 2.5 mg",
+        "Tablet 5 mg"
+      ],
+      "atc_code": "A10BB01",
+      "therapeutic_class": "Antidiabetik Oral — Sulfonilurea Generasi 2",
+      "facility_level": "FKTP dan FKRTL",
+      "prescriber_restriction": "DU",
+      "fornas_status": "Terdaftar dalam Fornas",
+      "restrictions": [
+        {
+          "restriction_code": "R",
+          "indication_required": "Diabetes Melitus Tipe 2",
+          "icd10_codes": [
+            "E11",
+            "E11.9"
+          ],
+          "clinical_condition": "DMT2 dengan cadangan fungsi sel beta masih cukup, tidak hamil, tidak ada gagal ginjal/hati berat",
+          "contraindications": [
+            "DM Tipe 1",
+            "Ketoasidosis Diabetik",
+            "Kehamilan dan menyusui",
+            "GFR < 30 mL/mnt (risiko hipoglikemia berkepanjangan)",
+            "Gagal hati berat",
+            "Hipersensitivitas terhadap sulfonilurea"
+          ],
+          "dose_guidance": {
+            "initial_dose": "2.5 mg 1x sehari bersama sarapan",
+            "titration": "Naikkan 2.5 mg per minggu sesuai respons glikemik",
+            "max_dose": "20 mg/hari terbagi 1-2 dosis",
+            "special_population": "Lansia dan GFR 30-60: gunakan dosis rendah, monitor ketat hipoglikemia"
+          },
+          "monitoring_required": [
+            "HbA1c setiap 3 bulan",
+            "Gejala hipoglikemia",
+            "Berat badan",
+            "Fungsi ginjal berkala"
+          ],
+          "prescribing_notes": "HATI-HATI pada lansia: risiko hipoglikemia berat dan berkepanjangan. Tidak direkomendasikan sebagai pilihan pertama pada lansia (preferensikan Glipizide atau Gliclazide MR). Hindari pada GFR < 30.",
+          "legal_basis": "Kepmenkes No. HK.01.07/MENKES/707/2022 — Fornas 2022, halaman A-12",
+          "clinical_guidelines_ref": "PNPK Diabetes Melitus Tipe 2 (Kemenkes 2020), PERKENI Konsensus DM 2021"
+        }
+      ]
+    },
+    {
+      "drug_id": "FOR-007",
+      "inn": "Furosemide",
+      "brand_examples": [
+        "Lasix",
+        "Furosemide Generik"
+      ],
+      "dosage_forms": [
+        "Tablet 40 mg",
+        "Injeksi 10 mg/mL"
+      ],
+      "atc_code": "C03CA01",
+      "therapeutic_class": "Diuretik Loop — Antiedema/Antihipertensi",
+      "facility_level": "FKTP (Tablet) dan FKRTL (Injeksi)",
+      "prescriber_restriction": "DU (Tablet); Sp.PD / Sp.JP / Sp.An (Injeksi IV)",
+      "fornas_status": "Terdaftar dalam Fornas",
+      "restrictions": [
+        {
+          "restriction_code": "R",
+          "indication_required": "Edema (Gagal Jantung, Sindrom Nefrotik, Sirosis) / Hipertensi Resisten",
+          "icd10_codes": [
+            "I50.0",
+            "I50.1",
+            "I50.9",
+            "N04",
+            "K74.6",
+            "I10"
+          ],
+          "clinical_condition": "Edema yang tidak respons terhadap diuretik thiazid, atau gagal jantung dekompensasi, atau hipertensi dengan edema",
+          "contraindications": [
+            "Anuria / gagal ginjal anurik tanpa overload cairan",
+            "Hipokalemia berat",
+            "Hiponatremia berat",
+            "Koma hepatikum (sirosis)",
+            "Hipersensitivitas terhadap sulfonamid"
+          ],
+          "dose_guidance": {
+            "edema": "20-80 mg/hari oral, 1-2 dosis",
+            "gagal_jantung_akut": "20-40 mg IV di FKRTL",
+            "max_dose": "600 mg/hari pada pasien gagal ginjal berat",
+            "anak": "0.5-2 mg/kg per dosis"
+          },
+          "monitoring_required": [
+            "Elektrolit (K, Na, Mg)",
+            "Fungsi ginjal (BUN/kreatinin)",
+            "Tekanan darah",
+            "Urine output"
+          ],
+          "prescribing_notes": "Pantau kalium; risiko hipokalemia terutama jika dikombinasi dengan digoksin atau kortikosteroid. Injeksi hanya di FKRTL.",
+          "legal_basis": "Kepmenkes No. HK.01.07/MENKES/707/2022 — Fornas 2022, halaman C-03",
+          "clinical_guidelines_ref": "ESC Heart Failure Guidelines 2021, PNPK Gagal Jantung Kemenkes 2020"
+        }
+      ]
+    },
+    {
+      "drug_id": "FOR-008",
+      "inn": "Tramadol",
+      "brand_examples": [
+        "Tramal",
+        "Tradonal",
+        "Tramadol Generik"
+      ],
+      "dosage_forms": [
+        "Kapsul 50 mg",
+        "Injeksi 50 mg/mL"
+      ],
+      "atc_code": "N02AX02",
+      "therapeutic_class": "Analgesik Opioid Lemah — Opioid Agonis / Inhibitor Reuptake Serotonin-Norepinefrin",
+      "facility_level": "FKRTL (Injeksi); FKTP terbatas (Kapsul)",
+      "prescriber_restriction": "DU (Kapsul, dengan catatan); Sp.An / Sp.PD (Injeksi)",
+      "fornas_status": "Terdaftar dalam Fornas dengan Restriksi",
+      "restrictions": [
+        {
+          "restriction_code": "R-FKRTL",
+          "indication_required": "Nyeri Sedang-Berat yang tidak responsif terhadap analgesik non-opioid",
+          "icd10_codes": [
+            "R52",
+            "G89.1",
+            "G89.2",
+            "G89.3",
+            "G89.4",
+            "C80"
+          ],
+          "clinical_condition": "Nyeri akut pasca operasi, nyeri kanker moderate-severe, nyeri neuropatik yang tidak terkontrol dengan paracetamol/NSAID",
+          "contraindications": [
+            "Depresi napas akut / PPOK berat",
+            "Intoksikasi alkohol/opioid/psikotropika",
+            "MAO-inhibitor dalam 14 hari terakhir (risiko sindrom serotonin)",
+            "Epilepsi tidak terkontrol",
+            "Kehamilan trimester I",
+            "Usia < 12 tahun"
+          ],
+          "dose_guidance": {
+            "nyeri_akut_dewasa": "50-100 mg setiap 4-6 jam (oral)",
+            "injeksi": "50-100 mg IV/IM lambat setiap 4 jam di bawah pengawasan medis",
+            "max_dose": "400 mg/hari",
+            "special_population": "Lansia > 75 tahun: < 300 mg/hari; GFR < 30: interval diperpanjang 12 jam"
+          },
+          "monitoring_required": [
+            "Skala nyeri (NRS/VAS)",
+            "Frekuensi napas dan saturasi O2",
+            "Tingkat kesadaran (GCS)",
+            "Risiko ketergantungan pada penggunaan kronis"
+          ],
+          "prescribing_notes": "TIDAK direkomendasikan untuk nyeri kronik non-maligna tanpa evaluasi Sp.An/Sp.PD. Waspadai interaksi dengan SSRI/SNRI (sindrom serotonin). Penggunaan kronis berisiko ketergantungan.",
+          "legal_basis": "Kepmenkes No. HK.01.07/MENKES/707/2022 — Fornas 2022, halaman N-02",
+          "clinical_guidelines_ref": "WHO Pain Ladder, PNPK Manajemen Nyeri Kemenkes 2022"
+        }
+      ]
+    },
+    {
+      "drug_id": "FOR-009",
+      "inn": "Atorvastatin",
+      "brand_examples": [
+        "Lipitor",
+        "Atorvastatin Generik",
+        "Tovast"
+      ],
+      "dosage_forms": [
+        "Tablet 10 mg",
+        "Tablet 20 mg",
+        "Tablet 40 mg"
+      ],
+      "atc_code": "C10AA05",
+      "therapeutic_class": "Hipolipidemik — Statin Intensitas Tinggi (HMG-CoA Reductase Inhibitor)",
+      "facility_level": "FKTP dan FKRTL",
+      "prescriber_restriction": "DU",
+      "fornas_status": "Terdaftar dalam Fornas",
+      "restrictions": [
+        {
+          "restriction_code": "R",
+          "indication_required": "Dislipidemia Risiko Tinggi / Pencegahan Sekunder Kardiovaskular",
+          "icd10_codes": [
+            "E78.0",
+            "E78.2",
+            "E78.5",
+            "I21",
+            "I63",
+            "Z82.49"
+          ],
+          "clinical_condition": "Pasien risiko CV tinggi-sangat tinggi: pasca ACS, stroke iskemik, PAD, LDL-C > 190 mg/dL (FH), atau DMT2 usia > 40 tahun dengan >= 1 faktor risiko",
+          "contraindications": [
+            "Kehamilan dan menyusui",
+            "Penyakit hati aktif (transaminase > 3x ULN)",
+            "Inhibitor CYP3A4 kuat"
+          ],
+          "dose_guidance": {
+            "moderate_intensity": "10-20 mg 1x sehari malam",
+            "high_intensity": "40-80 mg 1x sehari malam (pasca ACS, target LDL-C < 55 mg/dL)",
+            "max_dose": "80 mg/hari",
+            "target_ldl": "Risiko sangat tinggi: LDL-C < 55 mg/dL; Risiko tinggi: LDL-C < 70 mg/dL"
+          },
+          "monitoring_required": [
+            "Profil lipid 4-6 minggu setelah inisiasi",
+            "CK jika ada gejala mialgia",
+            "AST/ALT baseline"
+          ],
+          "prescribing_notes": "Atorvastatin 40-80 mg merupakan high-intensity statin pilihan untuk pencegahan sekunder CV. Preferensikan dibanding Simvastatin untuk pasien risiko tinggi/sangat tinggi.",
+          "legal_basis": "Kepmenkes No. HK.01.07/MENKES/707/2022 — Fornas 2022, halaman C-10",
+          "clinical_guidelines_ref": "ESC/EAS Dyslipidaemia Guidelines 2019, PNPK Dislipidemia Kemenkes 2019"
+        }
+      ]
+    },
+    {
+      "drug_id": "FOR-010",
+      "inn": "Codeine",
+      "brand_examples": [
+        "Kodein Generik",
+        "Coditam"
+      ],
+      "dosage_forms": [
+        "Tablet 10 mg",
+        "Tablet 20 mg"
+      ],
+      "atc_code": "R05DA04",
+      "therapeutic_class": "Antitusif / Analgesik Opioid Lemah — Golongan Narkotika",
+      "facility_level": "FKRTL",
+      "prescriber_restriction": "SP (Sp.PD / Sp.An / Sp.P)",
+      "fornas_status": "Terdaftar dalam Fornas — Golongan Narkotika (Restriksi Ketat)",
+      "restrictions": [
+        {
+          "restriction_code": "R-FKRTL",
+          "indication_required": "Batuk Kering Refrakter Berat / Nyeri Sedang (jika tramadol tidak memadai)",
+          "icd10_codes": [
+            "R05",
+            "R52",
+            "G89.3"
+          ],
+          "clinical_condition": "Batuk kering refrakter terhadap antitusif non-opioid, atau nyeri sedang-berat pada pasien kanker yang tidak bisa menggunakan tramadol",
+          "contraindications": [
+            "Anak < 12 tahun (BPOM melarang untuk antitusif)",
+            "Ibu menyusui",
+            "Depresi napas / asma tidak terkontrol",
+            "Paralitic ileus",
+            "Metabolizer ultrarapid CYP2D6"
+          ],
+          "dose_guidance": {
+            "antitusif": "10-20 mg setiap 4-6 jam (maksimal 120 mg/hari)",
+            "analgesik": "30-60 mg setiap 4-6 jam (maksimal 240 mg/hari)"
+          },
+          "monitoring_required": [
+            "Frekuensi napas dan saturasi O2",
+            "Tingkat kesadaran",
+            "Risiko ketergantungan"
+          ],
+          "prescribing_notes": "NARKOTIKA: Memerlukan resep narkotika khusus (blanko N-1 atau e-Narkotika BPOM). BPOM melarang kodein sebagai antitusif pada anak < 12 tahun dan ibu menyusui sejak 2017.",
+          "legal_basis": "Kepmenkes No. HK.01.07/MENKES/707/2022 — Fornas 2022; PerBPOM No. 3 Tahun 2017",
+          "clinical_guidelines_ref": "PerBPOM No. 3/2017, WHO Guidelines on Opioid Analgesics 2018"
+        }
+      ]
+    },
+    {
+      "drug_id": "FOR-011",
+      "inn": "Insulin Glargine",
+      "brand_examples": [
+        "Lantus",
+        "Basaglar"
+      ],
+      "dosage_forms": [
+        "Injeksi 100 IU/mL (vial 10 mL, SoloStar pen 3 mL)"
+      ],
+      "atc_code": "A10AE04",
+      "therapeutic_class": "Insulin Basal — Analog Insulin Kerja Panjang",
+      "facility_level": "FKRTL",
+      "prescriber_restriction": "SP (Sp.PD-KEMD / Sp.PD — inisiasi wajib di FKRTL)",
+      "fornas_status": "Terdaftar dalam Fornas — Restriksi FKRTL dan Spesialis",
+      "restrictions": [
+        {
+          "restriction_code": "R-FKRTL",
+          "indication_required": "Diabetes Melitus Tipe 1 ATAU DMT2 yang gagal OAD / HbA1c tidak terkontrol",
+          "icd10_codes": [
+            "E10",
+            "E11",
+            "E11.65"
+          ],
+          "clinical_condition": "DMT1 (semua pasien); DMT2 dengan HbA1c > 9% setelah intensifikasi OAD maksimal, atau intoleransi OAD, atau kondisi khusus (kehamilan, bedah besar, infeksi berat)",
+          "contraindications": [
+            "Hipoglikemia akut",
+            "Hipersensitivitas terhadap insulin atau eksipien"
+          ],
+          "dose_guidance": {
+            "initial_dmt2": "0.1-0.2 IU/kg subkutan, 1x sehari malam (bedtime)",
+            "titration": "Naikkan 2 IU setiap 3 hari jika GDP puasa > 130 mg/dL",
+            "dmt1": "Dosis individual, kombinasi dengan insulin rapid-acting (basal-bolus regimen)"
+          },
+          "monitoring_required": [
+            "GDP puasa (target 80-130 mg/dL)",
+            "HbA1c setiap 3 bulan",
+            "Gejala hipoglikemia",
+            "Berat badan dan profil lipid",
+            "Rotasi tempat suntikan"
+          ],
+          "prescribing_notes": "Inisiasi insulin basal wajib di FKRTL oleh Sp.PD-KEMD. Setelah dosis stabil, pemantauan bisa dilanjutkan di FKTP. Simpan di lemari es (2-8°C); setelah dibuka tahan 28-30 hari di suhu ruangan.",
+          "legal_basis": "Kepmenkes No. HK.01.07/MENKES/707/2022 — Fornas 2022, halaman A-10",
+          "clinical_guidelines_ref": "PNPK DMT2 Kemenkes 2020, PERKENI Konsensus DM 2021, ADA Standards of Care 2024"
+        }
+      ]
+    }
+  ],
+  "icd10_index": {
+    "E11": [
+      "FOR-001",
+      "FOR-006",
+      "FOR-011"
+    ],
+    "E11.9": [
+      "FOR-001",
+      "FOR-006"
+    ],
+    "E10": [
+      "FOR-011"
+    ],
+    "E78.0": [
+      "FOR-005",
+      "FOR-009"
+    ],
+    "E78.2": [
+      "FOR-009"
+    ],
+    "E78.5": [
+      "FOR-005",
+      "FOR-009"
+    ],
+    "I10": [
+      "FOR-002",
+      "FOR-007"
+    ],
+    "I20.8": [
+      "FOR-002"
+    ],
+    "I20.9": [
+      "FOR-002"
+    ],
+    "I21": [
+      "FOR-009"
+    ],
+    "I50.0": [
+      "FOR-007"
+    ],
+    "I50.9": [
+      "FOR-007"
+    ],
+    "K21.0": [
+      "FOR-003"
+    ],
+    "K21.9": [
+      "FOR-003"
+    ],
+    "K25": [
+      "FOR-003"
+    ],
+    "J06.9": [
+      "FOR-004"
+    ],
+    "J18.9": [
+      "FOR-004"
+    ],
+    "N39.0": [
+      "FOR-004"
+    ],
+    "N04": [
+      "FOR-007"
+    ],
+    "R05": [
+      "FOR-010"
+    ],
+    "R52": [
+      "FOR-008",
+      "FOR-010"
+    ],
+    "G89.1": [
+      "FOR-008"
+    ],
+    "G89.3": [
+      "FOR-008",
+      "FOR-010"
+    ],
+    "C80": [
+      "FOR-008"
+    ]
+  }
+}
