@@ -23,6 +23,7 @@ from guppy.backend.engine import fornas_matcher as fm
 from guppy.backend.engine import pnpk_engine as pe
 from guppy.backend.engine.clinical_literature import ClinicalLiteratureScout
 from guppy.backend.security.sanitizer import InputSanitizer
+from guppy.backend.security.link_guard import LinkGuard
 from guppy.backend.config import (
     REGULATIONS_DB_PATH,
     FORNAS_KEPMENKES,
@@ -222,6 +223,34 @@ with st.sidebar:
     st.markdown(f"- {FORNAS_PROGRAM}")
     st.markdown("- UU No. 17 Tahun 2023 (Kesehatan)")
     st.markdown("- Panduan Praktik Klinis / PNPK Kemenkes")
+
+    st.markdown("---")
+    st.markdown("**🛡️ Status Proteksi Sistem & Sumber Data:**")
+    sec_light = LinkGuard.get_security_light()
+    if sec_light["color"] == "HIJAU":
+        st.markdown(
+            f"""<div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px;">
+            <b style="color: #34d399;">🟢 Lampu Hijau: Aman Semua</b><br>
+            <small style="color: #a7f3d0;">Seluruh akses website acuan & database dalam kondisi aman terlindungi.</small>
+            </div>""",
+            unsafe_allow_html=True,
+        )
+    elif sec_light["color"] == "ORANGE":
+        st.markdown(
+            f"""<div style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px;">
+            <b style="color: #fbbf24;">🟠 Lampu Orange: Dibatasi Sementara</b><br>
+            <small style="color: #fde68a;">Ada satu atau lebih akses website yang sedang dibatasi sementara.</small>
+            </div>""",
+            unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            f"""<div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px;">
+            <b style="color: #f87171;">🔴 Lampu Merah: Akses Ditutup Permanen</b><br>
+            <small style="color: #fca5a5;">Ada satu atau lebih website yang ditutup permanen karena ancaman keamanan.</small>
+            </div>""",
+            unsafe_allow_html=True,
+        )
 
     st.markdown("---")
     st.markdown("**⚠️ Disclaimer Farmasi Klinis:**")

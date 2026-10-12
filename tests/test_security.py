@@ -104,3 +104,24 @@ def test_link_guard_flags_unverified_external_domains():
     assert res["is_safe"] is True
     assert res["is_official"] is False
     assert "Waspada" in res["badge"]
+
+
+def test_link_guard_traffic_light_status():
+    # Awalnya lampu hijau
+    LinkGuard._DOMAIN_SECURITY_STATUS.clear()
+    assert LinkGuard.get_security_light()["color"] == "HIJAU"
+
+    # Uji lampu orange (dibatasi sementara)
+    LinkGuard.set_domain_status("kemkes.go.id", "RESTRICTED", "Pemeriksaan integritas")
+    assert LinkGuard.get_security_light()["color"] == "ORANGE"
+    inspect_res = LinkGuard.inspect_url("https://kemkes.go.id/pedoman")
+    assert inspect_res["is_safe"] is False
+    assert "DIBATASI SEMENTARA" in inspect_res["reason"]
+
+    # Uji lampu merah (ditutup permanen)
+    LinkGuard.set_domain_status("bad-hacker-site.com", "BLOCKED", "Ancaman peretasan terkonfirmasi")
+    assert LinkGuard.get_security_light()["color"] == "MERAH"
+
+    # Reset kembali ke hijau
+    LinkGuard._DOMAIN_SECURITY_STATUS.clear()
+    assert LinkGuard.get_security_light()["color"] == "HIJAU"

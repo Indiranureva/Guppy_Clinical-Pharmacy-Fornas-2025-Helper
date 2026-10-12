@@ -60,6 +60,54 @@ class LinkGuard:
 
     DANGEROUS_SCHEMES = {"javascript", "data", "vbscript", "file", "about"}
 
+    # Dynamic security state for reference domains:
+    # "NORMAL" (Aman), "RESTRICTED" (Dibatasi sementara / Orange), "BLOCKED" (Ditutup permanen / Merah)
+    _DOMAIN_SECURITY_STATUS: Dict[str, Dict[str, str]] = {}
+
+    @classmethod
+    def set_domain_status(cls, domain: str, status: str, reason: str = "") -> None:
+        """Mengatur status keamanan domain: NORMAL, RESTRICTED, atau BLOCKED."""
+        clean_d = domain.strip().lower()
+        cls._DOMAIN_SECURITY_STATUS[clean_d] = {
+            "status": status.upper(),
+            "reason": reason
+        }
+
+    @classmethod
+    def get_security_light(cls) -> Dict[str, Any]:
+        """Menghitung status lampu proteksi sistem Guppy:
+        - HIJAU  : Semua koneksi acuan aman (100% normal).
+        - ORANGE : Ada satu atau lebih website yang sedang dibatasi sementara (karena anomali/risiko).
+        - MERAH  : Ada satu atau lebih website yang ditutup permanen (karena peretasan/ancaman terkonfirmasi).
+        """
+        has_blocked = any(v["status"] == "BLOCKED" for v in cls._DOMAIN_SECURITY_STATUS.values())
+        has_restricted = any(v["status"] == "RESTRICTED" for v in cls._DOMAIN_SECURITY_STATUS.values())
+
+        if has_blocked:
+            return {
+                "color": "MERAH",
+                "icon": "🔴",
+                "label": "Lampu Merah: Akses Website Ditutup Permanen",
+                "desc": "Terdeteksi ancaman kritis / website ditutup permanen untuk perlindungan sistem.",
+                "details": [f"{d}: {v['reason']}" for d, v in cls._DOMAIN_SECURITY_STATUS.items() if v["status"] == "BLOCKED"]
+            }
+        elif has_restricted:
+            return {
+                "color": "ORANGE",
+                "icon": "🟠",
+                "label": "Lampu Orange: Akses Website Dibatasi Sementara",
+                "desc": "Ada akses sumber referensi yang dibatasi sementara demi keamanan data.",
+                "details": [f"{d}: {v['reason']}" for d, v in cls._DOMAIN_SECURITY_STATUS.items() if v["status"] == "RESTRICTED"]
+            }
+        else:
+            return {
+                "color": "HIJAU",
+                "icon": "🟢",
+                "label": "Lampu Hijau: Situasi Aman Terkendali",
+                "desc": "Semua sumber data aman. Proteksi sistem dan privasi pengguna beroperasi normal.",
+                "details": []
+            }
+
     @classmethod
     def inspect_url(cls, url: str) -> Dict[str, Any]:
         """Inspects a link and categorizes it as Official, Trusted External, or Blocked (Sneaky Link)."""
@@ -97,6 +145,22 @@ class LinkGuard:
                 "threat_level": "CRITICAL",
                 "reason": "Hostname kosong atau tidak valid."
             }
+
+        # Check dynamic domain restriction / block list
+        for d_key, d_val in cls._DOMAIN_SECURITY_STATUS.items():
+            if hostname == d_key or hostname.endswith("." + d_key):
+                if d_val["status"] == "BLOCKED":
+                    return {
+                        "is_safe": False,
+                        "threat_level": "CRITICAL",
+                        "reason": f"Akses ke website '{hostname}' DITUTUP PERMANEN karena ancaman keamanan: {d_val.get('reason', 'Keamanan terancam')}."
+                    }
+                elif d_val["status"] == "RESTRICTED":
+                    return {
+                        "is_safe": False,
+                        "threat_level": "HIGH",
+                        "reason": f"Akses ke website '{hostname}' DIBATASI SEMENTARA: {d_val.get('reason', 'Pemeriksaan integritas')}."
+                    }
 
         # Check for private IP / SSRF attempts
         if cls.PRIVATE_IP_REGEX.match(hostname):
