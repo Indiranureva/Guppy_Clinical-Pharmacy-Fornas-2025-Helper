@@ -542,48 +542,63 @@ with tab2:
 
 
 # ═══════════════════════════════════════════════════════════════
+# ═══════════════════════════════════════════════════════════════
 # TAB 3: MATCHING DIAGNOSIS (ICD-10)
 # ═══════════════════════════════════════════════════════════════
 with tab3:
-    st.markdown('<div class="section-header">Pencocokan Diagnosis Pasien (ICD-10) ke Terapi Fornas</div>', unsafe_allow_html=True)
-    st.markdown(
-        "Membantu apoteker dan klinisi mencocokkan kode diagnosis penyakit (ICD-10) dengan opsi obat "
-        "yang diatur penggunaannya dalam Fornas 2025."
-    )
+    st.markdown('<div class="section-header">Pencocokan Diagnosis Pasien (ICD-10) ke Terapi Fornas & PNPK 2025</div>', unsafe_allow_html=True)
+    
+    # 💡 Keterangan Edukatif Fungsi Fitur (Sesuai Permintaan)
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, rgba(56, 182, 255, 0.12), rgba(15, 25, 35, 0.6)); border: 1px solid rgba(56, 182, 255, 0.35); border-radius: 12px; padding: 16px 20px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="font-size: 1.5rem;">💡</span>
+            <b style="color: #e2f4ff; font-size: 1.05rem;">Fungsi & Manfaat Mengetahui Hasil Matching Diagnosis:</b>
+        </div>
+        <ul style="color: #94d8ff; margin: 0; padding-left: 20px; font-size: 0.92rem; line-height: 1.6;">
+            <li><b>Validasi Rasionalitas Terapi (Evidence-Based):</b> Memastikan obat yang diresepkan dokter selaras dengan indikasi resmi yang diakui dalam Fornas 2025 dan baku emas klinis <b>PNPK Kemenkes 2025</b>.</li>
+            <li><b>Mencegah Dispute / Penolakan Klaim BPJS Kesehatan:</b> BPJS mencocokkan kode diagnosis ICD-10 dengan restriksi obat. Mengetahui pasangan diagnosis-obat yang tepat mencegah klaim berstatus <i>pending</i> atau tidak dibayar.</li>
+            <li><b>Panduan Pemilihan Lini Terapi (First-Line vs Escalation):</b> Mengetahui urutan terapi yang sah secara hukum dan etika medis sehingga pasien mendapatkan obat yang paling efektif sebelum naik ke terapi lini kedua.</li>
+            <li><b>Penyusunan Form Justifikasi Otomatis:</b> Jika pasien membutuhkan obat di luar daftar standar, data matching ini menjadi dasar kuat apoteker menyusun memo persetujuan ke Direktur RS / Komite Farmasi & Terapi (KFT).</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
 
-    icd_col1, icd_col2 = st.columns([1, 1])
+    icd_col1, icd_col2 = st.columns([1, 2])
     with icd_col1:
         st.markdown("#### 🎯 Pilih / Input Kode Diagnosis")
-        icd_sel = st.selectbox("Diagnosis Umum:", list(COMMON_ICD10.keys()))
+        st.caption("Pilih dari kategori klinis yang tersedia atau ketik kode ICD-10 secara bebas.")
+
+        icd_sel = st.selectbox("Kategori Diagnosis Klinis:", list(COMMON_ICD10.keys()), index=0)
         selected_code = COMMON_ICD10[icd_sel]
 
-        custom_icd = st.text_input("Atau ketik kode/istilah ICD-10 lain:", value="", placeholder="e.g. E11, I10, J45, N04")
+        custom_icd = st.text_input("Atau Cari Kode ICD-10 / Nama Penyakit:", value="", placeholder="e.g. J18, N39, E11, M17, Asma...")
         target_code = custom_icd.strip().upper() if custom_icd.strip() else selected_code
 
         st.info(f"Target Diagnosis Terpilih: **{target_code}**")
 
-    with icd_col2:
-        st.markdown("#### 📋 Daftar Obat Terkait")
-        all_drugs = fm.get_db()["obat"]
-        matched_drugs = []
-        target_clean = target_code.split(".")[0]
-
-        for d in all_drugs:
-            for u in d.get("icd10_usulan", []):
-                u_code = u["kode"].split("-")[0].split(".")[0]
-                if target_clean in u_code or u_code in target_clean:
-                    matched_drugs.append(d)
-                    break
-
-        # Tampilkan Rekomendasi Terapi PNPK 2025 Resmi
+        # Tampilkan apakah ada pedoman PNPK untuk kode ini
         pnpk_for_icd = pe.get_pnpk_by_icd10(target_code)
         if pnpk_for_icd:
-            st.markdown("#### 🏛️ Panduan Lini Terapi Resmi (PNPK 2025 Kemenkes)")
+            st.markdown(
+                f"""<div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 10px 12px; margin-top: 10px;">
+                <b style="color: #34d399;">🏛️ Memiliki Acuan Resmi PNPK 2025</b><br>
+                <small style="color: #a7f3d0;">Tersedia <b>{len(pnpk_for_icd)}</b> Pedoman Nasional Pelayanan Kedokteran Kemenkes RI terkait diagnosis ini.</small>
+                </div>""",
+                unsafe_allow_html=True,
+            )
+
+    with icd_col2:
+        st.markdown("#### 📋 Hasil Telaah Diagnosis & Pilihan Terapi")
+
+        # 1. BAGIAN PNPK 2025 (JIKA TERSEDIA)
+        if pnpk_for_icd:
+            st.markdown("##### 🏛️ Rekomendasi Terapi Resmi (PNPK 2025 Kemenkes RI)")
             for p in pnpk_for_icd:
-                with st.expander(f"📖 {p['title']} ({p['kmk']})", expanded=True):
+                with st.expander(f"🩺 {p['title']} ({p['kmk']})", expanded=True):
                     st.caption(f"Status: Standar Baku Emas Kemenkes RI · <a href='{p['source_url']}' target='_blank' style='color: #38b6ff;'>Buka Dokumen di Portal Kemenkes ↗</a>", unsafe_allow_html=True)
-                    st.write(p.get("summary", ""))
-                    
+                    st.markdown(f'<div class="clinical-ok">{p.get("summary", "")}</div>', unsafe_allow_html=True)
+
                     recs = p.get("clinical_recommendations", {})
                     col_r1, col_r2 = st.columns(2)
                     with col_r1:
@@ -594,20 +609,86 @@ with tab3:
                         st.markdown("**🟡 Lini Kedua / Eskalasi / Alternatif:**")
                         for sl in recs.get("second_line_or_escalation", []):
                             st.markdown(f"- **{sl['zat_aktif']}** ({sl.get('sediaan', '-')})<br>&nbsp;&nbsp;↳ <em>{sl.get('keterangan', '-')}</em>", unsafe_allow_html=True)
-                    
+
                     if recs.get("safety_and_restrictions"):
                         st.markdown("**⚠️ Batasan & Keamanan Klinis:**")
                         for sr in recs["safety_and_restrictions"]:
                             st.markdown(f"- <em>{sr}</em>", unsafe_allow_html=True)
 
+        # 2. PENCARIAN OBAT TERINTEGRASI DALAM FORNAS 2025
+        all_drugs = fm.get_db()["obat"]
+        matched_drugs = []
+        target_clean = target_code.split(".")[0]
+
+        # Ambil daftar obat yang terlibat dari PNPK
+        pnpk_drug_names = set()
+        for p in pnpk_for_icd:
+            for d_name in p.get("drugs_involved", []):
+                pnpk_drug_names.add(d_name.strip().lower())
+
+        for d in all_drugs:
+            is_hit = False
+            # Cek kecocokan kode ICD-10 usulan
+            for u in d.get("icd10_usulan", []):
+                u_code = u["kode"].split("-")[0].split(".")[0]
+                if target_clean in u_code or u_code in target_clean:
+                    is_hit = True
+                    break
+            # Cek kecocokan dengan obat rekomendasi PNPK
+            if not is_hit and any(d["zat_aktif"].strip().lower() == pd or pd in d["zat_aktif"].strip().lower() for pd in pnpk_drug_names):
+                is_hit = True
+
+            if is_hit:
+                matched_drugs.append(d)
+
+        # Tampilkan Obat Terkait dengan Expander Interaktif
+        st.markdown("##### 💊 Obat Fornas 2025 yang Diakui untuk Diagnosis Ini")
         if matched_drugs:
-            st.success(f"Ditemukan **{len(matched_drugs)}** obat dalam Fornas 2025 terkait diagnosis `{target_code}`:")
-            for md in matched_drugs[:8]:
-                st.markdown(f"- 💊 **{md['zat_aktif'].title()}** ({md['kelas_path'][-1]['nama'] if md.get('kelas_path') else '-'})")
-                if md.get("restriksi_zat_aktif"):
-                    st.caption(f"Restriksi: {md['restriksi_zat_aktif'][0]['teks'][:100]}...")
+            st.success(f"Ditemukan **{len(matched_drugs)}** obat dalam Fornas 2025 untuk diagnosis `{target_code}`. Klik obat untuk membuka detail sediaan & restriksi:")
+            for md in matched_drugs:
+                pen = md.get("penanda", {})
+                badges = []
+                if pen.get("P"):
+                    badges.append("🏷️ Program [P]")
+                if pen.get("Ca"):
+                    badges.append("🎗️ Kanker [Ca]")
+                if pen.get("PRB"):
+                    badges.append("⭐ Rujuk Balik (*)")
+                badge_text = f" ({', '.join(badges)})" if badges else ""
+
+                kelas_nama = md["kelas_path"][-1]["nama"] if md.get("kelas_path") else "-"
+
+                with st.expander(f"💊 {md['zat_aktif'].title()}{badge_text} — {kelas_nama}", expanded=False):
+                    st.markdown(f"**Kelas Terapi:** `{' > '.join([k['nama'] for k in md.get('kelas_path', [])])}`")
+                    st.markdown(f"**Halaman PDF Fornas 2025:** Hal. {md.get('halaman_pdf', '-')}")
+
+                    if md.get("restriksi_zat_aktif"):
+                        st.markdown("**📋 Restriksi Tingkat Zat Aktif:**")
+                        for rza in md["restriksi_zat_aktif"]:
+                            st.markdown(f'<div class="clinical-warning">⚠️ {rza["teks"]}</div>', unsafe_allow_html=True)
+
+                    st.markdown("**🧪 Bentuk Sediaan & Tingkat Fasilitas:**")
+                    for sed in md.get("sediaan", []):
+                        f_badges = []
+                        if sed.get("fpktp"):
+                            f_badges.append("🟢 FPKTP (Primer)")
+                        if sed.get("pp"):
+                            f_badges.append("🏢 Puskesmas Perawatan")
+                        if sed.get("fpktl"):
+                            f_badges.append("🔴 FPKTL (Rumah Sakit)")
+                        if sed.get("prb"):
+                            f_badges.append("⭐ PRB")
+                        if sed.get("oen"):
+                            f_badges.append("✅ OEN")
+
+                        st.markdown(f"- **{sed['no']}. {sed['sediaan']}**")
+                        st.caption(f"Fasilitas: {' · '.join(f_badges) if f_badges else 'Sesuai ketentuan'} | Peresepan Maksimal: {sed.get('peresepan_maksimal') or 'Tidak dibatasi'}")
+
+                        if sed.get("restriksi_sediaan"):
+                            for rs in sed["restriksi_sediaan"]:
+                                st.markdown(f'<div class="clinical-danger">📌 <em>{rs["teks"]}</em></div>', unsafe_allow_html=True)
         else:
-            st.warning(f"Belum ada pemetaan eksplisit untuk kode `{target_code}`. Anda dapat meninjau kelas terapi terkait secara langsung di Tab 1.")
+            st.warning(f"Belum ada pemetaan eksplisit untuk kode `{target_code}` dalam database. Anda dapat menelusuri nama obat secara manual pada Tab 1.")
 
 
 # ═══════════════════════════════════════════════════════════════
