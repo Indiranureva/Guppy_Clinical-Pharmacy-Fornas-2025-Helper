@@ -724,8 +724,125 @@ with tab4:
 
     filtered_topics = ClinicalLiteratureScout.search_curated_topics(lit_search_query)
 
-    if not filtered_topics:
-        st.warning("Tidak ditemukan topik klinis yang cocok dengan kata kunci pencarian. Menampilkan seluruh repositori.")
+    # 1.1 SMART FALLBACK: Jika obat tidak ada di topik kurasi khusus Q1-Q3
+    if lit_search_query.strip() and not filtered_topics:
+        st.markdown(f"""
+        <div style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 12px; padding: 16px 20px; margin: 15px 0 20px 0;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                <span style="font-size: 1.4rem;">💡</span>
+                <b style="color: #fde68a; font-size: 1.05rem;">Topik Kurasi Khusus Belum Ditemukan untuk "{lit_search_query}"</b>
+            </div>
+            <p style="color: #cbd5e1; margin: 0; font-size: 0.92rem; line-height: 1.6;">
+                Repositori kurasi literatur (Tab 4) berfokus pada kasus-kasus kontroversial / peresepan berisiko tinggi yang membutuhkan telaah jurnal Q1–Q3. 
+                Untuk obat <b>"{lit_search_query}"</b>, Anda dapat menggunakan <b>Generator Memo Justifikasi KFT Mandiri / Universal</b> di bawah ini yang terintegrasi langsung dengan database 1.100+ obat Fornas 2025.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Cari obat di database 1.100+ Fornas 2025 menggunakan sinonim
+        synonyms = ClinicalLiteratureScout.expand_query_with_synonyms(lit_search_query)
+        fornas_hits = []
+        for syn in synonyms:
+            hits = fm.search(syn)
+            if hits:
+                fornas_hits = hits
+                break
+
+        with st.container():
+            st.markdown(f"#### 📋 Generator Memo Justifikasi KFT Mandiri: `{lit_search_query.upper()}`")
+            
+            fornas_info_dict = {}
+            if fornas_hits:
+                top_hit = fornas_hits[0]
+                kelas_str = " > ".join(k["nama"] for k in top_hit.get("kelas_path", [])) if top_hit.get("kelas_path") else "Sesuai Katalog Fornas"
+                sediaan_names = [s.get("sediaan", "") for s in top_hit.get("sediaan", []) if s.get("sediaan")]
+                peresepan_maks = top_hit["sediaan"][0].get("peresepan_maksimal", "Sesuai resep") if top_hit.get("sediaan") else "-"
+                
+                f_badges = []
+                if top_hit.get("sediaan"):
+                    s0 = top_hit["sediaan"][0]
+                    if s0.get("fpktp"): f_badges.append("FPKTP (Primer)")
+                    if s0.get("fpktl"): f_badges.append("FPKTL (Rumah Sakit)")
+                fasilitas_str = " & ".join(f_badges) if f_badges else "Fasilitas Kesehatan Terakreditasi"
+
+                fornas_info_dict = {
+                    "kelas_terapi": kelas_str,
+                    "fasilitas": fasilitas_str,
+                    "peresepan_maksimal": peresepan_maks,
+                }
+
+                st.markdown(f"""
+                <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 182, 255, 0.3); border-radius: 8px; padding: 12px 16px; margin-bottom: 14px;">
+                    <div style="color: #38b6ff; font-weight: 600;">✅ Terdaftar Resmi dalam Fornas 2025: {top_hit['zat_aktif'].upper()}</div>
+                    <div style="color: #cbd5e1; font-size: 0.88rem;"><b>Kelas Terapi:</b> {kelas_str}</div>
+                    <div style="color: #cbd5e1; font-size: 0.88rem;"><b>Fasilitas:</b> {fasilitas_str} · <b>Peresepan Maksimal:</b> {peresepan_maks}</div>
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.info(f"ℹ️ Obat `{lit_search_query}` diidentifikasi sebagai obat di luar Fornas (Non-Formularium). Memo KFT akan disusun dengan format pengajuan persetujuan Direktur RS.")
+
+            col_fb1, col_fb2 = st.columns(2)
+            with col_fb1:
+                fb_kat = st.selectbox(
+                    "Kategori Alasan Justifikasi Klinis (KFT/BPJS):",
+                    options=[
+                        "Lini Pertama Gagal / Resisten (First-line failure)",
+                        "Gawat Darurat / Penyelamatan Jiwa (Life saving / Emergency)",
+                        "Komorbiditas Khusus / Kontraindikasi Regimen Baku",
+                        "Efek Samping Berat (ADR) terhadap Terapi Standar",
+                        "Stok Kosong Nasional / Faskes Terverifikasi",
+                        "Penyesuaian Dosis Khusus (Gangguan Ginjal / Hati / Geriatri)",
+                        "Pengajuan Obat di Luar Fornas (Kebutuhan Klinis Khusus)",
+                    ],
+                    key=f"fb_kat_{lit_search_query}",
+                )
+                fb_pt_name = st.text_input("Nama Pasien & Usia:", placeholder="e.g. Tn. Rahmat (55 th)", key=f"fb_pt_{lit_search_query}")
+                fb_no_rm = st.text_input("No. Rekam Medis (RM):", placeholder="e.g. RM-2026-1022", key=f"fb_rm_{lit_search_query}")
+            with col_fb2:
+                fb_dpjp = st.text_input("DPJP (Dokter Penulis Resep):", placeholder="e.g. dr. Ahmad, Sp.PD", key=f"fb_dpjp_{lit_search_query}")
+                fb_ruang = st.text_input("Ruang Rawat / Poliklinik:", placeholder="e.g. Ruang ICU / Rawat Inap Dahlia", key=f"fb_ruang_{lit_search_query}")
+                fb_apt = st.text_input("Nama Apoteker Pengkaji:", value="Apt. Tim Farmasi Klinis, S.Farm.", key=f"fb_apt_{lit_search_query}")
+
+            fb_rationale = st.text_area(
+                "Uraian Klinis & Dasar Kebutuhan Pasien (Justifikasi Dokter/Apoteker):",
+                value=f"Pasien memerlukan terapi {lit_search_query} karena kondisi klinis saat ini tidak memungkinkan penggunaan regimen lini pertama dan memerlukan pertimbangan farmasi klinis khusus demi keselamatan pasien.",
+                key=f"fb_rat_{lit_search_query}",
+            )
+
+            fb_patient_dict = {
+                "nama_pasien": fb_pt_name or "[Nama Pasien]",
+                "no_rm": fb_no_rm or "[No. Rekam Medis]",
+                "diagnosis": f"Kebutuhan Terapi {lit_search_query.upper()}",
+                "dpjp": fb_dpjp or "[Dokter Penanggung Jawab Pelayanan]",
+                "ruangan": fb_ruang or "[Poliklinik / Rawat Inap]",
+            }
+
+            universal_memo_md = ClinicalLiteratureScout.generate_universal_justification_memo(
+                drug_name=lit_search_query,
+                justification_reason=fb_kat,
+                clinical_rationale=fb_rationale,
+                patient_info=fb_patient_dict,
+                fornas_info=fornas_info_dict,
+                pharmacist_name=fb_apt or "Apoteker Farmasi Klinis",
+            )
+
+            with st.expander("👁️ Pratinjau Dokumen Memo Justifikasi KFT Mandiri", expanded=True):
+                st.markdown(universal_memo_md)
+
+            st.download_button(
+                label=f"⬇️ Unduh Dokumen Memo Justifikasi KFT ({lit_search_query.upper()})",
+                data=universal_memo_md,
+                file_name=f"memo_justifikasi_{lit_search_query.lower().replace(' ', '_')}.md",
+                mime="text/markdown",
+                key=f"dl_fb_memo_{lit_search_query}",
+            )
+
+        st.markdown("---")
+        st.markdown("##### 📚 Atau Telusuri Topik Kurasi Jurnal Q1–Q3 Lainnya:")
+        filtered_topics = ClinicalLiteratureScout.get_all_topics()
+    elif lit_search_query.strip() and filtered_topics:
+        st.success(f"🎯 Ditemukan **{len(filtered_topics)} topik kurasi klinis** terkait kata kunci `{lit_search_query}`:")
+    else:
         filtered_topics = ClinicalLiteratureScout.get_all_topics()
 
     topic_options = {
