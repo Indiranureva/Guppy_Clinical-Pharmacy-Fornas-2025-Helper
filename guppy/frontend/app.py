@@ -695,46 +695,156 @@ with tab3:
 # TAB 4: JUSTIFIKASI LITERATUR KLINIS (Q1-Q3)
 # ═══════════════════════════════════════════════════════════════
 with tab4:
-    st.markdown('<div class="section-header">Justifikasi Literatur Klinis Berbasis Bukti (Q1-Q3)</div>', unsafe_allow_html=True)
-    st.markdown(
-        "Menyediakan bukti ilmiah dari jurnal terindeks Scopus (Q1–Q3) dan pedoman praktik klinis (PNPK) "
-        "untuk menyusun **Memo Justifikasi Klinis** saat terapi pasien memerlukan adaptasi di luar restriksi baku."
+    st.markdown('<div class="section-header">Justifikasi Literatur Klinis Berbasis Bukti (Q1-Q3) & Memo KFT</div>', unsafe_allow_html=True)
+    
+    # 💡 Penjelasan Fitur Kurasi Rutin & Interaktif
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, rgba(56, 182, 255, 0.12), rgba(15, 25, 35, 0.6)); border: 1px solid rgba(56, 182, 255, 0.35); border-radius: 12px; padding: 16px 20px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+            <span style="font-size: 1.5rem;">💡</span>
+            <b style="color: #e2f4ff; font-size: 1.05rem;">Kurasi Rutin Guppy (Update Berkala) & Seleksi Fleksibel Pengguna:</b>
+        </div>
+        <p style="color: #94d8ff; margin: 0; font-size: 0.92rem; line-height: 1.6;">
+            Guppy memilihkan artikel bereputasi internasional (<b>Scopus Q1–Q3</b>, PubMed, Lancet, NEJM, JAMA, dan konsensus global) untuk setiap kasus peresepan yang memerlukan adaptasi restriksi Fornas 2025. 
+            Anda dapat meninjau rekomendasi utama Guppy serta studi pendukung lainnya, lalu <b>mencentang satu atau beberapa artikel terbaik</b> sesuai kondisi pasien untuk menghasilkan <b>Memo Justifikasi KFT</b> yang sah dan audit-ready.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # 1. PENCARIAN & PEMILIHAN TOPIK KLINIS
+    col_lit_s1, col_lit_s2 = st.columns([1.2, 0.8])
+    with col_lit_s1:
+        lit_search_query = st.text_input(
+            "🔍 Saring Kasus / Nama Obat / Topik Klinis:",
+            value="",
+            placeholder="e.g. Metformin, Statin, Lansia, Ginjal, PPI, Antibiotik, Insulin, Hipertensi...",
+        )
+    with col_lit_s2:
+        st.caption(f"🛡️ Versi Repositori: `{ClinicalLiteratureScout.CURATION_VERSION}`. Sumber terverifikasi bebas artikel predator.")
+
+    filtered_topics = ClinicalLiteratureScout.search_curated_topics(lit_search_query)
+
+    if not filtered_topics:
+        st.warning("Tidak ditemukan topik klinis yang cocok dengan kata kunci pencarian. Menampilkan seluruh repositori.")
+        filtered_topics = ClinicalLiteratureScout.get_all_topics()
+
+    topic_options = {
+        f"[{t['category']}] {t['title']} (Obat: {t['drug_inn']} · {len(t['articles'])} telaah Q1-Q3)": t["topic_id"]
+        for t in filtered_topics
+    }
+
+    selected_topic_label = st.selectbox(
+        "📌 Pilih Kasus Klinis yang Membutuhkan Justifikasi:",
+        options=list(topic_options.keys()),
+        index=0,
     )
 
-    col_lit1, col_lit2 = st.columns([1, 1])
-    with col_lit1:
-        lit_q = st.text_input("Cari Bukti Ilmiah (Nama Obat / Kasus):", value="", placeholder="e.g. Metformin, Statin, Lansia, Ginjal, PPI")
-    with col_lit2:
-        st.caption("Repositori bukti mencakup studi klinis keamanan metformin pada CKD, statin pada lansia, dan deprescribing PPI.")
+    selected_topic_id = topic_options[selected_topic_label]
+    curr_topic = ClinicalLiteratureScout.get_topic_by_id(selected_topic_id)
 
-    clean_lit_q = InputSanitizer.clean_text(lit_q) if lit_q else ""
-    evidence_items = ClinicalLiteratureScout.search_clinical_evidence(
-        drug_inn=clean_lit_q,
-        clinical_question=clean_lit_q,
-    )
-    if not evidence_items and not clean_lit_q:
-        evidence_items = ClinicalLiteratureScout.EVIDENCE_REPOSITORY
+    if curr_topic:
+        st.markdown(f"""
+        <div style="background: rgba(15, 23, 42, 0.65); border-left: 4px solid #38b6ff; border-radius: 8px; padding: 14px 18px; margin: 15px 0 20px 0;">
+            <div style="color: #e2f4ff; font-weight: 600; font-size: 1.05rem; margin-bottom: 4px;">💊 Kasus: {curr_topic['title']}</div>
+            <div style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 6px;"><b>Masalah Pasien:</b> {curr_topic['clinical_problem']}</div>
+            <div style="color: #fbbf24; font-size: 0.9rem;"><b>⚠️ Restriksi Baku Fornas:</b> {curr_topic['fornas_rule']}</div>
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.write(f"Ditemukan **{len(evidence_items)}** telaah bukti ilmiah:")
-    for item in evidence_items:
-        c = item["citation"]
-        with st.expander(f"📖 {item['drug_inn']} — {item['clinical_question']}", expanded=False):
-            st.markdown(f"**Judul Studi:** *\"{c['title']}\"*")
-            st.markdown(f"**Jurnal & Reputasi:** {c['journal']} ({c['year']}) · `{c['quartile']}` · DOI: {c.get('doi', '-')}")
-            st.markdown("---")
-            st.markdown("**🔬 Temuan Klinis Utama:**")
-            st.markdown(f'<div class="clinical-ok">{item["clinical_finding"]}</div>', unsafe_allow_html=True)
-            st.markdown("**🩺 Implikasi Terhadap Fornas & Justifikasi:**")
-            st.markdown(f'<div class="clinical-warning">{item["fornas_implication"]}</div>', unsafe_allow_html=True)
+        # 2. SELEKSI ARTIKEL OLEH PENGGUNA DARI PILIHAN GUPPY
+        st.markdown("#### 📚 Artikel Kurasi Guppy — Silakan Pilih Artikel untuk Memo Justifikasi:")
+        st.caption(
+            "Artikel bertanda ⭐ adalah Rekomendasi Utama Guppy yang langsung dicentang secara default. "
+            "Anda dapat mencentang artikel studi pembanding / pedoman konsensus bertanda 📑 untuk memperkuat dasar telaah."
+        )
 
-            memo_md = ClinicalLiteratureScout.format_evidence_card(item)
-            st.download_button(
-                label=f"⬇️ Unduh Memo Justifikasi ({item['drug_inn']})",
-                data=memo_md,
-                file_name=f"memo_justifikasi_{item['drug_inn']}.md",
-                mime="text/markdown",
-                key=f"dl_memo_{item['topic_id']}",
+        user_selected_articles = []
+        for idx, art in enumerate(curr_topic["articles"], 1):
+            c = art["citation"]
+            is_pri = art.get("is_primary", False)
+            badge_icon = "⭐ [REKOMENDASI UTAMA GUPPY]" if is_pri else "📑 [STUDI PENDUKUNG / KONSENSUS]"
+            
+            # Checkbox pemilihan artikel oleh pengguna
+            cb_key = f"chk_art_{curr_topic['topic_id']}_{art['article_id']}"
+            is_checked = st.checkbox(
+                f"{badge_icon} {c['authors']} ({c['year']}) — \"{c['title']}\" [{c['quartile']}]",
+                value=is_pri,
+                key=cb_key,
             )
+            if is_checked:
+                user_selected_articles.append(art)
+
+            # Detail konten artikel dalam expander
+            with st.expander(f"🔎 Detail Telaah #{idx}: {c['journal']} ({c['year']}) · {c['quartile']}", expanded=is_pri):
+                st.markdown(f"**Judul Makalah:** *\"{c['title']}\"*")
+                st.markdown(f"**Penulis:** {c['authors']} ({c['year']})")
+                st.markdown(f"**Jurnal & Reputasi:** `{c['journal']}`, {c['volume_issue']} · **`{c['quartile']}`**")
+                st.markdown(f"**Desain / Jenis Studi:** `{c.get('study_type', 'Clinical Trial / Guideline')}`")
+                st.markdown(f"**Identifikasi Referensi:** DOI: `{c.get('doi', '-')}` | PMID: `{c.get('pmid', '-')}`")
+                st.markdown("---")
+                st.markdown("**🔬 Temuan Klinis Kunci:**")
+                st.markdown(f'<div class="clinical-ok">{art["clinical_finding"]}</div>', unsafe_allow_html=True)
+                st.markdown("**🩺 Implikasi Terhadap Justifikasi Fornas & KFT:**")
+                st.markdown(f'<div class="clinical-warning">{art["fornas_implication"]}</div>', unsafe_allow_html=True)
+
+        st.markdown("---")
+
+        # 3. PERSONALISASI DATA PASIEN & GENERATOR MEMO KFT
+        st.markdown("#### 📝 Personalisasi & Unduh Memo Justifikasi KFT")
+        
+        with st.expander("✏️ Klik untuk Mengisi Identitas Pasien & Catatan Khusus Apoteker (Opsional)", expanded=False):
+            p_col1, p_col2 = st.columns(2)
+            with p_col1:
+                memo_pt_name = st.text_input("Nama Pasien & Usia:", value="", placeholder="e.g. Ny. Siti Rahma (68 th)", key=f"pt_n_{curr_topic['topic_id']}")
+                memo_no_rm = st.text_input("No. Rekam Medis (RM):", value="", placeholder="e.g. RM-2026-44910", key=f"pt_rm_{curr_topic['topic_id']}")
+                memo_diag = st.text_input("Diagnosis Klinis / ICD-10:", value=f"Terkait {curr_topic['drug_inn']}", placeholder="e.g. E11 DMT2 + N18 CKD Stage 3", key=f"pt_dx_{curr_topic['topic_id']}")
+            with p_col2:
+                memo_dpjp = st.text_input("DPJP (Dokter Penulis Resep):", value="", placeholder="e.g. dr. Hendra, Sp.PD-KEMD", key=f"pt_dr_{curr_topic['topic_id']}")
+                memo_ruang = st.text_input("Ruang Rawat / Poliklinik:", value="", placeholder="e.g. Rawat Inap Melati 3B / Poli Penyakit Dalam", key=f"pt_rg_{curr_topic['topic_id']}")
+                memo_apt = st.text_input("Nama Apoteker Pengkaji:", value="Apt. Tim Farmasi Klinis, S.Farm.", key=f"pt_apt_{curr_topic['topic_id']}")
+                memo_sipa = st.text_input("Nomor SIPA:", value="SIPA.XXXXXXXXXXXX", key=f"pt_sipa_{curr_topic['topic_id']}")
+
+            memo_notes = st.text_area(
+                "Catatan Khusus Rekomendasi Apoteker (Rencana Dosis, Monitoring Lab, atau Evaluasi Efek Samping):",
+                value="",
+                placeholder="e.g. Dosis metformin disesuaikan menjadi 500 mg 2x sehari (1000 mg/hari). Pemantauan kadar serum kreatinin dan eGFR dijadwalkan ulang dalam 3 bulan.",
+                key=f"pt_notes_{curr_topic['topic_id']}",
+            )
+
+        # Ringkasan Status Seleksi
+        if user_selected_articles:
+            st.success(f"✅ Sebanyak **{len(user_selected_articles)} artikel bukti ilmiah** dipilih untuk dimasukkan ke dalam draft Memo Justifikasi.")
+        else:
+            st.warning("⚠️ Tidak ada artikel yang dicentang. Silakan centang minimal 1 artikel di atas agar memo memiliki dasar bukti ilmiah yang kokoh.")
+
+        patient_dict = {
+            "nama_pasien": memo_pt_name or "[Nama Pasien]",
+            "no_rm": memo_no_rm or "[No. Rekam Medis]",
+            "diagnosis": memo_diag or f"Terkait terapi {curr_topic['drug_inn']}",
+            "dpjp": memo_dpjp or "[Dokter Penanggung Jawab Pelayanan]",
+            "ruangan": memo_ruang or "[Poliklinik / Rawat Inap]",
+        }
+
+        generated_memo_md = ClinicalLiteratureScout.generate_justification_memo(
+            topic=curr_topic,
+            selected_articles=user_selected_articles,
+            patient_info=patient_dict,
+            pharmacist_notes=memo_notes if 'memo_notes' in locals() else "",
+            pharmacist_name=memo_apt if 'memo_apt' in locals() and memo_apt else "Apoteker Farmasi Klinis",
+            sipa_number=memo_sipa if 'memo_sipa' in locals() and memo_sipa else "SIPA.XXXXXXXXXXXX",
+        )
+
+        with st.expander("👁️ Pratinjau Dokumen Memo Justifikasi KFT (Siap Cetak / Diserahkan)", expanded=False):
+            st.markdown(generated_memo_md)
+
+        clean_fn_drug = curr_topic['drug_inn'].replace('/', '_').replace(' ', '_').lower()
+        st.download_button(
+            label=f"⬇️ Unduh Dokumen Memo Justifikasi KFT ({curr_topic['drug_inn']})",
+            data=generated_memo_md,
+            file_name=f"memo_justifikasi_{clean_fn_drug}_{curr_topic['topic_id']}.md",
+            mime="text/markdown",
+            key=f"dl_memo_{curr_topic['topic_id']}",
+        )
 
 
 # ═══════════════════════════════════════════════════════════════
