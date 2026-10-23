@@ -1214,6 +1214,50 @@ class ClinicalLiteratureScout:
 
         return "\n".join(lines)
 
+    @classmethod
+    def generate_justification_memo_docx(
+        cls,
+        topic: Dict[str, Any],
+        selected_articles: List[Dict[str, Any]],
+        patient_info: Optional[Dict[str, str]] = None,
+        pharmacist_notes: str = "",
+        pharmacist_name: str = "Apoteker Farmasi Klinis",
+        sipa_number: str = "SIPA.XXXXXXXXXXXX",
+    ) -> bytes:
+        """Generate Word (.docx) document bytes for Curated Topic Justification Memo."""
+        from guppy.backend.engine.docx_generator import create_justification_memo_docx
+        return create_justification_memo_docx(
+            topic=topic,
+            selected_articles=selected_articles,
+            patient_info=patient_info,
+            pharmacist_notes=pharmacist_notes,
+            pharmacist_name=pharmacist_name,
+            sipa_number=sipa_number,
+        )
+
+    @classmethod
+    def generate_universal_justification_memo_docx(
+        cls,
+        drug_name: str,
+        justification_reason: str,
+        clinical_rationale: str,
+        patient_info: Optional[Dict[str, str]] = None,
+        fornas_info: Optional[Dict[str, Any]] = None,
+        pharmacist_name: str = "Apoteker Farmasi Klinis",
+        sipa_number: str = "SIPA.XXXXXXXXXXXX",
+    ) -> bytes:
+        """Generate Word (.docx) document bytes for Universal Justification Memo."""
+        from guppy.backend.engine.docx_generator import create_universal_justification_memo_docx
+        return create_universal_justification_memo_docx(
+            drug_name=drug_name,
+            justification_reason=justification_reason,
+            clinical_rationale=clinical_rationale,
+            patient_info=patient_info,
+            fornas_info=fornas_info,
+            pharmacist_name=pharmacist_name,
+            sipa_number=sipa_number,
+        )
+
 
 # Initialize flat evidence repository on module import
 ClinicalLiteratureScout._init_flat_evidence()

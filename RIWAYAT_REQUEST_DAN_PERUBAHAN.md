@@ -16,7 +16,8 @@
 5. [Siklus 4: Implementasi Kurasi Rutin Multi-Artikel & Generator Memo KFT](#5-siklus-4-implementasi-kurasi-rutin-multi-artikel--generator-memo-kft)
 6. [Siklus 5: Investigasi Kendala Pencarian Obat pada Kasus Klinis](#6-siklus-5-investigasi-kendala-pencarian-obat-pada-kasus-klinis)
 7. [Siklus 6: Implementasi Deep Search, Kamus Sinonim Bilingual & Smart Fallback](#7-siklus-6-implementasi-deep-search-kamus-sinonim-bilingual--smart-fallback)
-8. [Matriks Commit Git & Status Validasi Unit Test](#8-matriks-commit-git--status-validasi-unit-test)
+8. [Siklus 7: Transformasi Format Unduhan Memo Justifikasi KFT ke Dokumen Microsoft Word (.docx)](#8-siklus-7-transformasi-format-unduhan-memo-justifikasi-kft-ke-dokumen-microsoft-word-docx)
+9. [Matriks Commit Git & Status Validasi Unit Test](#9-matriks-commit-git--status-validasi-unit-test)
 
 ---
 
@@ -164,7 +165,39 @@ Agen mengidentifikasi 4 faktor penyebab:
 
 ---
 
-## 8. Matriks Commit Git & Status Validasi Unit Test
+## 8. Siklus 7: Transformasi Format Unduhan Memo Justifikasi KFT ke Dokumen Microsoft Word (.docx)
+
+### 🗣️ Request Pengguna:
+> *"ubah bentuk dokumen memo justifikasi yang diperoleh dari proses menjadi bentuk word ketika di download"*
+
+### 🔍 Analisis & Tindakan Teknis:
+1. **Analisis Kebutuhan Tata Kelola Dokumen Rumah Sakit**:
+   - Di instalasi farmasi rumah sakit dan Komite Farmasi & Terapi (KFT), dokumen pertanggungjawaban resmi memerlukan format **Microsoft Word (.docx)** agar dapat:
+     - Disesuaikan dengan kop surat resmi rumah sakit masing-masing.
+     - Diedit nomor surat/agenda farmasi secara mudah oleh apoteker.
+     - Diberi paraf, tanda tangan basah, maupun stempel basah instalasi farmasi/KFT sebelum diserahkan ke verifikator BPJS Kesehatan.
+2. **Pengembangan Modul Generator Word (`guppy/backend/engine/docx_generator.py`)**:
+   - Mengintegrasikan pustaka `python-docx` (v1.2.0) untuk merakit berkas `.docx` secara in-memory (`io.BytesIO`).
+   - Menyusun tata letak (*layout*) berstandar akreditasi rumah sakit:
+     - **Header & Tipografi**: Font Calibri 10.5pt, judul utama *Deep Navy* (`#1A365D`), spasi margin standar 1 inci (2.54 cm).
+     - **Tabel Data Pasien & Terapi**: Tabel dengan garis pembatas abu-abu rapi dan cell padding terstandar.
+     - **Kotak Bukti Ilmiah Berwarna**:
+       - Kotak mint hijau (`#F0FDF4`) untuk temuan klinis ilmiah.
+       - Kotak amber hangat (`#FFFBEB`) untuk implikasi klinis terhadap restriksi Fornas 2025.
+     - **Lembar Pengesahan Tiga Pihak**: Tabel tanda tangan untuk Apoteker Pengkaji (dengan No. SIPA), DPJP (Dokter Penulis Resep), dan Ketua KFT / Direktur RS.
+3. **Integrasi Antarmuka Pengunduhan Streamlit (`guppy/frontend/app.py`)**:
+   - Mengganti seluruh tombol unduhan di Tab 4:
+     - `⬇️ Unduh Dokumen Memo Justifikasi KFT (.docx / Microsoft Word) — [Nama Obat]`
+     - MIME type: `application/vnd.openxmlformats-officedocument.wordprocessingml.document`.
+     - Nama berkas berekstensi `.docx`.
+4. **Pembaruan Pengujian & Dependensi**:
+   - Menambahkan pengujian `test_generate_justification_memo_docx` dan `test_generate_universal_justification_memo_docx` di `tests/test_clinical_literature.py` (memvalidasi magic bytes ZIP/DOCX `PK\x03\x04`).
+   - Mendaftarkan `python-docx>=1.1.0` ke dalam `requirements.txt`.
+   - Seluruh **39 unit test lulus 100%**.
+
+---
+
+## 9. Matriks Commit Git & Status Validasi Unit Test
 
 | Hash Commit | Kategori | Komponen Berkas | Ringkasan Modifikasi |
 | :--- | :--- | :--- | :--- |
@@ -173,22 +206,24 @@ Agen mengidentifikasi 4 faktor penyebab:
 | `a3ccc48` | `feat(ui)` | `config.py`, `app.py` | Edukasi pencocokan diagnosis ICD-10 & expander obat Fornas/PNPK 2025 |
 | `0500a13` | `feat(lit)` | `clinical_literature.py`, `app.py`, `test_clinical_literature.py` | Kurasi multi-artikel Scopus Q1-Q3 & generator memo justifikasi KFT |
 | `e75f6b8` | `feat(search)` | `clinical_literature.py`, `app.py`, `test_clinical_literature.py` | Deep Search, kamus sinonim bilingual, & Smart Universal Justification |
+| `a231f1b` | `docs` | `RIWAYAT_REQUEST_DAN_PERUBAHAN.md` | Dokumentasi komprehensif riwayat request pengguna & implementasi AI |
+| `(terbaru)` | `feat(export)` | `docx_generator.py`, `clinical_literature.py`, `app.py`, `requirements.txt` | Transformasi unduhan memo justifikasi KFT ke format Microsoft Word (.docx) |
 
 ### Status Verifikasi Pengujian (Pytest):
 ```text
 ============================= test session starts =============================
 platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0
 rootdir: Guppy_Clinical Pharmacy & Fornas 2025 Helper
-collected 37 items
+collected 39 items
 
-tests\test_classifier.py ...                                             [  8%]
-tests\test_clinical_literature.py .......                                [ 27%]
-tests\test_fornas_matcher.py .........                                   [ 51%]
-tests\test_gap_analyzer.py ..                                            [ 56%]
-tests\test_roadmap.py ...                                                [ 64%]
+tests\test_classifier.py ...                                             [  7%]
+tests\test_clinical_literature.py .........                              [ 30%]
+tests\test_fornas_matcher.py .........                                   [ 53%]
+tests\test_gap_analyzer.py ..                                            [ 58%]
+tests\test_roadmap.py ...                                                [ 66%]
 tests\test_security.py .............                                     [100%]
 
-============================= 37 passed in 0.97s ==============================
+============================= 39 passed in 2.54s ==============================
 ```
 
 ---

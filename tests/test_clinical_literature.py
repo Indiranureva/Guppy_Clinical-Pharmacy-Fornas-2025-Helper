@@ -139,3 +139,32 @@ def test_generate_universal_justification_memo():
     assert "Nyeri Pasca Operasi" in memo
     assert "Analgesik Non-Opioid" in memo
     assert "LEMBAR PENGESAHAN" in memo
+
+
+def test_generate_justification_memo_docx():
+    topic = ClinicalLiteratureScout.get_topic_by_id("metformin_ckd_egfr")
+    assert topic is not None
+    docx_bytes = ClinicalLiteratureScout.generate_justification_memo_docx(
+        topic=topic,
+        selected_articles=topic["articles"][:2],
+        patient_info={"nama_pasien": "Tn. Test", "no_rm": "RM-1234"},
+        pharmacist_name="Apt. Test",
+    )
+    assert isinstance(docx_bytes, bytes)
+    assert len(docx_bytes) > 10000  # Valid docx zip archive is ~35-40KB
+    assert docx_bytes[:4] == b"PK\x03\x04"  # Standard ZIP / DOCX magic bytes
+
+
+def test_generate_universal_justification_memo_docx():
+    docx_bytes = ClinicalLiteratureScout.generate_universal_justification_memo_docx(
+        drug_name="Gentamicin",
+        justification_reason="Kultur Bakteri Resisten Sefalosporin",
+        clinical_rationale="Pasien mengalami urosepsis resisten terapi lini pertama.",
+        patient_info={"nama_pasien": "Ny. Test", "no_rm": "RM-5678"},
+        fornas_info={"kelas_terapi": "Aminoglikosida", "fasilitas": "FPKTL"},
+        pharmacist_name="Apt. Test",
+    )
+    assert isinstance(docx_bytes, bytes)
+    assert len(docx_bytes) > 10000
+    assert docx_bytes[:4] == b"PK\x03\x04"
+

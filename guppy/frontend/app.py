@@ -826,14 +826,23 @@ with tab4:
                 pharmacist_name=fb_apt or "Apoteker Farmasi Klinis",
             )
 
+            universal_docx_bytes = ClinicalLiteratureScout.generate_universal_justification_memo_docx(
+                drug_name=lit_search_query,
+                justification_reason=fb_kat,
+                clinical_rationale=fb_rationale,
+                patient_info=fb_patient_dict,
+                fornas_info=fornas_info_dict,
+                pharmacist_name=fb_apt or "Apoteker Farmasi Klinis",
+            )
+
             with st.expander("👁️ Pratinjau Dokumen Memo Justifikasi KFT Mandiri", expanded=True):
                 st.markdown(universal_memo_md)
 
             st.download_button(
-                label=f"⬇️ Unduh Dokumen Memo Justifikasi KFT ({lit_search_query.upper()})",
-                data=universal_memo_md,
-                file_name=f"memo_justifikasi_{lit_search_query.lower().replace(' ', '_')}.md",
-                mime="text/markdown",
+                label=f"⬇️ Unduh Dokumen Memo Justifikasi KFT (.docx / Microsoft Word) — {lit_search_query.upper()}",
+                data=universal_docx_bytes,
+                file_name=f"memo_justifikasi_{lit_search_query.lower().replace(' ', '_')}.docx",
+                mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                 key=f"dl_fb_memo_{lit_search_query}",
             )
 
@@ -951,15 +960,24 @@ with tab4:
             sipa_number=memo_sipa if 'memo_sipa' in locals() and memo_sipa else "SIPA.XXXXXXXXXXXX",
         )
 
+        generated_docx_bytes = ClinicalLiteratureScout.generate_justification_memo_docx(
+            topic=curr_topic,
+            selected_articles=user_selected_articles,
+            patient_info=patient_dict,
+            pharmacist_notes=memo_notes if 'memo_notes' in locals() else "",
+            pharmacist_name=memo_apt if 'memo_apt' in locals() and memo_apt else "Apoteker Farmasi Klinis",
+            sipa_number=memo_sipa if 'memo_sipa' in locals() and memo_sipa else "SIPA.XXXXXXXXXXXX",
+        )
+
         with st.expander("👁️ Pratinjau Dokumen Memo Justifikasi KFT (Siap Cetak / Diserahkan)", expanded=False):
             st.markdown(generated_memo_md)
 
         clean_fn_drug = curr_topic['drug_inn'].replace('/', '_').replace(' ', '_').lower()
         st.download_button(
-            label=f"⬇️ Unduh Dokumen Memo Justifikasi KFT ({curr_topic['drug_inn']})",
-            data=generated_memo_md,
-            file_name=f"memo_justifikasi_{clean_fn_drug}_{curr_topic['topic_id']}.md",
-            mime="text/markdown",
+            label=f"⬇️ Unduh Dokumen Memo Justifikasi KFT (.docx / Microsoft Word) — {curr_topic['drug_inn']}",
+            data=generated_docx_bytes,
+            file_name=f"memo_justifikasi_{clean_fn_drug}_{curr_topic['topic_id']}.docx",
+            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             key=f"dl_memo_{curr_topic['topic_id']}",
         )
 
