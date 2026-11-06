@@ -23,7 +23,8 @@
 12. [Siklus 11: Audit Komprehensif & Eliminasi Error UI/Fungsi Guppy (Logo PNG, Popover Profil, Universal Justification, & Global Search Sync)](#12-siklus-11-audit-komprehensif--eliminasi-error-uifungsi-guppy-logo-png-popover-profil-universal-justification--global-search-sync)
 13. [Siklus 12: Resolusi Konflik Tema Streamlit (Dark vs Light) & Restorasi Kontras UI CDSS](#13-siklus-12-resolusi-konflik-tema-streamlit-dark-vs-light--restorasi-kontras-ui-cdss)
 14. [Siklus 13: Eliminasi Konfigurasi Server Headless & Pemulihan Peluncuran Otomatis Browser Desktop Guppy](#14-siklus-13-eliminasi-konfigurasi-server-headless--pemulihan-peluncuran-otomatis-browser-desktop-guppy)
-15. [Matriks Commit Git & Status Validasi Unit Test](#15-matriks-commit-git--status-validasi-unit-test)
+15. [Siklus 14: Penyediaan Direktori Aset Gambar (assets/images/) di Root Proyek](#15-siklus-14-penyediaan-direktori-aset-gambar-assetsimages-di-root-proyek)
+16. [Matriks Commit Git & Status Validasi Unit Test](#16-matriks-commit-git--status-validasi-unit-test)
 
 ---
 
@@ -458,7 +459,25 @@ Setelah perubahan tema pada siklus sebelumnya, pengguna melaporkan aplikasi tida
 
 ---
 
-## 15. Matriks Commit Git & Status Validasi Unit Test
+## 15. SIKLUS 14: Penyediaan Direktori Aset Gambar (`assets/images/`) di Root Proyek
+
+### 15.1. Request Pengguna
+> *"Buat folder assets/images/ di dalam direktori utama proyek Guppy*
+> *STRICT PRESERVATION RULES*
+> *DO NOT: Rebuild the application, change the existing framework, modify the database, modify backend logic, modify existing API connections, change existing navigation, rename existing functions or variables, delete or replace existing components, modify other dashboard cards, change the styling of other pages, install unnecessary dependencies, change application configuration.*
+> *DO NOT modify any existing functionality related to: FORNAS search, drug information, drug restrictions, ICD-10 diagnosis matching, clinical justification, claim simulation, regulatory references, history and favorites."*
+
+### 15.2. Tindakan Teknis & Preservasi Ketat
+1. **Pembuatan Direktori Root `assets/images/`:**
+   * Dibuat direktori baru `assets/images/` langsung di bawah root proyek Guppy.
+   * Disertakan berkas `.gitkeep` agar struktur folder terpelihara dan dapat dilacak dengan baik oleh Git.
+2. **Kepatuhan Terhadap Aturan Preservasi Ketat (*Strict Preservation*):**
+   * Nol baris kode backend, frontend, database, skrip peluncur, maupun styling yang diubah atau dihapus.
+   * Seluruh 39 unit test pengujian CDSS, restriksi Fornas, classifier, dan sanitizer tetap lolos 100%.
+
+---
+
+## 16. Matriks Commit Git & Status Validasi Unit Test
 
 | Hash Commit | Kategori | Komponen Berkas | Ringkasan Modifikasi |
 | :--- | :--- | :--- | :--- |
@@ -474,7 +493,8 @@ Setelah perubahan tema pada siklus sebelumnya, pengguna melaporkan aplikasi tida
 | `927e183` | `fix(core-restore)` | `guppy/frontend/app.py`, `assets/guppy_logo.svg`, `assets/style.css` | Pemulihan esensi akses klinis asli, logo Guppy resmi, fitur ganti nama dr. Andini, dan perbaikan tombol |
 | `6e9b8ef` | `fix(audit-robust)` | `guppy/frontend/assets/guppy_logo.png`, `guppy/frontend/app.py` | Logo PNG resolusi tinggi, popover edit profil dr. Andini, universal justification & sinkronisasi search |
 | `bedad72` | `fix(theme-contrast)` | `.streamlit/config.toml`, `guppy/frontend/assets/style.css` | Resolusi konflik tema Streamlit (paksa light theme baku, kontras teks tinggi, styling input/expander putih) |
-| `(terbaru)` | `fix(launcher-desktop)` | `.streamlit/config.toml`, `run_guppy.bat` | Eliminasi opsi headless & pemulihan otomatis peluncuran browser desktop Guppy |
+| `4ebc34f` | `fix(launcher-desktop)` | `.streamlit/config.toml`, `run_guppy.bat` | Eliminasi opsi headless & pemulihan otomatis peluncuran browser desktop Guppy |
+| `(terbaru)` | `chore(assets)` | `assets/images/.gitkeep` | Pembuatan folder assets/images/ di root proyek sesuai preservasi ketat |
 
 ### Status Verifikasi Pengujian (Pytest):
 ```text
@@ -491,7 +511,7 @@ tests\test_gap_analyzer.py ..                                            [ 58%]
 tests\test_roadmap.py ...                                                [ 66%]
 tests\test_security.py .............                                     [100%]
 
-============================= 39 passed in 1.51s ==============================
+============================= 39 passed in 1.63s ==============================
 ```
 
 ---
