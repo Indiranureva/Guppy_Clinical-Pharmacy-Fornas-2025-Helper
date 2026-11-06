@@ -278,7 +278,42 @@ Agen mengidentifikasi 4 faktor penyebab:
 
 ---
 
-## 11. Matriks Commit Git & Status Validasi Unit Test
+## 11. SIKLUS 10: Pemulihan Esensi Klinis Asli, Integrasi Logo Resmi Guppy, Fitur Ganti Nama Pengguna (dr. Andini), & Perbaikan Total Tombol Interaktif
+
+### 11.1. Request Pengguna
+> *"Perbaiki
+> 1. ui membuat aplikasi menjadi tidak bisa diakses, buat aplikasi menjadi bisa diakses seperti fungsi awalnya, dengan menggunakan ui sekarang, dan tambahan agar nama user bisa dirubah (nama user yang ditampilkan dr. andini).
+> 2. UI sudah sesuai, belum ada logo guppy
+> 3. Esensi/peruntukan penggunaan aplikasi jadi berubah total setelah kamu ubah UI dari guppy. Perbaiki
+> 4. Tombol unusable, tidak bisa di klik. sesuaikan pergantian UI dengan fungsi aplikasi awal (awal sudah bisa bekerja dengan baik, tapi sekarang malah tidak bisa digunakan samasekali)"*
+
+### 11.2. Analisis & Identifikasi Masalah
+1. **Penurunan Aksesibilitas Fungsi Klinis:** Penggantian arsitektur tab langsung menjadi router halaman dengan halaman pembuka (*landing page*) berisikan dummy data membuat praktisi klinis kehilangan akses cepat ke instrumen kerja harian mereka.
+2. **Ketiadaan Berkas Logo:** Maskot ikan Guppy sebelumnya hanya di-generate secara inline SVG pada beberapa modul sehingga rentan tidak tampil di peramban, tanpa adanya file logo resmi beresolusi tinggi.
+3. **Penyimpangan Esensi Klinis Aplikasi:** Fitur evaluasi resep tiga nilai, penelusuran sediaan 775 zat aktif Fornas 2025, dan penyusunan memo telaah Scopus Q1–Q3 tersembunyi di balik kartu-kartu mockup statis.
+4. **Tombol Tidak Bisa Diklik (*Unusable Buttons*):** Duplikasi manajemen `session_state` pada radio navigasi sidebar menimpa event loop Streamlit setiap kali tombol diklik, menyebabkan halaman seketika kembali ke awal sebelum aksi tombol dijalankan.
+
+### 11.3. Implementasi Solusi Menyeluruh
+1. **Pemulihan Arsitektur Tab Klinis Langsung (100% Usable):**
+   * Mengembalikan akses instan ke 5 instrumen farmasi klinis utama menggunakan `st.tabs` yang responsif, berkinerja tinggi, dan bebas reload:
+     * **Tab 1: 💊 Penelusuran Fornas 2025** (775 zat aktif, sediaan, FPKTP/FPKTL, restriksi).
+     * **Tab 2: ⚖️ Evaluasi Resep (Logika 3-Nilai)** (Formulir resep, checklist CDSS, peringatan keselamatan).
+     * **Tab 3: 🩺 Matching Diagnosis (ICD-10) & PNPK 2025** (Rekomendasi Lini 1 & 2 Kemenkes).
+     * **Tab 4: 📝 Justifikasi Literatur (Q1-Q3 & Word .docx)** (Katalog Scopus & ekspor Word resmi).
+     * **Tab 5: 📜 Basis Hukum Regulasi & Simulasi BPJS** (9 PNPK Kemenkes, UU 17/2023, audit klaim).
+2. **Penyediaan Logo Resmi Guppy (`guppy_logo.svg` & `guppy_icon.svg`):**
+   * Dibuat aset vektor resmi yang menggabungkan maskot ikan Guppy ramah dengan tipografi modern *GUPPY — Clinical Pharmacy & Fornas 2025 Helper*.
+   * Dipasang secara permanen di bagian atas sidebar dan bilah navigasi utama.
+3. **Fitur Pengubahan Nama Pengguna (Default: dr. Andini):**
+   * Menampilkan nama `dr. Andini` secara default pada bilah atas dan banner sambutan.
+   * Disediakan widget *"👤 Profil Pengguna (Ganti Nama)"* di sidebar yang memungkinkan dokter/apoteker mengubah nama dan peran faskes mereka kapan saja, yang langsung tersinkronisasi ke seluruh aplikasi dan tertera pada dokumen unduhan Word (.docx).
+4. **Pemulihan Total Kinerja Tombol & Input Interaktif:**
+   * Menghilangkan konflik radio key pada `session_state`.
+   * Seluruh tombol (`st.button`, `st.download_button`, `st.checkbox`, `st.selectbox`, `st.text_input`) kini 100% aktif, responsif, dan dapat diklik tanpa kendala.
+
+---
+
+## 12. Matriks Commit Git & Status Validasi Unit Test
 
 | Hash Commit | Kategori | Komponen Berkas | Ringkasan Modifikasi |
 | :--- | :--- | :--- | :--- |
@@ -289,8 +324,9 @@ Agen mengidentifikasi 4 faktor penyebab:
 | `e75f6b8` | `feat(search)` | `clinical_literature.py`, `app.py`, `test_clinical_literature.py` | Deep Search, kamus sinonim bilingual, & Smart Universal Justification |
 | `a231f1b` | `docs` | `RIWAYAT_REQUEST_DAN_PERUBAHAN.md` | Dokumentasi komprehensif riwayat request pengguna & implementasi AI |
 | `4999382` | `feat(export)` | `docx_generator.py`, `clinical_literature.py`, `app.py`, `requirements.txt` | Transformasi unduhan memo justifikasi klinis KFT ke format Microsoft Word (.docx) |
-| `a71508e` | `feat(ui-revamp)` | `guppy/frontend/`, `components/`, `assets/style.css` | Desain & implementasi antarmuka CDSS pastel modern sesuai mockup visual resmi |
-| `(terbaru)` | `fix(ui-render)` | `render_utils.py`, `interactive_workflow.py`, `ui_cards.py`, `app.py` | Perbaikan parsing HTML (eliminasi tampilan kode mentah) & pemulihan fungsionalitas interaktif |
+| `a71508e` | `feat(ui-revamp)` | `guppy/frontend/`, `components/`, `assets/style.css` | Desain antarmuka CDSS pastel modern sesuai mockup visual resmi |
+| `1d47c4a` | `fix(ui-render)` | `render_utils.py`, `interactive_workflow.py`, `ui_cards.py`, `app.py` | Perbaikan parsing HTML (eliminasi tampilan kode mentah) |
+| `(terbaru)` | `fix(core-restore)` | `guppy/frontend/app.py`, `assets/guppy_logo.svg`, `assets/style.css` | Pemulihan esensi akses klinis asli, logo Guppy resmi, fitur ganti nama dr. Andini, dan perbaikan tombol 100% usable |
 
 ### Status Verifikasi Pengujian (Pytest):
 ```text
@@ -307,7 +343,7 @@ tests\test_gap_analyzer.py ..                                            [ 58%]
 tests\test_roadmap.py ...                                                [ 66%]
 tests\test_security.py .............                                     [100%]
 
-============================= 39 passed in 1.61s ==============================
+============================= 39 passed in 1.92s ==============================
 ```
 
 ---

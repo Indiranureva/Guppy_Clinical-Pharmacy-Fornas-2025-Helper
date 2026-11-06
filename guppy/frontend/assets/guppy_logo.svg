@@ -1,0 +1,74 @@
+<svg width="260" height="70" viewBox="0 0 260 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Circular Badge Background -->
+  <circle cx="35" cy="35" r="30" fill="url(#circle_bg)" stroke="#BAE6FD" stroke-width="2"/>
+  
+  <!-- Guppy Fish Mascot -->
+  <g transform="translate(14, 14) scale(0.35)">
+    <!-- Bubbles -->
+    <circle cx="106" cy="24" r="4" fill="#38B6FF" fill-opacity="0.4" stroke="#0288D1" stroke-width="1.2"/>
+    <circle cx="114" cy="14" r="2.5" fill="#38B6FF" fill-opacity="0.5"/>
+    
+    <!-- Tail Fin -->
+    <path d="M38 60 C 22 42, 6 36, 4 50 C 2 62, 10 70, 4 82 C 14 84, 26 78, 38 64 Z" 
+          fill="url(#tail_grad)" stroke="#0288D1" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Tail texture -->
+    <path d="M34 60 C 22 52, 14 48, 8 50" stroke="#E1F5FE" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M34 62 C 20 64, 12 68, 6 72" stroke="#E1F5FE" stroke-width="1.5" stroke-linecap="round"/>
+    
+    <!-- Dorsal Fin -->
+    <path d="M52 44 C 54 28, 68 24, 76 34 C 70 38, 64 42, 60 45 Z" 
+          fill="url(#dorsal_grad)" stroke="#0288D1" stroke-width="2" stroke-linejoin="round"/>
+    
+    <!-- Ventral Fin -->
+    <path d="M54 74 C 52 86, 62 90, 68 82 C 64 78, 60 76, 58 74 Z" 
+          fill="url(#dorsal_grad)" stroke="#0288D1" stroke-width="1.5" stroke-linejoin="round"/>
+    
+    <!-- Body -->
+    <path d="M36 60 C 38 42, 60 38, 82 44 C 98 48, 108 58, 106 66 C 104 74, 92 82, 78 82 C 58 82, 38 78, 36 60 Z" 
+          fill="url(#body_grad)" stroke="#E65100" stroke-width="2" stroke-linejoin="round"/>
+    
+    <!-- Belly Accent -->
+    <path d="M48 68 C 60 78, 76 78, 88 74 C 94 70, 96 66, 94 65 C 84 72, 66 72, 48 68 Z" 
+          fill="#FFF9C4" opacity="0.85"/>
+    
+    <!-- Pectoral Fin -->
+    <path d="M62 60 C 66 54, 74 54, 76 60 C 74 68, 66 70, 60 64 Z" 
+          fill="url(#dorsal_grad)" stroke="#0288D1" stroke-width="1.5"/>
+    
+    <!-- Eye -->
+    <circle cx="92" cy="54" r="8" fill="#FFFFFF"/>
+    <circle cx="94" cy="54" r="4.5" fill="#0D233A"/>
+    <circle cx="95.5" cy="52.5" r="1.8" fill="#FFFFFF"/>
+    
+    <!-- Smile & Blush -->
+    <path d="M101 64 C 99 67, 96 67, 94 65" stroke="#B71C1C" stroke-width="1.6" stroke-linecap="round"/>
+    <ellipse cx="86" cy="63" rx="4.5" ry="2.8" fill="#FF5252" fill-opacity="0.4"/>
+  </g>
+
+  <!-- Typography -->
+  <text x="76" y="32" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="24" font-weight="800" fill="#FFFFFF" letter-spacing="0.5">GUPPY</text>
+  <text x="76" y="47" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="9.5" font-weight="600" fill="#38BDF8">Clinical Pharmacy &amp;</text>
+  <text x="76" y="58" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="9.5" font-weight="600" fill="#BAE6FD">Fornas 2025 Helper</text>
+
+  <!-- Gradients -->
+  <defs>
+    <linearGradient id="circle_bg" x1="5" y1="5" x2="65" y2="65" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0284C7"/>
+      <stop offset="100%" stop-color="#0F9F93"/>
+    </linearGradient>
+    <linearGradient id="body_grad" x1="36" y1="40" x2="108" y2="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFB74D"/>
+      <stop offset="45%" stop-color="#FFA726"/>
+      <stop offset="100%" stop-color="#FF7043"/>
+    </linearGradient>
+    <linearGradient id="tail_grad" x1="4" y1="40" x2="38" y2="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="70%" stop-color="#0288D1"/>
+      <stop offset="100%" stop-color="#01579B"/>
+    </linearGradient>
+    <linearGradient id="dorsal_grad" x1="52" y1="24" x2="76" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7DD3FC"/>
+      <stop offset="100%" stop-color="#0288D1"/>
+    </linearGradient>
+  </defs>
+</svg>
