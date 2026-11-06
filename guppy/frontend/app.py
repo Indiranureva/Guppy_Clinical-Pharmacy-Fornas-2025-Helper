@@ -101,11 +101,14 @@ st.session_state.setdefault(
 # ─────────────────────────────────────────────────────────────
 # 3. SIDEBAR WITH LOGO GUPPY & CLINICAL METADATA
 # ─────────────────────────────────────────────────────────────
+LOGO_PNG_PATH = Path(__file__).parent / "assets" / "guppy_logo.png"
 LOGO_SVG_PATH = Path(__file__).parent / "assets" / "guppy_logo.svg"
 
 with st.sidebar:
     # 1. Official Guppy Logo (Visible & Prominent)
-    if LOGO_SVG_PATH.exists():
+    if LOGO_PNG_PATH.exists():
+        st.image(str(LOGO_PNG_PATH), use_container_width=True)
+    elif LOGO_SVG_PATH.exists():
         st.image(str(LOGO_SVG_PATH), use_container_width=True)
     else:
         render_html(
@@ -136,7 +139,7 @@ with st.sidebar:
         new_fac = st.selectbox(
             "Tingkat Faskes:",
             ["FPKTL (Rumah Sakit)", "FPKTP (Puskesmas / Klinik Primer)"],
-            index=0,
+            index=0 if "FPKTL" in st.session_state["facility_level"] else 1,
             key="sb_edit_fac",
         )
         if st.button("💾 Simpan Perubahan Profil", key="btn_save_profile", use_container_width=True):
@@ -216,7 +219,7 @@ with st.sidebar:
 # ─────────────────────────────────────────────────────────────
 # 4. TOP BAR & HERO WELCOME BANNER (MODERN PASTEL THEME)
 # ─────────────────────────────────────────────────────────────
-# Top bar: User Profile & Quick Edit Toggle
+# Top bar: User Profile & Quick Edit Popover
 col_search, col_actions = st.columns([2.5, 1.2])
 
 with col_search:
@@ -226,27 +229,34 @@ with col_search:
         key="top_search_bar",
         label_visibility="collapsed",
     )
+    # Sync with Tab 1 search if user types in top search bar
+    if top_search_query and top_search_query != st.session_state.get("_prev_top_search"):
+        st.session_state["_prev_top_search"] = top_search_query
+        st.session_state["t1_drug_search"] = top_search_query
 
 with col_actions:
-    render_html(
-        f"""
-        <div style="display: flex; align-items: center; justify-content: flex-end; gap: 12px;">
-            <div style="background: #FFFFFF; border: 1px solid #E2EAF3; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(18, 52, 90, 0.04); position: relative;">
-                <span style="font-size: 1.05rem;">🔔</span>
-                <span style="position: absolute; top: -2px; right: -2px; background: #EF4444; color: #FFFFFF; border-radius: 50%; width: 15px; height: 15px; font-size: 0.62rem; display: flex; align-items: center; justify-content: center; font-weight: 700;">1</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 10px; background: #FFFFFF; border: 1px solid #E2EAF3; border-radius: 9999px; padding: 4px 14px 4px 6px; box-shadow: 0 1px 3px rgba(18, 52, 90, 0.04);">
-                <div style="width: 28px; height: 28px; border-radius: 50%; background: #E0F2FE; color: #0284C7; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem;">
-                    👤
-                </div>
-                <div style="line-height: 1.2;">
-                    <div style="font-size: 0.84rem; font-weight: 700; color: #12345A;">{st.session_state['user_name']}</div>
-                    <div style="font-size: 0.7rem; color: #64748B;">{st.session_state['facility_level']}</div>
-                </div>
-            </div>
-        </div>
-        """
-    )
+    # Interactive Popover for Profile Editing directly from top bar
+    with st.popover(f"👤 {st.session_state['user_name']}", use_container_width=True):
+        st.markdown("**⚙️ Pengaturan Profil Pengguna**")
+        p_edit_name = st.text_input("Nama Pengguna & Gelar:", value=st.session_state["user_name"], key="top_p_name")
+        p_edit_role = st.selectbox(
+            "Peran Profesi:",
+            ["Dokter Spesialis / DPJP", "Dokter Umum", "Apoteker Farmasi Klinis", "Komite Farmasi & Terapi (KFT)", "Verifikator Klaim BPJS"],
+            index=0,
+            key="top_p_role",
+        )
+        p_edit_fac = st.selectbox(
+            "Fasilitas Pelayanan:",
+            ["FPKTL (Rumah Sakit)", "FPKTP (Puskesmas / Klinik Primer)"],
+            index=0 if "FPKTL" in st.session_state["facility_level"] else 1,
+            key="top_p_fac",
+        )
+        if st.button("Simpan Perubahan", key="btn_save_top_p", type="primary", use_container_width=True):
+            st.session_state["user_name"] = p_edit_name
+            st.session_state["user_role"] = p_edit_role
+            st.session_state["facility_level"] = p_edit_fac
+            st.toast("✅ Nama pengguna diperbarui!", icon="👤")
+            st.rerun()
 
 # Welcome Banner with Guppy Mascot
 mascot_speech = get_welcome_banner_mascot_html()
@@ -276,6 +286,47 @@ render_html(
     </div>
     """
 )
+
+# Executive pastel metric indicators
+col_m1, col_m2, col_m3, col_m4 = st.columns(4)
+with col_m1:
+    render_html(
+        """
+        <div style="background: #E8F8F0; border: 1px solid #A7F3D0; border-radius: 12px; padding: 10px 14px; text-align: center;">
+            <div style="font-size: 1.45rem; font-weight: 800; color: #065F46; line-height: 1.1;">775+ Zat Aktif</div>
+            <div style="font-size: 0.74rem; font-weight: 600; color: #047857; margin-top: 2px;">Tabel Resmi Fornas 2025</div>
+        </div>
+        """
+    )
+with col_m2:
+    render_html(
+        """
+        <div style="background: #EBF3FE; border: 1px solid #BFDBFE; border-radius: 12px; padding: 10px 14px; text-align: center;">
+            <div style="font-size: 1.45rem; font-weight: 800; color: #1E40AF; line-height: 1.1;">9 PNPK 2025</div>
+            <div style="font-size: 0.74rem; font-weight: 600; color: #1D4ED8; margin-top: 2px;">Rekomendasi Lini 1 &amp; 2</div>
+        </div>
+        """
+    )
+with col_m3:
+    render_html(
+        """
+        <div style="background: #FFF0E5; border: 1px solid #FED7AA; border-radius: 12px; padding: 10px 14px; text-align: center;">
+            <div style="font-size: 1.45rem; font-weight: 800; color: #9A3412; line-height: 1.1;">Logika 3-Nilai</div>
+            <div style="font-size: 0.74rem; font-weight: 600; color: #C2410C; margin-top: 2px;">Terpenuhi | Data Kurang | Justifikasi</div>
+        </div>
+        """
+    )
+with col_m4:
+    render_html(
+        """
+        <div style="background: #F3EEFF; border: 1px solid #DDD6FE; border-radius: 12px; padding: 10px 14px; text-align: center;">
+            <div style="font-size: 1.45rem; font-weight: 800; color: #5B21B6; line-height: 1.1;">Word (.docx) KFT</div>
+            <div style="font-size: 0.74rem; font-weight: 600; color: #6D28D9; margin-top: 2px;">Memo Bukti Scopus Q1-Q3</div>
+        </div>
+        """
+    )
+
+render_html("<div style='height: 16px;'></div>")
 
 
 # ─────────────────────────────────────────────────────────────
@@ -506,6 +557,19 @@ with tab_eval:
                     if ev.get("peringatan"):
                         for w in ev["peringatan"]:
                             render_html(f'<div class="callout-danger">🛡️ <b>Peringatan Keselamatan:</b> {w}</div>')
+
+                if st.button("📁 Simpan Evaluasi ke Riwayat", key="btn_save_eval_hist"):
+                    st.session_state["history"].insert(
+                        0,
+                        {
+                            "timestamp": "Baru Saja",
+                            "type": "Evaluasi Resep",
+                            "item": f"{safe_drug} ({safe_sed or '-'})",
+                            "diagnosis": ev_icd or "-",
+                            "status": status,
+                        },
+                    )
+                    st.toast("✅ Evaluasi berhasil disimpan ke Riwayat Klinis!", icon="📁")
             else:
                 st.info("Masukkan data resep pada formulir di sebelah kiri, lalu klik '⚖️ Jalankan Evaluasi Resep'.")
 
@@ -592,7 +656,7 @@ with tab_dx:
             st.markdown("##### 💊 Obat Fornas 2025 yang Diakui untuk Diagnosis Ini:")
             if matched_drugs:
                 st.success(f"Ditemukan **{len(matched_drugs)}** obat dalam Fornas 2025 untuk diagnosis `{target_code}`.")
-                for md in matched_drugs[:8]:
+                for md in matched_drugs:
                     kelas_nama = md["kelas_path"][-1]["nama"] if md.get("kelas_path") else "-"
                     with st.expander(f"💊 {md['zat_aktif'].title()} — {kelas_nama}", expanded=False):
                         st.markdown(f"**Halaman PDF Fornas:** Hal. {md.get('halaman_pdf', '-')}")
@@ -603,7 +667,7 @@ with tab_dx:
 
 
 # ═════════════════════════════════════════════════════════════
-# TAB 4: JUSTIFIKASI LITERATUR KLINIS (Q1-Q3) & UNDUH WORD (.DOCX)
+# TAB 4: JUSTIFIKASI LITERATUR KLINIS (Q1-Q3 & WORD .DOCX)
 # ═════════════════════════════════════════════════════════════
 with tab_just:
     render_html(
@@ -617,19 +681,139 @@ with tab_just:
         """
     )
 
-    all_topics = ClinicalLiteratureScout.get_all_topics()
-    topic_options = {f"[{t['category']}] {t['title']} ({t['drug_inn']})": t["topic_id"] for t in all_topics}
+    col_lit_s1, col_lit_s2 = st.columns([3, 1.2])
+    with col_lit_s1:
+        lit_search_query = st.text_input(
+            "Cari Telaah Bukti (Zat Aktif, Masalah Klinis, atau Kata Kunci):",
+            value="metformin",
+            placeholder="e.g. Metformin, Simvastatin, Albumin, Parasetamol, Captopril, Meropenem...",
+            key="t4_lit_search_q",
+        )
+    with col_lit_s2:
+        render_html("<div style='height: 24px;'></div>")
+        st.caption(f"🛡️ Versi Repositori: `{ClinicalLiteratureScout.CURATION_VERSION}`. Sumber Scopus Q1-Q3 terverifikasi.")
 
-    col_j1, col_j2 = st.columns([1.2, 1])
+    filtered_topics = ClinicalLiteratureScout.search_curated_topics(lit_search_query)
 
-    with col_j1:
+    # 1. SMART FALLBACK / UNIVERSAL GENERATOR JIKA TOPIK KURASI KHUSUS TIDAK DITEMUKAN
+    if lit_search_query.strip() and not filtered_topics:
+        render_html(
+            f"""
+            <div class="callout-warn">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <span style="font-size: 1.2rem;">💡</span>
+                    <b style="font-size: 0.98rem; color: #92400E;">Topik Kurasi Khusus Belum Ditemukan untuk "{lit_search_query}"</b>
+                </div>
+                <div style="font-size: 0.84rem; line-height: 1.5; color: #78350F;">
+                    Repositori kurasi jurnal berfokus pada peresepan kasus-kasus kontroversial / peresepan berisiko tinggi.
+                    Untuk obat <b>"{lit_search_query}"</b>, Anda dapat menggunakan <b>Generator Memo Justifikasi KFT Mandiri / Universal</b> di bawah ini yang terintegrasi langsung dengan database 1.100+ obat Fornas 2025.
+                </div>
+            </div>
+            """
+        )
+
+        # Cari data obat di database Fornas 2025
+        synonyms = ClinicalLiteratureScout.expand_query_with_synonyms(lit_search_query)
+        fornas_hits = []
+        for syn in synonyms:
+            hits = fm.search(syn)
+            if hits:
+                fornas_hits = hits
+                break
+
+        fornas_info_dict = None
+        if fornas_hits:
+            f_drug = fornas_hits[0]
+            fornas_info_dict = {
+                "zat_aktif": f_drug["zat_aktif"],
+                "kelas_terapi": f_drug["kelas_path"][-1]["nama"] if f_drug.get("kelas_path") else "-",
+                "halaman_pdf": f_drug.get("halaman_pdf", "-"),
+                "restriksi_zat_aktif": [r["teks"] for r in f_drug.get("restriksi_zat_aktif", [])],
+                "sediaan": [f"{s['sediaan']} (Batas: {s.get('peresepan_maksimal', 'Tidak dibatasi')})" for s in f_drug.get("sediaan", [])],
+            }
+            render_html(
+                f"""
+                <div class="callout-ok">
+                    ✅ Obat <b>{f_drug['zat_aktif'].upper()}</b> ditemukan dalam Fornas 2025 (Hal. {f_drug.get('halaman_pdf', '-')}). Parameter resmi otomatis dimuat ke memo justifikasi.
+                </div>
+                """
+            )
+
         with st.container(border=True):
-            st.markdown("#### 1. Pilih Kasus Klinis & Artikel Ilmiah")
-            sel_label = st.selectbox("📌 Topik Masalah Klinis Pasien:", list(topic_options.keys()), key="t4_sel_topic")
-            topic_id = topic_options[sel_label]
-            topic = ClinicalLiteratureScout.get_topic_by_id(topic_id)
+            st.markdown(f"#### 📝 Formulir Justifikasi KFT Mandiri — {lit_search_query.upper()}")
+            c_fb1, c_fb2 = st.columns(2)
+            with c_fb1:
+                fb_kat = st.selectbox(
+                    "Alasan Klinis Justifikasi (Diktum KELIMA KMK 1199/2025):",
+                    [
+                        "LINI_1_GAGAL (Gagal terapi obat lini pertama)",
+                        "KONTRAINDIKASI (Kontraindikasi terhadap obat standar Fornas)",
+                        "EFEK_SAMPING_BERAT (Reaksi merugikan obat sebelumnya)",
+                        "TIDAK_TERSEDIA (Kekosongan stok obat formularium yang sah)",
+                        "GAWAT_DARURAT (Kondisi kegawatdaruratan klinis mengancam nyawa)",
+                        "LAINNYA (Alasan pertimbangan medis spesifik)",
+                    ],
+                    key="t4_fb_kat",
+                )
+                fb_patient = st.text_input("Nama Pasien & Usia:", value="Tn. Pasien (58 th)", key="t4_fb_patient")
+                fb_rm = st.text_input("Nomor Rekam Medis (RM):", value="RM-2026-UNIVERSAL", key="t4_fb_rm")
+                fb_dx = st.text_input("Diagnosis Kerja (ICD-10):", value=f"Terkait terapi {lit_search_query}", key="t4_fb_dx")
+            with c_fb2:
+                fb_dr = st.text_input("DPJP (Dokter Penulis Resep):", value=st.session_state["user_name"], key="t4_fb_dr")
+                fb_apt = st.text_input("Nama Apoteker Pengkaji:", value="Apt. Tim Farmasi Klinis, S.Farm.", key="t4_fb_apt")
+                fb_sipa = st.text_input("Nomor SIPA:", value=st.session_state["sipa_number"], key="t4_fb_sipa")
+                fb_ruang = st.text_input("Ruangan / Poliklinik:", value="Rawat Inap / Poliklinik", key="t4_fb_ruang")
 
-            if topic:
+            fb_rationale = st.text_area(
+                "Rasional Klinis & Penjelasan Medis:",
+                value=f"Pasien memerlukan terapi {lit_search_query} berdasarkan pertimbangan efektivitas klinis, tolerabilitas, dan optimalisasi luaran pasien sesuai panduan klinis.",
+                key="t4_fb_rationale",
+            )
+
+            fb_patient_dict = {
+                "nama_pasien": fb_patient,
+                "no_rm": fb_rm,
+                "diagnosis": fb_dx,
+                "dpjp": fb_dr,
+                "ruangan": fb_ruang,
+            }
+
+            universal_docx_bytes = ClinicalLiteratureScout.generate_universal_justification_memo_docx(
+                drug_name=lit_search_query,
+                justification_reason=fb_kat,
+                clinical_rationale=fb_rationale,
+                patient_info=fb_patient_dict,
+                fornas_info=fornas_info_dict,
+                pharmacist_name=fb_apt,
+                sipa_number=fb_sipa,
+            )
+
+            st.download_button(
+                label=f"📥 Unduh Dokumen Memo Justifikasi KFT (.docx / Microsoft Word) — {lit_search_query.upper()}",
+                data=universal_docx_bytes,
+                file_name=f"memo_justifikasi_kft_{lit_search_query.lower().replace(' ', '_')}.docx",
+                mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                type="primary",
+                use_container_width=True,
+                key=f"t4_dl_uni_{lit_search_query}",
+            )
+
+        st.markdown("---")
+        st.markdown("##### 📚 Atau Telusuri Topik Kurasi Jurnal Q1–Q3 yang Tersedia:")
+        filtered_topics = ClinicalLiteratureScout.get_all_topics()
+
+    elif lit_search_query.strip() and filtered_topics:
+        st.success(f"🎯 Ditemukan **{len(filtered_topics)} topik kurasi klinis** terkait kata kunci `{lit_search_query}`:")
+
+    # 2. TOPIK KURASI KHUSUS DENGAN BUKTI JURNAL Q1-Q3
+    topic = filtered_topics[0] if filtered_topics else None
+
+    if topic:
+        col_j1, col_j2 = st.columns([1.2, 1])
+
+        with col_j1:
+            with st.container(border=True):
+                st.markdown(f"#### 🔬 {topic['title']} ({topic['drug_inn']})")
                 render_html(
                     f"""
                     <div class="callout-info">
@@ -648,47 +832,48 @@ with tab_just:
                     is_chk = st.checkbox(
                         f"{tag} {c['authors']} ({c['year']}) — \"{c['title']}\" [{c['quartile']}]",
                         value=is_pri,
-                        key=f"t4_art_{topic_id}_{art['article_id']}",
+                        key=f"t4_art_{topic['topic_id']}_{art['article_id']}",
                     )
                     if is_chk:
                         chosen_articles.append(art)
+                    st.caption(f"↳ {c['journal']} · DOI: {c.get('doi', '-')} · Temuan: {art['clinical_finding']}")
 
-    with col_j2:
-        with st.container(border=True):
-            st.markdown("#### 2. Identitas Pasien, Dokter & Apoteker")
-            p_name = st.text_input("Nama Pasien & Usia:", value="Tn. Rahardjo (62 th)", key="t4_p_name")
-            p_rm = st.text_input("Nomor Rekam Medis (RM):", value="RM-2026-9921", key="t4_p_rm")
-            p_dx = st.text_input("Diagnosis Kerja / ICD-10:", value=f"Terkait indikasi {topic['drug_inn']}", key="t4_p_dx")
-            p_dr = st.text_input("DPJP (Dokter Penulis Resep):", value=st.session_state["user_name"], key="t4_p_dr")
-            p_apt = st.text_input("Nama Apoteker Pengkaji:", value="Apt. Tim Farmasi Klinis, S.Farm.", key="t4_p_apt")
-            p_sipa = st.text_input("Nomor SIPA:", value=st.session_state["sipa_number"], key="t4_p_sipa")
+        with col_j2:
+            with st.container(border=True):
+                st.markdown("#### ✏️ Identitas Pasien, Dokter & Apoteker")
+                p_name = st.text_input("Nama Pasien & Usia:", value="Tn. Rahardjo (62 th)", key="t4_p_name")
+                p_rm = st.text_input("Nomor Rekam Medis (RM):", value="RM-2026-9921", key="t4_p_rm")
+                p_dx = st.text_input("Diagnosis Kerja / ICD-10:", value=f"Terkait indikasi {topic['drug_inn']}", key="t4_p_dx")
+                p_dr = st.text_input("DPJP (Dokter Penulis Resep):", value=st.session_state["user_name"], key="t4_p_dr")
+                p_apt = st.text_input("Nama Apoteker Pengkaji:", value="Apt. Tim Farmasi Klinis, S.Farm.", key="t4_p_apt")
+                p_sipa = st.text_input("Nomor SIPA:", value=st.session_state["sipa_number"], key="t4_p_sipa")
 
-            p_notes = st.text_area(
-                "Catatan Rekomendasi Terapi (PTO):",
-                value="Dosis dan pemilihan terapi disesuaikan dengan profil klinis pasien. Monitoring parameter efektivitas & keamanan dijadwalkan berkala.",
-                key="t4_p_notes",
-            )
+                p_notes = st.text_area(
+                    "Catatan Rekomendasi Terapi (PTO):",
+                    value="Dosis dan pemilihan terapi disesuaikan dengan profil klinis pasien. Monitoring parameter efektivitas & keamanan dijadwalkan berkala.",
+                    key="t4_p_notes",
+                )
 
-            # Generate Docx
-            docx_bytes = ClinicalLiteratureScout.generate_justification_memo_docx(
-                topic=topic,
-                selected_articles=chosen_articles,
-                patient_info={"nama_pasien": p_name, "no_rm": p_rm, "diagnosis": p_dx, "dpjp": p_dr},
-                pharmacist_notes=p_notes,
-                pharmacist_name=p_apt,
-                sipa_number=p_sipa,
-            )
+                # Generate Docx
+                docx_bytes = ClinicalLiteratureScout.generate_justification_memo_docx(
+                    topic=topic,
+                    selected_articles=chosen_articles,
+                    patient_info={"nama_pasien": p_name, "no_rm": p_rm, "diagnosis": p_dx, "dpjp": p_dr},
+                    pharmacist_notes=p_notes,
+                    pharmacist_name=p_apt,
+                    sipa_number=p_sipa,
+                )
 
-            clean_slug = topic["drug_inn"].lower().replace(" ", "_").replace("/", "_")
-            st.download_button(
-                label=f"📥 Unduh Memo Justifikasi KFT (.docx / Microsoft Word) — {topic['drug_inn']}",
-                data=docx_bytes,
-                file_name=f"memo_justifikasi_kft_{clean_slug}.docx",
-                mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                type="primary",
-                use_container_width=True,
-                key="t4_dl_btn",
-            )
+                clean_slug = topic["drug_inn"].lower().replace(" ", "_").replace("/", "_")
+                st.download_button(
+                    label=f"📥 Unduh Memo Justifikasi KFT (.docx / Microsoft Word) — {topic['drug_inn']}",
+                    data=docx_bytes,
+                    file_name=f"memo_justifikasi_kft_{clean_slug}.docx",
+                    mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    type="primary",
+                    use_container_width=True,
+                    key="t4_dl_btn",
+                )
 
 
 # ═════════════════════════════════════════════════════════════

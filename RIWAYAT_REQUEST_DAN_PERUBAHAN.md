@@ -313,7 +313,40 @@ Agen mengidentifikasi 4 faktor penyebab:
 
 ---
 
-## 12. Matriks Commit Git & Status Validasi Unit Test
+## 12. SIKLUS 11: Audit Komprehensif & Eliminasi Error UI/Fungsi Guppy (Logo PNG, Popover Profil, Universal Justification, & Global Search Sync)
+
+### 12.1. Request Pengguna
+> *"temukan error berkaitan dengan UI dan fungsi guppy, perbaiki lagi"*
+
+### 12.2. Temuan Masalah & Audit Mendalam
+1. **Rendering Aset Logo Guppy Terkendala Parser SVG:**
+   * Di lingkungan Python/Windows, library PIL (*Pillow*) tidak dapat membuka berkas SVG secara langsung tanpa pustaka tambahan (*UnidentifiedImageError*), sehingga pemanggilan `st.image` pada berkas SVG berpotensi gagal me-render logo di browser tertentu.
+2. **Keterbatasan Input Justifikasi Literatur (Tab 4):**
+   * Tab 4 sempat dibatasi hanya pada dropdown statis topik kurasi khusus, sehingga pencarian obat umum di luar 5 topik tersebut tidak dapat diproses.
+3. **Pemisahan Input Pencarian Bilah Atas (*Search Bar Desync*):**
+   * Bilah pencarian di bagian atas (*top bar*) tidak tersinkronisasi otomatis dengan kolom pencarian obat pada Tab 1 (Fornas 2025).
+4. **Akses Pengubahan Profil Pengguna Masih Tersembunyi:**
+   * Pengubahan nama `dr. Andini` hanya tersedia di dalam expander sidebar, belum dapat diakses langsung secara intuitif dari avatar/badge profil pada bilah atas.
+5. **Pemotongan Daftar Obat Terkait Diagnosis (Tab 3):**
+   * Diagnosis dengan banyak opsi obat Fornas (seperti Diabetes Melitus atau Hipertensi) sebelumnya dibatasi hanya menampilkan 8 obat pertama.
+
+### 12.3. Perbaikan yang Diterapkan
+1. **Penyediaan Aset Logo PNG Beresolusi Tinggi (`guppy_logo.png`):**
+   * Dibuat berkas gambar PNG beresolusi tinggi 800x200 RGBA yang menampilkan maskot ikan Guppy dan teks tipografi resmi.
+   * `st.image` kini dapat memuat logo secara 100% reliabel, tajam, dan konsisten di seluruh browser dan platform.
+2. **Integrasi Popover Profil Pengguna Interaktif (`st.popover`):**
+   * Avatar `👤 dr. Andini` di bilah atas kini merupakan tombol popover interaktif. Saat diklik, dokter/apoteker dapat langsung mengganti nama, peran klinis, dan tingkat faskes tanpa perlu membuka sidebar.
+3. **Pemulihan Penuh Mesin Justifikasi Mandiri Universal (Tab 4):**
+   * Diintegrasikan kembali fitur pencarian cerdas dengan sinonim obat (*bilingual drug synonyms*).
+   * Apabila obat yang dicari belum memiliki topik kurasi jurnal khusus, sistem secara otomatis mengaktifkan *Generator Memo Justifikasi KFT Mandiri/Universal*, memuat data resmi Fornas 2025, dan mengizinkan pengunduhan dokumen Word (`.docx`) resmi.
+4. **Sinkronisasi Otomatis Pencarian Bilah Atas (*Global Search Sync*):**
+   * Kata kunci yang diketikkan pada bilah atas otomatis mengisi kolom pencarian obat di Tab 1 secara seketika (*instant sync*).
+5. **Visibilitas Penuh Obat Fornas 2025 per Diagnosis (Tab 3):**
+   * Seluruh obat Fornas 2025 yang sesuai dengan kode diagnosis kini ditampilkan secara lengkap dalam expander terstruktur tanpa pemotongan.
+
+---
+
+## 13. Matriks Commit Git & Status Validasi Unit Test
 
 | Hash Commit | Kategori | Komponen Berkas | Ringkasan Modifikasi |
 | :--- | :--- | :--- | :--- |
@@ -326,7 +359,8 @@ Agen mengidentifikasi 4 faktor penyebab:
 | `4999382` | `feat(export)` | `docx_generator.py`, `clinical_literature.py`, `app.py`, `requirements.txt` | Transformasi unduhan memo justifikasi klinis KFT ke format Microsoft Word (.docx) |
 | `a71508e` | `feat(ui-revamp)` | `guppy/frontend/`, `components/`, `assets/style.css` | Desain antarmuka CDSS pastel modern sesuai mockup visual resmi |
 | `1d47c4a` | `fix(ui-render)` | `render_utils.py`, `interactive_workflow.py`, `ui_cards.py`, `app.py` | Perbaikan parsing HTML (eliminasi tampilan kode mentah) |
-| `(terbaru)` | `fix(core-restore)` | `guppy/frontend/app.py`, `assets/guppy_logo.svg`, `assets/style.css` | Pemulihan esensi akses klinis asli, logo Guppy resmi, fitur ganti nama dr. Andini, dan perbaikan tombol 100% usable |
+| `927e183` | `fix(core-restore)` | `guppy/frontend/app.py`, `assets/guppy_logo.svg`, `assets/style.css` | Pemulihan esensi akses klinis asli, logo Guppy resmi, fitur ganti nama dr. Andini, dan perbaikan tombol |
+| `(terbaru)` | `fix(audit-robust)` | `guppy/frontend/assets/guppy_logo.png`, `guppy/frontend/app.py` | Logo PNG resolusi tinggi, popover edit profil dr. Andini, universal justification & sinkronisasi search |
 
 ### Status Verifikasi Pengujian (Pytest):
 ```text
@@ -343,7 +377,7 @@ tests\test_gap_analyzer.py ..                                            [ 58%]
 tests\test_roadmap.py ...                                                [ 66%]
 tests\test_security.py .............                                     [100%]
 
-============================= 39 passed in 1.92s ==============================
+============================= 39 passed in 1.68s ==============================
 ```
 
 ---
