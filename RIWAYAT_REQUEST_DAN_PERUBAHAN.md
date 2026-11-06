@@ -17,7 +17,8 @@
 6. [Siklus 5: Investigasi Kendala Pencarian Obat pada Kasus Klinis](#6-siklus-5-investigasi-kendala-pencarian-obat-pada-kasus-klinis)
 7. [Siklus 6: Implementasi Deep Search, Kamus Sinonim Bilingual & Smart Fallback](#7-siklus-6-implementasi-deep-search-kamus-sinonim-bilingual--smart-fallback)
 8. [Siklus 7: Transformasi Format Unduhan Memo Justifikasi KFT ke Dokumen Microsoft Word (.docx)](#8-siklus-7-transformasi-format-unduhan-memo-justifikasi-kft-ke-dokumen-microsoft-word-docx)
-9. [Matriks Commit Git & Status Validasi Unit Test](#9-matriks-commit-git--status-validasi-unit-test)
+9. [Siklus 8: Desain & Implementasi Antarmuka Pengguna Komprehensif (UI/UX CDSS) Sesuai Mockup Visual](#9-siklus-8-desain--implementasi-antarmuka-pengguna-komprehensif-uiux-cdss-sesuai-mockup-visual)
+10. [Matriks Commit Git & Status Validasi Unit Test](#10-matriks-commit-git--status-validasi-unit-test)
 
 ---
 
@@ -197,7 +198,50 @@ Agen mengidentifikasi 4 faktor penyebab:
 
 ---
 
-## 9. Matriks Commit Git & Status Validasi Unit Test
+## 9. Siklus 8: Desain & Implementasi Antarmuka Pengguna Komprehensif (UI/UX CDSS) Sesuai Mockup Visual
+
+### 🗣️ Request Pengguna:
+> Implementasi desain dan antarmuka interaktif modern, profesional, dan menenangkan (calming pastel palette) untuk aplikasi **GUPPY — Clinical Pharmacy & Fornas 2025 Helper** berdasarkan gambar acuan mockup resmi (`media_1792774390169_ee3201ac.jpg`) serta 5 pilar klinis (Clinical clarity, Patient safety, Cognitive efficiency, Professional visual appeal, Regulatory traceability).
+
+### 🔍 Analisis & Tindakan Rekayasa Antarmuka (UI/UX):
+1. **Adopsi Sistem Token Desain Pastel Healthcare**:
+   - **Deep Navy Sidebar (`#12345A` / `#0D233A`)**: Memberikan kontras kokoh, profesional, dan terstruktur.
+   - **Primary Teal (`#0F9F93`)**: Branding khas, status aktif pill navigasi, dan indikator positif.
+   - **Calming Pastel Accents**: Mint (`#E8F8F0`), Soft Blue (`#EBF3FE`), Warm Cream/Yellow (`#FFF9E6`), Peach (`#FFF0E5`), Lavender (`#F3EEFF`), dan Soft Pink (`#FFE7EC`).
+   - **Latar Belakang Bersih & Terang (`#F5F8FC`)**: Menggantikan tema gelap sebelumnya menjadi antarmuka klinis modern ala SaaS rumah sakit.
+   - **Kartu Putih Elegan (`#FFFFFF`)**: Sudut membulat 12–16px, bayangan halus (*subtle shadow*), dan garis tepi tipis (`#E2EAF3`).
+
+2. **Identitas Visual Maskot Guppy Vector Asli**:
+   - Dibuatkan generator SVG mandiri (`guppy/frontend/components/mascot.py`):
+     - Logo lingkaran maskot ikan guppy oranye keemasan dengan sirip biru/cyan.
+     - Maskot banner selamat datang dengan balon ucapan (*speech bubble*): *"Cek cepat kesesuaian terapi JKN di satu tempat!"*.
+     - Maskot bawah sidebar dengan komitmen klinis: *"Informasi tepat, keputusan lebih yakin untuk layanan JKN yang lebih baik."*.
+
+3. **Tata Letak Dashboard Eksekutif (Beranda) Sesuai Mockup**:
+   - **Top Navigation Bar**: Kotak pencarian global (`Ctrl + K`), lonceng notifikasi klinis berindikator angka, dan profil dokter/apoteker (`dr. Andini | Fasilitas Kesehatan (FPKTL)`).
+   - **Welcome Banner**: Banner pastel kuning dengan rujukan resmi KMK 1199/2025, 775+ zat aktif, dan CDSS Logika Tiga Nilai.
+   - **4 Primary Action Cards**: Kartu aksi cepat (*Cek Fornas*, *Cek Diagnosa*, *Buat Justifikasi*, *Simulasi Klaim*) dengan transisi hover dan navigasi satu-klik.
+   - **Widget Panel Kanan**:
+     - *Statistik Penggunaan*: 4 kartu metrik pastel (152 Pencarian Fornas, 98 Cek Diagnosa, 67 Justifikasi Dibuat, 24 Simulasi Klaim).
+     - *Tips Hari Ini*: Kartu edukasi koding ICD-10 dan restriksi berpaginasi.
+     - *Regulasi & Referensi Cepat*: Tautan langsung KMK 1199/2025, koding ICD-10, Diktum KELIMA, dan Simbol Khusus.
+     - *6 Nilai Utama GUPPY*: Akurat & Terstruktur, Logika Tiga Nilai, Katalog Justifikasi, Peringatan Keselamatan, Bukti Ilmiah Q1-Q3, Dirancang untuk Praktisi Klinis.
+   - **4 Kolom Alur Kerja Interaktif Bagian Bawah**:
+     - *1. Cek Fornas*: Pencarian langsung obat (contoh `metformin`), tab informasi, kartu dosis, restriksi eGFR, fasilitas FPKTP/FPKTL, dan nomor halaman PDF resmi.
+     - *2. Cek Diagnosa*: Pencarian diagnosis ICD-10 (contoh `E11`), kelompok, inklusi, eksklusi, dan obat umum (lini pertama, lini kedua, restriksi).
+     - *3. Buat Justifikasi*: Stepper 3 tahap, pemilihan kode alasan (LINI_1_GAGAL, KONTRAINDIKASI, ALERGI, dll.), dan tombol Lanjut.
+     - *4. Hasil Analisis & Simulasi Klaim*: Kartu penilaian kesesuaian (TERPENUHI), checklist 6 parameter, estimasi risiko klaim BPJS (Risiko Rendah), serta tombol Simpan Riwayat dan Unduh Ringkasan Word (.docx).
+
+4. **Navigasi 11 Modul Lengkap di Sidebar**:
+   - *Beranda*, *Cek Fornas*, *Cek Diagnosa*, *Evaluasi Resep*, *Justifikasi Klinis*, *Simulasi Klaim*, *Referensi*, *Literatur Ilmiah*, *Riwayat*, *Favorit*, dan *Pengaturan*.
+   - Seluruh halaman terhubung langsung ke mesin logika `fornas_matcher`, `pnpk_engine`, `clinical_literature`, dan `docx_generator`.
+
+5. **Verifikasi & Integritas Pengujian**:
+   - Seluruh **39 unit test lulus 100%**.
+
+---
+
+## 10. Matriks Commit Git & Status Validasi Unit Test
 
 | Hash Commit | Kategori | Komponen Berkas | Ringkasan Modifikasi |
 | :--- | :--- | :--- | :--- |
@@ -207,7 +251,8 @@ Agen mengidentifikasi 4 faktor penyebab:
 | `0500a13` | `feat(lit)` | `clinical_literature.py`, `app.py`, `test_clinical_literature.py` | Kurasi multi-artikel Scopus Q1-Q3 & generator memo justifikasi KFT |
 | `e75f6b8` | `feat(search)` | `clinical_literature.py`, `app.py`, `test_clinical_literature.py` | Deep Search, kamus sinonim bilingual, & Smart Universal Justification |
 | `a231f1b` | `docs` | `RIWAYAT_REQUEST_DAN_PERUBAHAN.md` | Dokumentasi komprehensif riwayat request pengguna & implementasi AI |
-| `(terbaru)` | `feat(export)` | `docx_generator.py`, `clinical_literature.py`, `app.py`, `requirements.txt` | Transformasi unduhan memo justifikasi KFT ke format Microsoft Word (.docx) |
+| `4999382` | `feat(export)` | `docx_generator.py`, `clinical_literature.py`, `app.py`, `requirements.txt` | Transformasi unduhan memo justifikasi klinis KFT ke format Microsoft Word (.docx) |
+| `(terbaru)` | `feat(ui-revamp)` | `guppy/frontend/`, `components/`, `assets/style.css` | Desain & implementasi antarmuka CDSS pastel modern sesuai mockup visual resmi |
 
 ### Status Verifikasi Pengujian (Pytest):
 ```text
@@ -223,7 +268,7 @@ tests\test_gap_analyzer.py ..                                            [ 58%]
 tests\test_roadmap.py ...                                                [ 66%]
 tests\test_security.py .............                                     [100%]
 
-============================= 39 passed in 2.54s ==============================
+============================= 39 passed in 1.36s ==============================
 ```
 
 ---
