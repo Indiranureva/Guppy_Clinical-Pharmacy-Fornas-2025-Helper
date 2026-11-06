@@ -36,6 +36,7 @@ from guppy.backend.config import (
     PRESCRIBER_TYPES,
     COMMON_ICD10,
 )
+from guppy.frontend.components.render_utils import render_html
 from guppy.frontend.components.mascot import (
     get_guppy_circle_logo_svg,
     get_sidebar_footer_html,
@@ -66,7 +67,7 @@ st.set_page_config(
 CSS_PATH = Path(__file__).parent / "assets" / "style.css"
 if CSS_PATH.exists():
     with open(CSS_PATH, "r", encoding="utf-8") as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+        render_html(f"<style>{f.read()}</style>")
 
 
 # ─────────────────────────────────────────────────────────────
@@ -112,8 +113,8 @@ st.session_state.setdefault(
 # ─────────────────────────────────────────────────────────────
 with st.sidebar:
     # Mascot Circle Logo & Brand Title
-    logo_svg = get_guppy_circle_logo_svg(size=46)
-    st.markdown(
+    logo_svg = get_guppy_circle_logo_svg(size=44)
+    render_html(
         f"""
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
             {logo_svg}
@@ -126,8 +127,7 @@ with st.sidebar:
                 </div>
             </div>
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
     # Primary Navigation Menu
@@ -151,7 +151,7 @@ with st.sidebar:
         "Cek Diagnosa": "🩺",
         "Evaluasi Resep": "⚖️",
         "Justifikasi Klinis": "📝",
-        "Simulasi Klaim": "📊",
+        "Simulasi Klaim": "🧮",
         "Referensi": "📚",
         "Literatur Ilmiah": "📖",
         "Riwayat": "🕒",
@@ -159,64 +159,31 @@ with st.sidebar:
         "Pengaturan": "⚙️",
     }
 
-    current_nav = st.session_state["nav_selection"]
-    if current_nav not in nav_options:
-        current_nav = "Beranda"
-
-    selected_page = st.radio(
-        "Menu Navigasi Utama",
-        options=nav_options,
-        index=nav_options.index(current_nav),
-        format_func=lambda x: f"{nav_icons.get(x, '•')}  {x}",
-        label_visibility="collapsed",
-        key="main_sidebar_nav",
+    current_idx = (
+        nav_options.index(st.session_state["nav_selection"])
+        if st.session_state["nav_selection"] in nav_options
+        else 0
     )
 
-    if selected_page != st.session_state["nav_selection"]:
-        st.session_state["nav_selection"] = selected_page
+    selected_nav = st.radio(
+        "Menu Navigasi Utama",
+        options=nav_options,
+        index=current_idx,
+        format_func=lambda x: f"{nav_icons.get(x, '📌')}  {x}",
+        label_visibility="collapsed",
+        key="sidebar_radio_selection",
+    )
+
+    if selected_nav != st.session_state["nav_selection"]:
+        st.session_state["nav_selection"] = selected_nav
         st.rerun()
 
-    st.markdown("---")
-
-    # LinkGuard Security Light Indicator
-    sec_light = LinkGuard.get_security_light()
-    if sec_light["color"] == "HIJAU":
-        st.markdown(
-            """
-            <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px;">
-                <b style="color: #34d399; font-size: 0.8rem;">🟢 Sistem & Acuan: AMAN</b><br>
-                <small style="color: #A7F3D0; font-size: 0.72rem;">Database Fornas 2025 & PNPK Kemenkes terverifikasi resmi.</small>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    elif sec_light["color"] == "ORANGE":
-        st.markdown(
-            """
-            <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px;">
-                <b style="color: #FBBF24; font-size: 0.8rem;">🟠 Akses Dibatasi Sementara</b><br>
-                <small style="color: #FDE68A; font-size: 0.72rem;">Satu atau lebih portal referensi sedang dalam pemeliharaan.</small>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    else:
-        st.markdown(
-            """
-            <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px;">
-                <b style="color: #F87171; font-size: 0.8rem;">🔴 Proteksi Keamanan Aktif</b><br>
-                <small style="color: #FCA5A5; font-size: 0.72rem;">Tautan tidak terverifikasi dinonaktifkan otomatis.</small>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    # Sidebar Tagline Footer with Swimming Mascot
-    st.markdown(get_sidebar_footer_html(), unsafe_allow_html=True)
+    # Footer Mascot Banner
+    render_html(get_sidebar_footer_html())
 
 
 # ─────────────────────────────────────────────────────────────
-# 4. TOP BAR RENDERING
+# 4. TOP APPLICATION BAR
 # ─────────────────────────────────────────────────────────────
 render_top_bar(
     user_name=st.session_state["user_name"],
@@ -234,43 +201,38 @@ current_page = st.session_state["nav_selection"]
 # PAGE: BERANDA (EXECUTIVE CLINICAL DASHBOARD)
 # ═════════════════════════════════════════════════════════════
 if current_page == "Beranda":
-    # 1. Main Welcome Banner with Mascot
-    render_welcome_banner(user_name=st.session_state["user_name"])
+    # TOP SECTION: 3 Columns matching Mockup Layout
+    col_top_left, col_top_mid, col_top_right = st.columns([2.3, 1.25, 1.15])
 
-    # 2. Main Layout: Left Workflow / Actions (72%) & Right Intelligence Widgets (28%)
-    col_main_dash, col_side_dash = st.columns([2.6, 1.2])
-
-    with col_main_dash:
+    with col_top_left:
+        # Welcome Banner with Mascot
+        render_welcome_banner(user_name=st.session_state["user_name"])
         # 4 Primary Action Cards
         render_four_action_cards()
 
-    with col_side_dash:
+    with col_top_mid:
         # Statistics Panel
         render_stats_panel(searches=152, diagnoses=98, justifications=67, simulations=24)
-
-    st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
-
-    # 3. Middle Section: Interactive Workflow (Left) + Tips, Links & Core Values (Right)
-    col_lower_left, col_lower_right = st.columns([2.6, 1.2])
-
-    with col_lower_left:
-        # Interactive 4-Column Live Workflow Cards from Mockup
-        render_four_workflow_columns()
-
-    with col_lower_right:
-        # Tips Hari Ini
+        # Tips Hari Ini (working pagination)
         render_tips_card(tip_index=st.session_state["tips_idx"], total_tips=5)
         # Quick References Links
         render_quick_references()
+
+    with col_top_right:
         # 6 Core Values of GUPPY
         render_guppy_core_values()
+
+    render_html("<div style='height: 18px;'></div>")
+
+    # BOTTOM SECTION (FULL WIDTH): 4-Column Clinical Workflow Cards
+    render_four_workflow_columns()
 
 
 # ═════════════════════════════════════════════════════════════
 # PAGE: CEK FORNAS (775+ ZAT AKTIF & 1.238 SEDIAAN)
 # ═════════════════════════════════════════════════════════════
 elif current_page == "Cek Fornas":
-    st.markdown(
+    render_html(
         """
         <div style="margin-bottom: 16px;">
             <div style="font-size: 1.5rem; font-weight: 800; color: #12345A;">💊 Penelusuran Formularium Nasional (Fornas 2025)</div>
@@ -278,20 +240,20 @@ elif current_page == "Cek Fornas":
                 Basis data resmi KMK No. HK.01.07/MENKES/1199/2025 memuat 775 zat aktif, sediaan, indikasi, dan batas peresepan maksimal.
             </div>
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
     c_search1, c_search2 = st.columns([3, 1.2])
     with c_search1:
+        initial_q = st.session_state.get("page_drug_search", "metformin")
         drug_search_q = st.text_input(
             "Cari Zat Aktif, Nama Obat, atau Kelas Terapi:",
             placeholder="e.g. Metformin, Parasetamol, Atorvastatin, Klopidogrel, Fentanil...",
-            value="metformin",
-            key="page_drug_search",
+            value=initial_q,
+            key="page_drug_search_input",
         )
     with c_search2:
-        st.markdown("<div style='height: 28px;'></div>", unsafe_allow_html=True)
+        render_html("<div style='height: 28px;'></div>")
         col_f1, col_f2 = st.columns(2)
         with col_f1:
             filter_p = st.checkbox("Program [P]", value=False)
@@ -350,21 +312,20 @@ elif current_page == "Cek Fornas":
                     if matched_pnpk:
                         st.markdown("**🏛️ Pedoman Praktik Terkait (PNPK Kemenkes 2025):**")
                         for p in matched_pnpk:
-                            st.markdown(
+                            render_html(
                                 f"""
                                 <div class="callout-ok">
                                     <b>{p['title']}</b> ({p['kmk']})<br>
                                     <small>{p.get('summary', '')} · <a href='{p['source_url']}' target='_blank' style='color: #0F9F93; font-weight: 600;'>Buka Dokumen Resmi Kemenkes ↗</a></small>
                                 </div>
-                                """,
-                                unsafe_allow_html=True,
+                                """
                             )
 
                     # Restriksi Zat Aktif
                     if item.get("restriksi_zat_aktif"):
                         st.markdown("**📋 Restriksi Tingkat Zat Aktif:**")
                         for rza in item["restriksi_zat_aktif"]:
-                            st.markdown(f'<div class="callout-warn">⚠️ {rza["teks"]}</div>', unsafe_allow_html=True)
+                            render_html(f'<div class="callout-warn">⚠️ {rza["teks"]}</div>')
 
                     # Tabel Bentuk Sediaan & Fasilitas
                     st.markdown("**🧪 Bentuk Sediaan & Tingkat Fasilitas:**")
@@ -391,14 +352,14 @@ elif current_page == "Cek Fornas":
 
                         if sed.get("restriksi_sediaan"):
                             for rs in sed["restriksi_sediaan"]:
-                                st.markdown(f'<div class="callout-danger">📌 <em>{rs["teks"]}</em></div>', unsafe_allow_html=True)
+                                render_html(f'<div class="callout-danger">📌 <em>{rs["teks"]}</em></div>')
 
 
 # ═════════════════════════════════════════════════════════════
 # PAGE: CEK DIAGNOSA (ICD-10 MATCHING ENGINE)
 # ═════════════════════════════════════════════════════════════
 elif current_page == "Cek Diagnosa":
-    st.markdown(
+    render_html(
         """
         <div style="margin-bottom: 16px;">
             <div style="font-size: 1.5rem; font-weight: 800; color: #12345A;">🩺 Pencocokan Diagnosis (ICD-10) ke Terapi Fornas & PNPK 2025</div>
@@ -406,8 +367,7 @@ elif current_page == "Cek Diagnosa":
                 Membantu Apoteker dan Dokter memastikan terapi resep selaras dengan indikasi resmi yang diakui Fornas dan pedoman klinis Kemenkes RI.
             </div>
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
     c_dx1, c_dx2 = st.columns([1, 2])
@@ -423,14 +383,13 @@ elif current_page == "Cek Diagnosa":
 
         pnpk_for_icd = pe.get_pnpk_by_icd10(target_code)
         if pnpk_for_icd:
-            st.markdown(
+            render_html(
                 f"""
                 <div class="callout-ok">
                     <b>🏛️ Memiliki Acuan Resmi PNPK 2025</b><br>
                     Tersedia <b>{len(pnpk_for_icd)}</b> Pedoman Nasional Pelayanan Kedokteran Kemenkes RI.
                 </div>
-                """,
-                unsafe_allow_html=True,
+                """
             )
 
     with c_dx2:
@@ -439,17 +398,17 @@ elif current_page == "Cek Diagnosa":
         if pnpk_for_icd:
             for p in pnpk_for_icd:
                 with st.expander(f"🩺 {p['title']} ({p['kmk']})", expanded=True):
-                    st.markdown(f'<div class="callout-ok">{p.get("summary", "")}</div>', unsafe_allow_html=True)
+                    render_html(f'<div class="callout-ok">{p.get("summary", "")}</div>')
                     recs = p.get("clinical_recommendations", {})
                     col_r1, col_r2 = st.columns(2)
                     with col_r1:
                         st.markdown("**🟢 Rekomendasi Lini Pertama (First-Line):**")
                         for fl in recs.get("first_line", []):
-                            st.markdown(f"- **{fl['zat_aktif']}** ({fl.get('sediaan', '-')})<br>&nbsp;&nbsp;↳ <em>{fl.get('keterangan', '-')}</em>", unsafe_allow_html=True)
+                            render_html(f"<div style='margin-bottom: 4px;'>• <b>{fl['zat_aktif']}</b> ({fl.get('sediaan', '-')})<br>&nbsp;&nbsp;↳ <em style='color: #64748B;'>{fl.get('keterangan', '-')}</em></div>")
                     with col_r2:
                         st.markdown("**🟡 Lini Kedua / Alternatif / Eskalasi:**")
                         for sl in recs.get("second_line_or_escalation", []):
-                            st.markdown(f"- **{sl['zat_aktif']}** ({sl.get('sediaan', '-')})<br>&nbsp;&nbsp;↳ <em>{sl.get('keterangan', '-')}</em>", unsafe_allow_html=True)
+                            render_html(f"<div style='margin-bottom: 4px;'>• <b>{sl['zat_aktif']}</b> ({sl.get('sediaan', '-')})<br>&nbsp;&nbsp;↳ <em style='color: #64748B;'>{sl.get('keterangan', '-')}</em></div>")
 
         all_drugs = fm.get_db()["obat"]
         matched_drugs = []
@@ -489,7 +448,7 @@ elif current_page == "Cek Diagnosa":
 # PAGE: EVALUASI RESEP (LOGIKA TIGA NILAI)
 # ═════════════════════════════════════════════════════════════
 elif current_page == "Evaluasi Resep":
-    st.markdown(
+    render_html(
         """
         <div style="margin-bottom: 16px;">
             <div style="font-size: 1.5rem; font-weight: 800; color: #12345A;">⚖️ Evaluasi Resep Pasien & Logika Tiga Nilai</div>
@@ -497,8 +456,7 @@ elif current_page == "Evaluasi Resep":
                 Menilai kesesuaian resep dengan prinsip Logika Tiga Nilai: <b>TERPENUHI</b>, <b>TIDAK_TERPENUHI</b>, atau <b>TIDAK_DIKETAHUI</b> (data kurang tidak otomatis ditolak).
             </div>
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
     c_ev1, c_ev2 = st.columns([1.1, 1.3])
@@ -540,11 +498,11 @@ elif current_page == "Evaluasi Resep":
 
             status = res.get("status")
             if status == "SESUAI":
-                st.markdown('<div class="callout-ok"><b>✅ STATUS: SESUAI</b> — Resep memenuhi seluruh ketentuan Fornas 2025.</div>', unsafe_allow_html=True)
+                render_html('<div class="callout-ok"><b>✅ STATUS: SESUAI</b> — Resep memenuhi seluruh ketentuan Fornas 2025.</div>')
             elif status == "DATA_KURANG":
-                st.markdown('<div class="callout-warn"><b>⚠️ STATUS: DATA_KURANG</b> — Data pasien atau sediaan perlu dilengkapi sebelum verifikasi akhir.</div>', unsafe_allow_html=True)
+                render_html('<div class="callout-warn"><b>⚠️ STATUS: DATA_KURANG</b> — Data pasien atau sediaan perlu dilengkapi sebelum verifikasi akhir.</div>')
             elif status == "PERLU_JUSTIFIKASI":
-                st.markdown('<div class="callout-danger"><b>⛔ STATUS: PERLU_JUSTIFIKASI</b> — Ditemukan restriksi yang dilanggar; disarankan melampirkan memo justifikasi KFT.</div>', unsafe_allow_html=True)
+                render_html('<div class="callout-danger"><b>⛔ STATUS: PERLU_JUSTIFIKASI</b> — Ditemukan restriksi yang dilanggar; disarankan melampirkan memo justifikasi KFT.</div>')
 
             for ev in res.get("evaluasi", []):
                 st.markdown("**Rincian Kriteria Penilaian Tiga Nilai:**")
@@ -560,11 +518,11 @@ elif current_page == "Evaluasi Resep":
                 if ev.get("data_diminta"):
                     st.markdown("**📋 Data Tambahan yang Perlu Dilengkapi:**")
                     for d in ev["data_diminta"]:
-                        st.markdown(f'<div class="callout-warn">Minta: {d}</div>', unsafe_allow_html=True)
+                        render_html(f'<div class="callout-warn">Minta: {d}</div>')
 
                 if ev.get("peringatan"):
                     for w in ev["peringatan"]:
-                        st.markdown(f'<div class="callout-danger">🛡️ <b>Peringatan Keselamatan:</b> {w}</div>', unsafe_allow_html=True)
+                        render_html(f'<div class="callout-danger">🛡️ <b>Peringatan Keselamatan:</b> {w}</div>')
         else:
             st.info("Isi formulir resep di sebelah kiri lalu klik 'Jalankan Evaluasi Resep'.")
 
@@ -573,7 +531,7 @@ elif current_page == "Evaluasi Resep":
 # PAGE: JUSTIFIKASI KLINIS (WIZARD & WORD .DOCX GENERATOR)
 # ═════════════════════════════════════════════════════════════
 elif current_page == "Justifikasi Klinis":
-    st.markdown(
+    render_html(
         """
         <div style="margin-bottom: 16px;">
             <div style="font-size: 1.5rem; font-weight: 800; color: #12345A;">📝 Wizard Justifikasi Klinis (KFT & Diktum KELIMA)</div>
@@ -581,8 +539,7 @@ elif current_page == "Justifikasi Klinis":
                 Susun memo justifikasi terstruktur berbasis bukti Scopus Q1–Q3 dan unduh langsung dalam format <b>Microsoft Word (.docx)</b> resmi untuk KFT/BPJS.
             </div>
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
     all_topics = ClinicalLiteratureScout.get_all_topics()
@@ -593,14 +550,13 @@ elif current_page == "Justifikasi Klinis":
     topic = ClinicalLiteratureScout.get_topic_by_id(topic_id)
 
     if topic:
-        st.markdown(
+        render_html(
             f"""
             <div class="callout-info">
                 <b>Masalah Klinis Pasien:</b> {topic['clinical_problem']}<br>
                 <b>Ketentuan Baku Fornas 2025:</b> {topic['fornas_rule']}
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
 
         st.markdown("#### 📚 Pilih Artikel Bukti Ilmiah (Scopus Q1–Q3):")
@@ -658,7 +614,7 @@ elif current_page == "Justifikasi Klinis":
 # PAGE: SIMULASI KLAIM (BPJS PRE-CLAIM COMPLIANCE AUDIT)
 # ═════════════════════════════════════════════════════════════
 elif current_page == "Simulasi Klaim":
-    st.markdown(
+    render_html(
         """
         <div style="margin-bottom: 16px;">
             <div style="font-size: 1.5rem; font-weight: 800; color: #12345A;">📊 Simulasi Klaim & Audit Kepatuhan BPJS Kesehatan</div>
@@ -666,8 +622,7 @@ elif current_page == "Simulasi Klaim":
                 Deteksi dini potensi sengketa (dispute) / penolakan klaim resep obat sebelum diverifikasi oleh BPJS Kesehatan.
             </div>
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
     c_sim1, c_sim2 = st.columns([1.1, 1.3])
@@ -688,39 +643,36 @@ elif current_page == "Simulasi Klaim":
         is_med_risk = "Insulin" in sim_drug and sim_fac.startswith("FPKTP")
 
         if is_high_risk:
-            st.markdown(
+            render_html(
                 """
                 <div class="callout-danger">
                     <b>🔴 TINGKAT RISIKO KLAIM: TINGGI (Potensi Dispute / Tolak)</b><br>
                     • Penggunaan PPI lebih dari 30 hari tanpa lampiran memo justifikasi KFT berisiko tidak dijamin JKN.<br>
                     • <b>Tindakan:</b> Buat Memo Justifikasi KFT di menu 'Justifikasi Klinis'.
                 </div>
-                """,
-                unsafe_allow_html=True,
+                """
             )
         elif is_med_risk:
-            st.markdown(
+            render_html(
                 """
                 <div class="callout-warn">
                     <b>🟡 TINGKAT RISIKO KLAIM: SEDANG (Perlu Verifikasi Faskes)</b><br>
                     • Inisiasi analog insulin awal dipersyaratkan dilakukan di FPKTL oleh Dokter Spesialis Penyakit Dalam.<br>
                     • <b>Tindakan:</b> Pastikan resep merupakan resep rujuk balik (PRB) yang sah.
                 </div>
-                """,
-                unsafe_allow_html=True,
+                """
             )
         else:
-            st.markdown(
+            render_html(
                 """
                 <div class="callout-ok">
                     <b>🟢 TINGKAT RISIKO KLAIM: RENDAH (Memenuhi Syarat Klaim)</b><br>
                     Resep memenuhi ketentuan Fornas 2025, kesesuaian diagnosis ICD-10, dan tingkat fasilitas penjaminan.
                 </div>
-                """,
-                unsafe_allow_html=True,
+                """
             )
 
-        st.markdown(
+        render_html(
             f"""
             <div style="background: #FFFFFF; border: 1px solid #E2EAF3; border-radius: 12px; padding: 14px; margin-top: 10px;">
                 <b style="color: #12345A;">Checklist 6 Parameter Verifikator BPJS:</b>
@@ -733,8 +685,7 @@ elif current_page == "Simulasi Klaim":
                     <div>✓ Peringatan Keselamatan Pasien: <b style="color: #065F46;">Aman</b></div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
 
 
@@ -742,7 +693,7 @@ elif current_page == "Simulasi Klaim":
 # PAGE: REFERENSI (BASIS HUKUM & PNPK KEMENKES 2025)
 # ═════════════════════════════════════════════════════════════
 elif current_page == "Referensi":
-    st.markdown(
+    render_html(
         """
         <div style="margin-bottom: 16px;">
             <div style="font-size: 1.5rem; font-weight: 800; color: #12345A;">📚 Basis Hukum Regulasi & Pedoman Pelayanan Kedokteran (PNPK)</div>
@@ -750,8 +701,7 @@ elif current_page == "Referensi":
                 Hierarki regulasi farmasi klinis Indonesia (KMK Fornas 1199/2025, UU 17/2023) dan 9 PNPK Kemenkes RI.
             </div>
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
     t_reg1, t_reg2 = st.tabs(["🏛️ PNPK Kemenkes RI 2025", "📜 Regulasi Pokok (Fornas & UU)"])
@@ -774,8 +724,8 @@ elif current_page == "Referensi":
         for p in filtered_pnpk:
             with st.expander(f"🩺 {p['title']} — {p['kmk']}", expanded=False):
                 st.markdown(f"**Nomor Kepmenkes:** `{p['kmk']}` | Ditetapkan Tahun {p['year']}")
-                st.markdown(f'<div class="callout-ok">{p["summary"]}</div>', unsafe_allow_html=True)
-                st.markdown(f"🔗 <a href='{p['source_url']}' target='_blank' style='color: #0F9F93; font-weight: 600;'>Buka Dokumen Resmi di Portal Kemenkes RI ↗</a>", unsafe_allow_html=True)
+                render_html(f'<div class="callout-ok">{p["summary"]}</div>')
+                render_html(f"🔗 <a href='{p['source_url']}' target='_blank' style='color: #0F9F93; font-weight: 600;'>Buka Dokumen Resmi di Portal Kemenkes RI ↗</a>")
 
     with t_reg2:
         try:
@@ -786,7 +736,7 @@ elif current_page == "Referensi":
                     with st.expander(f"📜 {reg['number']} — {art['article']}", expanded=False):
                         st.markdown(f"**{reg['title']}**")
                         for p in art.get("paragraphs", []):
-                            st.markdown(f'<div class="callout-ok">{p}</div>', unsafe_allow_html=True)
+                            render_html(f'<div class="callout-ok">{p}</div>')
         except Exception as e:
             st.error(f"Gagal memuat basis data regulasi: {e}")
 
@@ -795,7 +745,7 @@ elif current_page == "Referensi":
 # PAGE: LITERATUR ILMIAH (SCOPUS Q1-Q3 EVIDENCE SCOUT)
 # ═════════════════════════════════════════════════════════════
 elif current_page == "Literatur Ilmiah":
-    st.markdown(
+    render_html(
         """
         <div style="margin-bottom: 16px;">
             <div style="font-size: 1.5rem; font-weight: 800; color: #12345A;">📖 Telaah Literatur Klinis Berbasis Bukti (Scopus Q1–Q3)</div>
@@ -803,8 +753,7 @@ elif current_page == "Literatur Ilmiah":
                 Repositori bukti ilmiah peer-reviewed dari The Lancet, NEJM, JAMA, Diabetes Care, dan pedoman internasional.
             </div>
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
     q_lit = st.text_input("Cari Telaah Bukti (Zat Aktif, Masalah Klinis, atau Sinonim):", value="metformin")
@@ -813,12 +762,12 @@ elif current_page == "Literatur Ilmiah":
     st.write(f"Ditemukan **{len(results_topics)}** topik bukti ilmiah:")
     for t in results_topics:
         with st.expander(f"🔬 {t['title']} ({t['drug_inn']})", expanded=True):
-            st.markdown(f'<div class="callout-info"><b>Masalah Klinis:</b> {t["clinical_problem"]}<br><b>Restriksi Fornas:</b> {t["fornas_rule"]}</div>', unsafe_allow_html=True)
+            render_html(f'<div class="callout-info"><b>Masalah Klinis:</b> {t["clinical_problem"]}<br><b>Restriksi Fornas:</b> {t["fornas_rule"]}</div>')
             for art in t["articles"]:
                 c = art["citation"]
                 st.markdown(f"**• {c['authors']} ({c['year']})** — *\"{c['title']}\"*")
                 st.caption(f"{c['journal']} · `{c['quartile']}` · DOI: {c.get('doi', '-')}")
-                st.markdown(f'<div class="callout-ok"><b>Temuan:</b> {art["clinical_finding"]}</div>', unsafe_allow_html=True)
+                render_html(f'<div class="callout-ok"><b>Temuan:</b> {art["clinical_finding"]}</div>')
 
 
 # ═════════════════════════════════════════════════════════════
@@ -826,37 +775,34 @@ elif current_page == "Literatur Ilmiah":
 # ═════════════════════════════════════════════════════════════
 elif current_page in ("Riwayat", "Favorit"):
     if current_page == "Riwayat":
-        st.markdown(
+        render_html(
             """
             <div style="margin-bottom: 16px;">
                 <div style="font-size: 1.5rem; font-weight: 800; color: #12345A;">🕒 Riwayat Aktivitas & Penilaian Klinis</div>
                 <div style="font-size: 0.9rem; color: #64748B;">Daftar evaluasi resep, penelusuran Fornas, dan memo justifikasi yang telah diproses.</div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
         for h in st.session_state["history"]:
-            st.markdown(
+            render_html(
                 f"""
                 <div style="background: #FFFFFF; border: 1px solid #E2EAF3; border-radius: 10px; padding: 12px 16px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
                     <div>
                         <b style="color: #12345A;">{h['item']}</b> — <span style="color: #64748B;">{h['diagnosis']}</span><br>
                         <small style="color: #94A3B8;">{h['timestamp']} · {h['type']}</small>
                     </div>
-                    <span class="badge-terpenuhi">{h['status']}</span>
+                    <span style="background: #E8F8F0; color: #065F46; border: 1px solid #A7F3D0; border-radius: 9999px; font-size: 0.72rem; font-weight: 700; padding: 2px 8px;">{h['status']}</span>
                 </div>
-                """,
-                unsafe_allow_html=True,
+                """
             )
     else:
-        st.markdown(
+        render_html(
             """
             <div style="margin-bottom: 16px;">
                 <div style="font-size: 1.5rem; font-weight: 800; color: #12345A;">⭐ Obat & Diagnosis Favorit</div>
                 <div style="font-size: 0.9rem; color: #64748B;">Akses cepat item yang sering Anda evaluasi dalam praktik klinis sehari-hari.</div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
         favs = list(st.session_state["favorites"])
         if favs:
@@ -870,14 +816,13 @@ elif current_page in ("Riwayat", "Favorit"):
 # PAGE: PENGATURAN
 # ═════════════════════════════════════════════════════════════
 elif current_page == "Pengaturan":
-    st.markdown(
+    render_html(
         """
         <div style="margin-bottom: 16px;">
             <div style="font-size: 1.5rem; font-weight: 800; color: #12345A;">⚙️ Pengaturan Profil & Fasilitas Kesehatan</div>
             <div style="font-size: 0.9rem; color: #64748B;">Konfigurasi identitas dokter/apoteker dan tingkat fasilitas penjaminan.</div>
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
     c_set1, c_set2 = st.columns(2)
@@ -887,14 +832,13 @@ elif current_page == "Pengaturan":
         new_sipa = st.text_input("Nomor SIPA / SIP:", value=st.session_state["sipa_number"])
     with c_set2:
         new_fac = st.selectbox("Tingkat Fasilitas Kesehatan:", ["FPKTL (Rumah Sakit)", "FPKTP (Puskesmas / Klinik Primer)"])
-        st.markdown(
+        render_html(
             """
             <div class="callout-info" style="margin-top: 24px;">
                 <b>Pengaturan CDSS:</b><br>
                 Perubahan tingkat fasilitas akan secara otomatis menyesuaikan parameter validasi restriksi Fornas 2025.
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
 
     if st.button("💾 Simpan Pengaturan", type="primary"):

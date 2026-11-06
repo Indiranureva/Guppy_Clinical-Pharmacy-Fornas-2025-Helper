@@ -551,3 +551,35 @@ button[kind="secondary"]:hover {
   background-color: #F8FAFC !important;
   border-color: #CBD5E1 !important;
 }
+
+
+/* ─────────────────────────────────────────────────────────────
+   STREAMLIT CONTAINER & TAB STYLING OVERRIDES
+   ───────────────────────────────────────────────────────────── */
+div[data-testid="stVerticalBlockBorderWrapper"] {
+  background-color: #FFFFFF !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-sm) !important;
+  padding: 14px !important;
+  margin-bottom: 12px !important;
+}
+
+div[data-baseweb="tab-list"] {
+  gap: 8px !important;
+  border-bottom: 1px solid var(--border-light) !important;
+}
+
+button[data-baseweb="tab"] {
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  padding: 6px 12px !important;
+  color: var(--text-secondary) !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+button[data-baseweb="tab"][aria-selected="true"] {
+  color: var(--primary-teal) !important;
+  border-bottom: 2px solid var(--primary-teal) !important;
+}

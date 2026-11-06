@@ -241,7 +241,44 @@ Agen mengidentifikasi 4 faktor penyebab:
 
 ---
 
-## 10. Matriks Commit Git & Status Validasi Unit Test
+## 10. SIKLUS 9: Perbaikan Rendering UI (Eliminasi Kode Mentah) & Pemulihan Fungsionalitas Interaktif Penuh
+
+### 10.1. Request Pengguna
+> *"perbaiki ui guppy dan fungsinya, ui guppy masih belum bekerja dengan baik dan menampilkan kode bukan ui sesungguhnya"*
+
+### 10.2. Analisis Akar Masalah (Root Cause Analysis)
+1. **Markdown Indented Code Block Bug:**
+   * Di dalam Streamlit, pemanggilan `st.markdown("""<tag>...</tag>""", unsafe_allow_html=True)` yang ditulis di dalam fungsi/blok Python memiliki indentasi 8–16 spasi.
+   * Spesifikasi parser Markdown (CommonMark) secara baku menginterpretasikan baris teks apa pun yang diawali oleh 4 spasi atau lebih sebagai **blok kode (`<pre><code>`)**.
+   * Akibatnya, alih-alih merender kartu HTML/CSS pastel yang estetis, peramban menampilkan kotak kode abu-abu yang memperlihatkan kode HTML/CSS mentah kepada pengguna.
+2. **Unclosed HTML Tag across Widget Boundaries:**
+   * Pada kolom alur kerja (*interactive workflow*), tag `<div>` dibuka pada pemanggilan `st.markdown()` pertama, kemudian disisipkan widget Streamlit bawaan (`st.radio`), lalu ditutup dengan `</div>` pada pemanggilan `st.markdown()` berikutnya.
+   * Hal ini merusak struktur DOM React Streamlit dan menyebabkan rendering elemen di sekitarnya menjadi cacat (*broken markup*).
+3. **Cramped Column Layout:**
+   * Keempat kolom alur kerja (*1. Cek Fornas, 2. Cek Diagnosa, 3. Buat Justifikasi, 4. Hasil Analisis*) sebelumnya disematkan ke dalam kolom kiri yang sempit bersamaan dengan widget samping, sehingga setiap kartu hanya mendapat lebar ~15% layar dan terhimpit.
+4. **Fungsionalitas Belum Aktif:**
+   * Tombol paginasi Tips Hari Ini (`< >`) sebelumnya berupa teks statis dan belum merespons klik pengguna.
+   * Bilah pencarian global di bagian atas belum dapat menerima input pencarian aktif.
+
+### 10.3. Tindakan & Implementasi Solusi
+1. **Pembuatan Utilitas `render_html()` (`guppy/frontend/components/render_utils.py`):**
+   * Menggunakan API bawaan `st.html()` (Streamlit 1.64) yang menginjeksi HTML langsung ke DOM tanpa melalui parser Markdown.
+   * Mengintegrasikan `textwrap.dedent()` untuk menghapus seluruh spasi indentasi terdepan, sehingga mustahil memicu mode kode Markdown.
+2. **Arsitektur Kontainer Bersih (`st.container(border=True)`):**
+   * Mengganti pembungkus HTML manual dengan `with st.container(border=True):` bawaan Streamlit.
+   * Memastikan seluruh widget interaktif (`st.text_input`, `st.radio`, `st.button`, `st.download_button`) berjalan secara native, responsif, dan bebas konflik DOM.
+3. **Penataan Layout Presisi Sesuai Mockup:**
+   * **Bagian Atas (3 Kolom):** Kolom Kiri memuat Banner Sambutan Maskot + 4 Kartu Aksi Pastel; Kolom Tengah memuat Statistik Penggunaan + Tips Hari Ini + Regulasi Cepat; Kolom Kanan memuat 6 Nilai Utama GUPPY.
+   * **Bagian Bawah (Full Width - 4 Kolom):** Memberikan ruang penuh (100% lebar layar) untuk keempat kartu alur kerja klinis interaktif (*Cek Fornas*, *Cek Diagnosa*, *Buat Justifikasi*, *Hasil Analisis & Simulasi Klaim*).
+4. **Pengaktifan Fitur Interaktif:**
+   * Tombol `◀` dan `▶` pada *Tips Hari Ini* kini berfungsi secara langsung mengubah tips 1–5 secara *real-time*.
+   * Bilah pencarian global di atas kini aktif dan dapat langsung melakukan penelusuran obat ke halaman Cek Fornas.
+   * Navigasi satu-klik pada ke-4 kartu aksi pastel berfungsi mulus menghubungkan halaman terkait.
+   * Unduhan berkas Word (.docx) pada kartu hasil analisis tetap berjalan lancar.
+
+---
+
+## 11. Matriks Commit Git & Status Validasi Unit Test
 
 | Hash Commit | Kategori | Komponen Berkas | Ringkasan Modifikasi |
 | :--- | :--- | :--- | :--- |
@@ -252,13 +289,15 @@ Agen mengidentifikasi 4 faktor penyebab:
 | `e75f6b8` | `feat(search)` | `clinical_literature.py`, `app.py`, `test_clinical_literature.py` | Deep Search, kamus sinonim bilingual, & Smart Universal Justification |
 | `a231f1b` | `docs` | `RIWAYAT_REQUEST_DAN_PERUBAHAN.md` | Dokumentasi komprehensif riwayat request pengguna & implementasi AI |
 | `4999382` | `feat(export)` | `docx_generator.py`, `clinical_literature.py`, `app.py`, `requirements.txt` | Transformasi unduhan memo justifikasi klinis KFT ke format Microsoft Word (.docx) |
-| `(terbaru)` | `feat(ui-revamp)` | `guppy/frontend/`, `components/`, `assets/style.css` | Desain & implementasi antarmuka CDSS pastel modern sesuai mockup visual resmi |
+| `a71508e` | `feat(ui-revamp)` | `guppy/frontend/`, `components/`, `assets/style.css` | Desain & implementasi antarmuka CDSS pastel modern sesuai mockup visual resmi |
+| `(terbaru)` | `fix(ui-render)` | `render_utils.py`, `interactive_workflow.py`, `ui_cards.py`, `app.py` | Perbaikan parsing HTML (eliminasi tampilan kode mentah) & pemulihan fungsionalitas interaktif |
 
 ### Status Verifikasi Pengujian (Pytest):
 ```text
 ============================= test session starts =============================
 platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0
 rootdir: Guppy_Clinical Pharmacy & Fornas 2025 Helper
+plugins: anyio-4.15.1
 collected 39 items
 
 tests\test_classifier.py ...                                             [  7%]
@@ -268,7 +307,7 @@ tests\test_gap_analyzer.py ..                                            [ 58%]
 tests\test_roadmap.py ...                                                [ 66%]
 tests\test_security.py .............                                     [100%]
 
-============================= 39 passed in 1.36s ==============================
+============================= 39 passed in 1.61s ==============================
 ```
 
 ---

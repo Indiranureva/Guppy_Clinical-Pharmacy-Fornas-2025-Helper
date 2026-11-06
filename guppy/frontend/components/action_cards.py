@@ -1,6 +1,6 @@
 """Primary Action Cards Component for Beranda.
 
-Displays 4 distinct pastel-accented interactive action cards:
+Displays 4 distinct pastel-accented interactive action cards matching the mockup:
 - Cek Fornas (Mint)
 - Cek Diagnosa (Blue)
 - Buat Justifikasi (Peach)
@@ -8,84 +8,97 @@ Displays 4 distinct pastel-accented interactive action cards:
 """
 
 import streamlit as st
+from guppy.frontend.components.render_utils import render_html
 
 
 def render_four_action_cards():
     """Render the 4 primary action cards with one-click navigation."""
     c1, c2, c3, c4 = st.columns(4)
 
+    # 1. CEK FORNAS
     with c1:
-        st.markdown(
-            """
-            <div class="action-card action-card-mint">
-                <div class="action-icon-box" style="background: #E8F8F0; color: #0F9F93;">
-                    💊
+        with st.container(border=True):
+            render_html(
+                """
+                <div style="min-height: 140px; display: flex; flex-direction: column;">
+                    <div style="width: 42px; height: 42px; border-radius: 10px; background: #E8F8F0; color: #0F9F93; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; margin-bottom: 12px; border: 1px solid #A7F3D0;">
+                        💊
+                    </div>
+                    <div style="font-size: 1.05rem; font-weight: 700; color: #12345A; margin-bottom: 6px;">
+                        Cek Fornas
+                    </div>
+                    <div style="font-size: 0.8rem; color: #64748B; line-height: 1.4; flex-grow: 1;">
+                        Lihat ketersediaan obat, restriksi, indikasi, dan ketentuan penulisan.
+                    </div>
                 </div>
-                <div class="action-card-title">Cek Fornas</div>
-                <div class="action-card-desc">
-                    Lihat ketersediaan obat, restriksi, indikasi, dan ketentuan penulisan.
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        if st.button("Buka Cek Fornas →", key="btn_act_fornas", use_container_width=True):
-            st.session_state["nav_selection"] = "Cek Fornas"
-            st.rerun()
+                """
+            )
+            if st.button("Cek Fornas →", key="btn_act_fornas", use_container_width=True):
+                st.session_state["nav_selection"] = "Cek Fornas"
+                st.rerun()
 
+    # 2. CEK DIAGNOSA
     with c2:
-        st.markdown(
-            """
-            <div class="action-card action-card-blue">
-                <div class="action-icon-box" style="background: #EBF3FE; color: #2563EB;">
-                    🩺
+        with st.container(border=True):
+            render_html(
+                """
+                <div style="min-height: 140px; display: flex; flex-direction: column;">
+                    <div style="width: 42px; height: 42px; border-radius: 10px; background: #EBF3FE; color: #2563EB; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; margin-bottom: 12px; border: 1px solid #BFDBFE;">
+                        🩺
+                    </div>
+                    <div style="font-size: 1.05rem; font-weight: 700; color: #12345A; margin-bottom: 6px;">
+                        Cek Diagnosa
+                    </div>
+                    <div style="font-size: 0.8rem; color: #64748B; line-height: 1.4; flex-grow: 1;">
+                        Cocokkan kode ICD-10 dengan ketentuan Fornas & diagnosa yang sesuai.
+                    </div>
                 </div>
-                <div class="action-card-title">Cek Diagnosa</div>
-                <div class="action-card-desc">
-                    Cocokkan kode ICD-10 dengan ketentuan Fornas & diagnosa yang sesuai.
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        if st.button("Buka Cek Diagnosa →", key="btn_act_diag", use_container_width=True):
-            st.session_state["nav_selection"] = "Cek Diagnosa"
-            st.rerun()
+                """
+            )
+            if st.button("Cek Diagnosa →", key="btn_act_diag", use_container_width=True):
+                st.session_state["nav_selection"] = "Cek Diagnosa"
+                st.rerun()
 
+    # 3. BUAT JUSTIFIKASI
     with c3:
-        st.markdown(
-            """
-            <div class="action-card action-card-peach">
-                <div class="action-icon-box" style="background: #FFF0E5; color: #EA580C;">
-                    📄
+        with st.container(border=True):
+            render_html(
+                """
+                <div style="min-height: 140px; display: flex; flex-direction: column;">
+                    <div style="width: 42px; height: 42px; border-radius: 10px; background: #FFF0E5; color: #EA580C; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; margin-bottom: 12px; border: 1px solid #FED7AA;">
+                        📄
+                    </div>
+                    <div style="font-size: 1.05rem; font-weight: 700; color: #12345A; margin-bottom: 6px;">
+                        Buat Justifikasi
+                    </div>
+                    <div style="font-size: 0.8rem; color: #64748B; line-height: 1.4; flex-grow: 1;">
+                        Template alasan sah (LINI_1_GAGAL, KONTRAINDIKASI, dll).
+                    </div>
                 </div>
-                <div class="action-card-title">Buat Justifikasi</div>
-                <div class="action-card-desc">
-                    Template alasan sah (LINI_1_GAGAL, KONTRAINDIKASI, dll).
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        if st.button("Buka Justifikasi →", key="btn_act_just", use_container_width=True):
-            st.session_state["nav_selection"] = "Justifikasi Klinis"
-            st.rerun()
+                """
+            )
+            if st.button("Buat Justifikasi →", key="btn_act_just", use_container_width=True):
+                st.session_state["nav_selection"] = "Justifikasi Klinis"
+                st.rerun()
 
+    # 4. SIMULASI KLAIM
     with c4:
-        st.markdown(
-            """
-            <div class="action-card action-card-lavender">
-                <div class="action-icon-box" style="background: #F3EEFF; color: #7C3AED;">
-                    🧮
+        with st.container(border=True):
+            render_html(
+                """
+                <div style="min-height: 140px; display: flex; flex-direction: column;">
+                    <div style="width: 42px; height: 42px; border-radius: 10px; background: #F3EEFF; color: #7C3AED; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; margin-bottom: 12px; border: 1px solid #DDD6FE;">
+                        🧮
+                    </div>
+                    <div style="font-size: 1.05rem; font-weight: 700; color: #12345A; margin-bottom: 6px;">
+                        Simulasi Klaim
+                    </div>
+                    <div style="font-size: 0.8rem; color: #64748B; line-height: 1.4; flex-grow: 1;">
+                        Cek potensi penolakan dan estimasi kesesuaian klaim BPJS.
+                    </div>
                 </div>
-                <div class="action-card-title">Simulasi Klaim</div>
-                <div class="action-card-desc">
-                    Cek potensi penolakan dan estimasi kesesuaian klaim BPJS Kesehatan.
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        if st.button("Buka Simulasi Klaim →", key="btn_act_klaim", use_container_width=True):
-            st.session_state["nav_selection"] = "Simulasi Klaim"
-            st.rerun()
+                """
+            )
+            if st.button("Simulasi Klaim →", key="btn_act_klaim", use_container_width=True):
+                st.session_state["nav_selection"] = "Simulasi Klaim"
+                st.rerun()
