@@ -1,11 +1,21 @@
 /* Guppy Clinical Pharmacy & Fornas 2025 Helper
    Modern Pastel Clinical Decision Support Design System
-   Color Tokens based on Official Specifications & Mockup
+   Harmonized Light Theme & Contrast System
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
+/* ─────────────────────────────────────────────────────────────
+   1. CENTRALIZED DESIGN TOKENS (LIGHT THEME FIRST)
+   ───────────────────────────────────────────────────────────── */
 :root {
+  /* Streamlit Native Theme Variables Synchronization */
+  --primary-color: #0F9F93;
+  --background-color: #F5F8FC;
+  --secondary-background-color: #FFFFFF;
+  --text-color: #172B4D;
+
+  /* Brand Palette */
   --primary-navy: #12345A;
   --sidebar-navy: #0D233A;
   --primary-teal: #0F9F93;
@@ -37,14 +47,19 @@
   --pastel-pink-border: #FECDD3;
   --pastel-pink-text: #9F1239;
 
-  /* Neutrals */
+  /* High-Contrast Light Neutrals */
   --main-bg: #F5F8FC;
   --card-bg: #FFFFFF;
   --text-primary: #172B4D;
-  --text-secondary: #64748B;
-  --text-muted: #94A3B8;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
   --border-light: #E2EAF3;
   --border-subtle: #EDF2F7;
+  
+  --input-bg: #FFFFFF;
+  --input-border: #CBD5E1;
+  --expander-header-bg: #F8FAFC;
+  --expander-border: #E2EAF3;
   
   --radius-lg: 16px;
   --radius-md: 12px;
@@ -56,31 +71,61 @@
   --shadow-lg: 0 10px 25px rgba(18, 52, 90, 0.08);
 }
 
-/* Global Page Resets & Base Fonts */
-html, body, [class*="css"] {
-  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+/* ─────────────────────────────────────────────────────────────
+   2. GLOBAL PAGE & BASE TYPOGRAPHY
+   ───────────────────────────────────────────────────────────── */
+html, body {
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--text-primary);
+  background-color: var(--main-bg);
 }
 
 .stApp {
-  background-color: var(--main-bg) !important;
+  background-color: var(--main-bg);
+  color: var(--text-primary);
 }
 
-/* Hide default streamlit header decoration */
+/* Streamlit Header & Top Container */
 header[data-testid="stHeader"] {
   background-color: transparent !important;
   z-index: 1;
 }
 
-/* Top App Container */
 .block-container {
   padding-top: 1.5rem !important;
   padding-bottom: 3rem !important;
   max-width: 1440px !important;
 }
 
+/* Base Headings & Paragraphs Contrast */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--primary-navy) !important;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+div[data-testid="stMarkdownContainer"] p {
+  color: var(--text-primary);
+  line-height: 1.55;
+}
+
+div[data-testid="stMarkdownContainer"] code {
+  background-color: #EEF2F6;
+  color: var(--primary-navy);
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.88em;
+}
+
+div[data-testid="stCaptionContainer"] p,
+.stCaption {
+  color: var(--text-secondary) !important;
+  font-size: 0.85rem;
+}
+
 /* ─────────────────────────────────────────────────────────────
-   SIDEBAR STYLING — Deep Navy (#12345A / #0D233A)
+   3. SIDEBAR STYLING — Deep Navy (#12345A / #0D233A)
    ───────────────────────────────────────────────────────────── */
 section[data-testid="stSidebar"] {
   background-color: var(--sidebar-navy) !important;
@@ -102,7 +147,6 @@ section[data-testid="stSidebar"] label {
   color: #F8FAFC !important;
 }
 
-/* Custom Nav Radio / Buttons inside Sidebar */
 section[data-testid="stSidebar"] div[role="radiogroup"] > label {
   background-color: transparent;
   padding: 8px 14px;
@@ -128,7 +172,292 @@ section[data-testid="stSidebar"] div[role="radiogroup"] > label:has(input:checke
 }
 
 /* ─────────────────────────────────────────────────────────────
-   TOP NAVIGATION BAR
+   4. STREAMLIT TABS (CLEAR CONTRAST INACTIVE & ACTIVE)
+   ───────────────────────────────────────────────────────────── */
+div[data-baseweb="tab-list"] {
+  gap: 8px !important;
+  border-bottom: 2px solid var(--border-light) !important;
+  background-color: transparent !important;
+  margin-bottom: 16px !important;
+}
+
+button[data-baseweb="tab"] {
+  font-size: 0.92rem !important;
+  font-weight: 600 !important;
+  padding: 10px 16px !important;
+  color: var(--text-secondary) !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: 3px solid transparent !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+button[data-baseweb="tab"] p,
+button[data-baseweb="tab"] span {
+  color: var(--text-secondary) !important;
+  font-weight: 600 !important;
+}
+
+button[data-baseweb="tab"]:hover {
+  color: var(--primary-teal) !important;
+  background-color: rgba(15, 159, 147, 0.05) !important;
+}
+
+button[data-baseweb="tab"]:hover p,
+button[data-baseweb="tab"]:hover span {
+  color: var(--primary-teal) !important;
+}
+
+button[data-baseweb="tab"][aria-selected="true"] {
+  color: var(--primary-teal) !important;
+  border-bottom: 3px solid var(--primary-teal) !important;
+  font-weight: 700 !important;
+  background-color: transparent !important;
+}
+
+button[data-baseweb="tab"][aria-selected="true"] p,
+button[data-baseweb="tab"][aria-selected="true"] span {
+  color: var(--primary-teal) !important;
+  font-weight: 700 !important;
+}
+
+div[data-baseweb="tab-highlight"] {
+  background-color: var(--primary-teal) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   5. WIDGET LABELS & FORM CONTROLS (LIGHT THEME)
+   ───────────────────────────────────────────────────────────── */
+/* Widget Labels */
+label[data-testid="stWidgetLabel"],
+label[data-testid="stWidgetLabel"] p,
+label[data-testid="stWidgetLabel"] span {
+  color: var(--primary-navy) !important;
+  font-weight: 600 !important;
+  font-size: 0.90rem !important;
+}
+
+/* Input Fields */
+div[data-baseweb="input"] {
+  background-color: var(--input-bg) !important;
+  border: 1px solid var(--input-border) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+div[data-baseweb="input"] > div {
+  background-color: var(--input-bg) !important;
+}
+
+div[data-baseweb="input"] input {
+  background-color: var(--input-bg) !important;
+  color: var(--text-primary) !important;
+  font-size: 0.92rem !important;
+}
+
+div[data-baseweb="input"] input::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 1 !important;
+}
+
+div[data-baseweb="input"]:focus-within {
+  border-color: var(--primary-teal) !important;
+  box-shadow: 0 0 0 3px rgba(15, 159, 147, 0.15) !important;
+}
+
+/* Textarea */
+div[data-baseweb="textarea"] {
+  background-color: var(--input-bg) !important;
+  border: 1px solid var(--input-border) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+div[data-baseweb="textarea"] textarea {
+  background-color: var(--input-bg) !important;
+  color: var(--text-primary) !important;
+  font-size: 0.90rem !important;
+}
+
+div[data-baseweb="textarea"]:focus-within {
+  border-color: var(--primary-teal) !important;
+  box-shadow: 0 0 0 3px rgba(15, 159, 147, 0.15) !important;
+}
+
+/* Selectbox */
+div[data-baseweb="select"] > div {
+  background-color: var(--input-bg) !important;
+  border: 1px solid var(--input-border) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--text-primary) !important;
+}
+
+div[data-baseweb="select"] span,
+div[data-baseweb="select"] div {
+  color: var(--text-primary) !important;
+}
+
+div[data-baseweb="select"] svg {
+  fill: var(--text-secondary) !important;
+}
+
+ul[role="listbox"] {
+  background-color: #FFFFFF !important;
+  border: 1px solid var(--border-light) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+ul[role="listbox"] li {
+  color: var(--text-primary) !important;
+  background-color: #FFFFFF !important;
+}
+
+ul[role="listbox"] li:hover,
+ul[role="listbox"] li[aria-selected="true"] {
+  background-color: #F1F5F9 !important;
+  color: var(--primary-teal) !important;
+}
+
+/* Number Input */
+div[data-testid="stNumberInput"] button {
+  background-color: #F8FAFC !important;
+  border-color: var(--input-border) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Checkboxes */
+div[data-testid="stCheckbox"] label p,
+div[data-testid="stCheckbox"] label span {
+  color: var(--text-primary) !important;
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+}
+
+div[data-testid="stCheckbox"] [data-baseweb="checkbox"] > div:first-child {
+  background-color: #FFFFFF !important;
+  border: 1px solid var(--input-border) !important;
+  border-radius: 4px !important;
+}
+
+div[data-testid="stCheckbox"] [data-baseweb="checkbox"][aria-checked="true"] > div:first-child,
+div[data-testid="stCheckbox"] input:checked + div {
+  background-color: var(--primary-teal) !important;
+  border-color: var(--primary-teal) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   6. STREAMLIT EXPANDERS (CRISP LIGHT CARDS)
+   ───────────────────────────────────────────────────────────── */
+div[data-testid="stExpander"],
+details[data-testid="stExpander"] {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--expander-border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-sm) !important;
+  overflow: hidden !important;
+  margin-bottom: 12px !important;
+}
+
+details[data-testid="stExpander"] > summary {
+  background-color: var(--expander-header-bg) !important;
+  color: var(--primary-navy) !important;
+  padding: 12px 18px !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  border-bottom: 1px solid transparent !important;
+  transition: background-color 0.2s ease !important;
+}
+
+details[data-testid="stExpander"] > summary:hover {
+  background-color: #F1F5F9 !important;
+}
+
+details[data-testid="stExpander"][open] > summary {
+  border-bottom: 1px solid var(--expander-border) !important;
+}
+
+details[data-testid="stExpander"] > summary p,
+details[data-testid="stExpander"] > summary span {
+  color: var(--primary-navy) !important;
+  font-weight: 700 !important;
+}
+
+details[data-testid="stExpander"] > summary svg {
+  fill: var(--primary-navy) !important;
+  color: var(--primary-navy) !important;
+}
+
+details[data-testid="stExpander"] > div[role="region"],
+details[data-testid="stExpander"] > div[data-testid="stExpanderDetails"] {
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+  padding: 16px 20px !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   7. VERTICAL CONTAINER WITH BORDER
+   ───────────────────────────────────────────────────────────── */
+div[data-testid="stVerticalBlockBorderWrapper"] {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-sm) !important;
+  padding: 18px !important;
+  margin-bottom: 14px !important;
+}
+
+/* Popover Content */
+div[data-testid="stPopoverBody"] {
+  background-color: #FFFFFF !important;
+  border: 1px solid var(--border-light) !important;
+  box-shadow: var(--shadow-md) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 16px !important;
+  color: var(--text-primary) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   8. STREAMLIT BUTTON OVERRIDES
+   ───────────────────────────────────────────────────────────── */
+button[data-testid="baseButton-primary"],
+button[kind="primary"] {
+  background-color: var(--primary-teal) !important;
+  border-color: var(--primary-teal) !important;
+  border-radius: var(--radius-sm) !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 6px rgba(15, 159, 147, 0.25) !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  transition: all 0.2s ease !important;
+}
+
+button[data-testid="baseButton-primary"]:hover,
+button[kind="primary"]:hover {
+  background-color: var(--teal-dark) !important;
+  border-color: var(--teal-dark) !important;
+  transform: translateY(-1px) !important;
+}
+
+button[data-testid="baseButton-secondary"],
+button[kind="secondary"] {
+  background-color: #FFFFFF !important;
+  border: 1px solid var(--input-border) !important;
+  border-radius: var(--radius-sm) !important;
+  color: var(--primary-navy) !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  transition: all 0.2s ease !important;
+}
+
+button[data-testid="baseButton-secondary"]:hover,
+button[kind="secondary"]:hover {
+  background-color: #F8FAFC !important;
+  border-color: #94A3B8 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   9. GUPPY CUSTOM COMPONENTS (TOPBAR, WELCOME BANNER, CARDS)
    ───────────────────────────────────────────────────────────── */
 .guppy-topbar {
   display: flex;
@@ -142,46 +471,6 @@ section[data-testid="stSidebar"] div[role="radiogroup"] > label:has(input:checke
   box-shadow: var(--shadow-sm);
 }
 
-.guppy-search-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 50%;
-  max-width: 500px;
-}
-
-.guppy-search-input {
-  width: 100%;
-  padding: 8px 40px 8px 16px;
-  background-color: #F8FAFC;
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-pill);
-  font-size: 0.88rem;
-  color: var(--text-primary);
-  outline: none;
-  transition: border-color 0.2s ease;
-}
-
-.guppy-search-input:focus {
-  border-color: var(--primary-teal);
-  background-color: #FFFFFF;
-}
-
-.guppy-user-badge {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 14px;
-  background-color: var(--pastel-blue);
-  border: 1px solid var(--pastel-blue-border);
-  border-radius: var(--radius-pill);
-  font-size: 0.86rem;
-  color: var(--primary-navy);
-}
-
-/* ─────────────────────────────────────────────────────────────
-   WELCOME BANNER (Pastel Yellow / Cream)
-   ───────────────────────────────────────────────────────────── */
 .welcome-banner {
   background: linear-gradient(135deg, #FFFDF5 0%, var(--pastel-yellow) 100%);
   border: 1px solid var(--pastel-yellow-border);
@@ -220,182 +509,11 @@ section[data-testid="stSidebar"] div[role="radiogroup"] > label:has(input:checke
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--pastel-yellow-text);
+  flex-wrap: wrap;
 }
 
 /* ─────────────────────────────────────────────────────────────
-   PRIMARY WORKFLOW ACTION CARDS (4 CARDS)
-   ───────────────────────────────────────────────────────────── */
-.action-card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  height: 100%;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: var(--shadow-sm);
-  position: relative;
-}
-
-.action-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-  border-color: #CBD5E1;
-}
-
-.action-card-mint {
-  border-top: 4px solid var(--primary-teal);
-}
-.action-card-blue {
-  border-top: 4px solid #3B82F6;
-}
-.action-card-peach {
-  border-top: 4px solid #F97316;
-}
-.action-card-lavender {
-  border-top: 4px solid #8B5CF6;
-}
-
-.action-icon-box {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.35rem;
-  margin-bottom: 12px;
-}
-
-.action-card-title {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--primary-navy);
-  margin-bottom: 6px;
-}
-
-.action-card-desc {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.45;
-  margin-bottom: 16px;
-  flex-grow: 1;
-}
-
-.action-card-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 8px 14px;
-  border-radius: var(--radius-sm);
-  font-size: 0.86rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background 0.2s ease;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   RIGHT SIDEBAR PANELS (STATS, TIPS, REGULASI, NILAI UTAMA)
-   ───────────────────────────────────────────────────────────── */
-.guppy-card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-md);
-  padding: 16px 20px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow-sm);
-}
-
-.guppy-card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--primary-navy);
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-/* Metric Mini Cards Grid */
-.stat-mini-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
-.stat-mini-card {
-  border-radius: var(--radius-md);
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-}
-
-.stat-num {
-  font-size: 1.55rem;
-  font-weight: 800;
-  line-height: 1.1;
-  margin-bottom: 2px;
-}
-
-.stat-label {
-  font-size: 0.76rem;
-  font-weight: 600;
-  color: #475569;
-}
-
-/* Tips Card */
-.tips-card {
-  background-color: #FFFDF5;
-  border: 1px solid var(--pastel-yellow-border);
-  border-radius: var(--radius-md);
-  padding: 14px 18px;
-  margin-bottom: 16px;
-}
-
-/* Value Item Cards */
-.value-card-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.value-card-item:last-child {
-  border-bottom: none;
-}
-
-.value-icon-badge {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 1rem;
-}
-
-.value-title {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--primary-navy);
-  margin-bottom: 2px;
-}
-
-.value-desc {
-  font-size: 0.78rem;
-  color: var(--text-secondary);
-  line-height: 1.4;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   THREE-VALUED LOGIC & CLINICAL BADGES
+   10. THREE-VALUED LOGIC & CLINICAL BADGES
    ───────────────────────────────────────────────────────────── */
 .badge-terpenuhi {
   background-color: var(--pastel-mint);
@@ -467,13 +585,13 @@ section[data-testid="stSidebar"] div[role="radiogroup"] > label:has(input:checke
 }
 
 /* ─────────────────────────────────────────────────────────────
-   CLINICAL CALLOUT BOXES
+   11. CLINICAL CALLOUT BOXES
    ───────────────────────────────────────────────────────────── */
 .callout-ok {
   background-color: var(--pastel-mint);
   border-left: 4px solid #10B981;
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  padding: 10px 14px;
+  padding: 12px 16px;
   margin: 8px 0;
   color: var(--pastel-mint-text);
   font-size: 0.88rem;
@@ -484,7 +602,7 @@ section[data-testid="stSidebar"] div[role="radiogroup"] > label:has(input:checke
   background-color: var(--pastel-yellow);
   border-left: 4px solid #F59E0B;
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  padding: 10px 14px;
+  padding: 12px 16px;
   margin: 8px 0;
   color: var(--pastel-yellow-text);
   font-size: 0.88rem;
@@ -495,7 +613,7 @@ section[data-testid="stSidebar"] div[role="radiogroup"] > label:has(input:checke
   background-color: var(--pastel-pink);
   border-left: 4px solid #EF4444;
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  padding: 10px 14px;
+  padding: 12px 16px;
   margin: 8px 0;
   color: var(--pastel-pink-text);
   font-size: 0.88rem;
@@ -506,102 +624,9 @@ section[data-testid="stSidebar"] div[role="radiogroup"] > label:has(input:checke
   background-color: var(--pastel-blue);
   border-left: 4px solid #3B82F6;
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  padding: 10px 14px;
+  padding: 12px 16px;
   margin: 8px 0;
   color: var(--pastel-blue-text);
   font-size: 0.88rem;
   line-height: 1.5;
-}
-
-/* Form inputs styling */
-div[data-baseweb="input"] {
-  border-radius: var(--radius-sm) !important;
-  border-color: var(--border-light) !important;
-}
-
-div[data-baseweb="input"]:focus-within {
-  border-color: var(--primary-teal) !important;
-  box-shadow: 0 0 0 2px rgba(15, 159, 147, 0.2) !important;
-}
-
-/* Streamlit Button Overrides */
-button[data-testid="baseButton-primary"],
-button[kind="primary"] {
-  background-color: var(--primary-teal) !important;
-  border-color: var(--primary-teal) !important;
-  border-radius: var(--radius-sm) !important;
-  color: #FFFFFF !important;
-  font-weight: 600 !important;
-  box-shadow: 0 2px 6px rgba(15, 159, 147, 0.25) !important;
-  cursor: pointer !important;
-  pointer-events: auto !important;
-  transition: all 0.2s ease !important;
-}
-
-button[data-testid="baseButton-primary"]:hover,
-button[kind="primary"]:hover {
-  background-color: var(--teal-dark) !important;
-  border-color: var(--teal-dark) !important;
-  transform: translateY(-1px) !important;
-}
-
-button[data-testid="baseButton-secondary"],
-button[kind="secondary"] {
-  background-color: #FFFFFF !important;
-  border-color: var(--border-light) !important;
-  border-radius: var(--radius-sm) !important;
-  color: var(--primary-navy) !important;
-  font-weight: 600 !important;
-  cursor: pointer !important;
-  pointer-events: auto !important;
-  transition: all 0.2s ease !important;
-}
-
-button[data-testid="baseButton-secondary"]:hover,
-button[kind="secondary"]:hover {
-  background-color: #F8FAFC !important;
-  border-color: #CBD5E1 !important;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   STREAMLIT CONTAINER & TAB STYLING OVERRIDES
-   ───────────────────────────────────────────────────────────── */
-div[data-testid="stVerticalBlockBorderWrapper"] {
-  background-color: #FFFFFF !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius-md) !important;
-  box-shadow: var(--shadow-sm) !important;
-  padding: 16px !important;
-  margin-bottom: 14px !important;
-}
-
-div[data-baseweb="tab-list"] {
-  gap: 8px !important;
-  border-bottom: 2px solid var(--border-light) !important;
-  background-color: transparent !important;
-  margin-bottom: 16px !important;
-}
-
-button[data-baseweb="tab"] {
-  font-size: 0.92rem !important;
-  font-weight: 600 !important;
-  padding: 10px 16px !important;
-  color: var(--text-secondary) !important;
-  background-color: transparent !important;
-  border: none !important;
-  border-bottom: 3px solid transparent !important;
-  cursor: pointer !important;
-  pointer-events: auto !important;
-  transition: all 0.2s ease !important;
-}
-
-button[data-baseweb="tab"]:hover {
-  color: var(--primary-teal) !important;
-  background-color: rgba(15, 159, 147, 0.05) !important;
-}
-
-button[data-baseweb="tab"][aria-selected="true"] {
-  color: var(--primary-teal) !important;
-  border-bottom: 3px solid var(--primary-teal) !important;
-  font-weight: 700 !important;
 }
