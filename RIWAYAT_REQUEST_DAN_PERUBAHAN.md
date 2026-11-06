@@ -22,7 +22,8 @@
 11. [Siklus 10: Pemulihan Esensi Klinis Asli, Integrasi Logo Resmi Guppy, Fitur Ganti Nama dr. Andini, & Perbaikan Tombol](#11-siklus-10-pemulihan-esensi-klinis-asli-integrasi-logo-resmi-guppy-fitur-ganti-nama-pengguna-dr-andini--perbaikan-total-tombol-interaktif)
 12. [Siklus 11: Audit Komprehensif & Eliminasi Error UI/Fungsi Guppy (Logo PNG, Popover Profil, Universal Justification, & Global Search Sync)](#12-siklus-11-audit-komprehensif--eliminasi-error-uifungsi-guppy-logo-png-popover-profil-universal-justification--global-search-sync)
 13. [Siklus 12: Resolusi Konflik Tema Streamlit (Dark vs Light) & Restorasi Kontras UI CDSS](#13-siklus-12-resolusi-konflik-tema-streamlit-dark-vs-light--restorasi-kontras-ui-cdss)
-14. [Matriks Commit Git & Status Validasi Unit Test](#14-matriks-commit-git--status-validasi-unit-test)
+14. [Siklus 13: Eliminasi Konfigurasi Server Headless & Pemulihan Peluncuran Otomatis Browser Desktop Guppy](#14-siklus-13-eliminasi-konfigurasi-server-headless--pemulihan-peluncuran-otomatis-browser-desktop-guppy)
+15. [Matriks Commit Git & Status Validasi Unit Test](#15-matriks-commit-git--status-validasi-unit-test)
 
 ---
 
@@ -418,7 +419,46 @@ Berdasarkan investigasi mendalam terhadap lingkungan frontend Streamlit dan berk
 
 ---
 
-## 14. Matriks Commit Git & Status Validasi Unit Test
+## 14. SIKLUS 13: Eliminasi Konfigurasi Server Headless & Pemulihan Peluncuran Otomatis Browser Desktop Guppy
+
+### 14.1. Request Pengguna
+> *"perbaiki, aplikasi guppy tidak bisa dibuka"*
+
+### 14.2. Investigasi & Akar Masalah
+Setelah perubahan tema pada siklus sebelumnya, pengguna melaporkan aplikasi tidak dapat dibuka ketika mengklik peluncur (*launcher*) `run_guppy.bat` atau `Buka_Guppy.vbs`:
+1. **Pemicu `server.headless = true` di `.streamlit/config.toml`:**
+   * Pada `.streamlit/config.toml`, bagian `[server]` sebelumnya menyertakan parameter `headless = true`.
+   * Pada arsitektur Streamlit, pengaturan `headless = true` secara eksplisit **menonaktifkan pemanggilan pembuka browser otomatis** (`webbrowser.open`).
+   * Ketika pengguna menjalankan `run_guppy.bat` atau `Buka_Guppy.vbs`, terminal melaporkan `Membuka Guppy di Web Browser...`, namun sistem sengaja tidak memunculkan jendela Google Chrome / browser default pengguna. Hal ini menyebabkan ilusi bahwa aplikasi "tidak merespons / tidak bisa dibuka".
+2. **Pemicu Parameter `enableCORS = false` dan `enableXsrfProtection = true`:**
+   * Di Streamlit 1.64.0 (versi terbaru), kombinasi kedua parameter tersebut memicu *deprecation warning* dan dapat menolak koneksi WebSocket pada localhost dari browser tertentu.
+3. **Penyempurnaan Skrip Peluncur `run_guppy.bat`:**
+   * Skrip `run_guppy.bat` diperbarui agar otomatis memverifikasi ketersediaan pustaka ekspor Word `python-docx` bersama dengan `streamlit` dan `pytest`.
+
+### 14.3. Solusi & Perbaikan yang Diterapkan
+1. **Pembersihan Konfigurasi `.streamlit/config.toml`:**
+   * Menghapus seluruh blok `[server]` (`headless = true`, `enableCORS`, `enableXsrfProtection`).
+   * Konfigurasi kini murni berfokus pada tema pastel resmi Guppy dan privasi:
+     ```toml
+     [theme]
+     base = "light"
+     primaryColor = "#0F9F93"
+     backgroundColor = "#F5F8FC"
+     secondaryBackgroundColor = "#FFFFFF"
+     textColor = "#172B4D"
+     font = "sans serif"
+
+     [browser]
+     gatherUsageStats = false
+     ```
+   * Dengan `server.headless` kembali ke nilai bawaan (`False`), Streamlit secara otomatis membuka peramban web (*web browser*) ke `http://localhost:8501` saat `run_guppy.bat` atau `Buka_Guppy.vbs` dijalankan.
+2. **Uji Validasi Peluncuran:**
+   * Pengujian peluncuran server Streamlit berhasil dengan kode HTTP 200 OK tanpa peringatan CORS maupun error WebSocket.
+   * Seluruh 39 unit test terverifikasi lolos 100%.
+
+---
+
+## 15. Matriks Commit Git & Status Validasi Unit Test
 
 | Hash Commit | Kategori | Komponen Berkas | Ringkasan Modifikasi |
 | :--- | :--- | :--- | :--- |
@@ -433,7 +473,8 @@ Berdasarkan investigasi mendalam terhadap lingkungan frontend Streamlit dan berk
 | `1d47c4a` | `fix(ui-render)` | `render_utils.py`, `interactive_workflow.py`, `ui_cards.py`, `app.py` | Perbaikan parsing HTML (eliminasi tampilan kode mentah) |
 | `927e183` | `fix(core-restore)` | `guppy/frontend/app.py`, `assets/guppy_logo.svg`, `assets/style.css` | Pemulihan esensi akses klinis asli, logo Guppy resmi, fitur ganti nama dr. Andini, dan perbaikan tombol |
 | `6e9b8ef` | `fix(audit-robust)` | `guppy/frontend/assets/guppy_logo.png`, `guppy/frontend/app.py` | Logo PNG resolusi tinggi, popover edit profil dr. Andini, universal justification & sinkronisasi search |
-| `(terbaru)` | `fix(theme-contrast)` | `.streamlit/config.toml`, `guppy/frontend/assets/style.css` | Resolusi konflik tema Streamlit (paksa light theme baku, kontras teks tinggi, styling input/expander putih) |
+| `bedad72` | `fix(theme-contrast)` | `.streamlit/config.toml`, `guppy/frontend/assets/style.css` | Resolusi konflik tema Streamlit (paksa light theme baku, kontras teks tinggi, styling input/expander putih) |
+| `(terbaru)` | `fix(launcher-desktop)` | `.streamlit/config.toml`, `run_guppy.bat` | Eliminasi opsi headless & pemulihan otomatis peluncuran browser desktop Guppy |
 
 ### Status Verifikasi Pengujian (Pytest):
 ```text
@@ -450,7 +491,7 @@ tests\test_gap_analyzer.py ..                                            [ 58%]
 tests\test_roadmap.py ...                                                [ 66%]
 tests\test_security.py .............                                     [100%]
 
-============================= 39 passed in 1.76s ==============================
+============================= 39 passed in 1.51s ==============================
 ```
 
 ---

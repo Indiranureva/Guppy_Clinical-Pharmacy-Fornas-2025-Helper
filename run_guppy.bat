@@ -65,14 +65,14 @@ if "%PY_EXE%"=="" (
 )
 
 echo [*] Menggunakan Python: %PY_EXE%
-echo [*] Memeriksa paket Streamlit...
+echo [*] Memeriksa paket dependensi (Streamlit, python-docx, pytest)...
 
-%PY_EXE% -c "import streamlit" >nul 2>&1
+%PY_EXE% -c "import streamlit, docx" >nul 2>&1
 if %ERRORLEVEL% NEQ 0 (
-    echo [*] Mengunduh dan memasang Streamlit otomatis...
-    %PY_EXE% -m pip install streamlit pytest
+    echo [*] Mengunduh dan memasang paket pendukung otomatis...
+    %PY_EXE% -m pip install streamlit pytest python-docx
     if %ERRORLEVEL% NEQ 0 (
-        echo [ERROR] Gagal memasang Streamlit. Pastikan PC terhubung ke internet.
+        echo [ERROR] Gagal memasang dependensi. Pastikan PC terhubung ke internet.
         pause
         exit /b 1
     )
