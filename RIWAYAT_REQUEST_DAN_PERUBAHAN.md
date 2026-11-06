@@ -25,7 +25,8 @@
 14. [Siklus 13: Eliminasi Konfigurasi Server Headless & Pemulihan Peluncuran Otomatis Browser Desktop Guppy](#14-siklus-13-eliminasi-konfigurasi-server-headless--pemulihan-peluncuran-otomatis-browser-desktop-guppy)
 15. [Siklus 14: Penyediaan Direktori Aset Gambar (assets/images/) di Root Proyek](#15-siklus-14-penyediaan-direktori-aset-gambar-assetsimages-di-root-proyek)
 16. [Siklus 15: Integrasi Welcome Banner Vektor Resmi Guppy ke Dashboard Utama](#16-siklus-15-integrasi-welcome-banner-vektor-resmi-guppy-ke-dashboard-utama)
-17. [Matriks Commit Git & Status Validasi Unit Test](#17-matriks-commit-git--status-validasi-unit-test)
+17. [Siklus 16: Penyiapan Aplikasi untuk Deployment Cloud & Akses Web Publik (Docker, Backup, & Panduan Hosting)](#17-siklus-16-penyiapan-aplikasi-untuk-deployment-cloud--akses-web-publik-docker-backup--panduan-hosting)
+18. [Matriks Commit Git & Status Validasi Unit Test](#18-matriks-commit-git--status-validasi-unit-test)
 
 ---
 
@@ -507,7 +508,29 @@ Setelah perubahan tema pada siklus sebelumnya, pengguna melaporkan aplikasi tida
 
 ---
 
-## 17. Matriks Commit Git & Status Validasi Unit Test
+## 17. SIKLUS 16: Penyiapan Aplikasi untuk Deployment Cloud & Akses Web Publik (Docker, Backup, & Panduan Hosting)
+
+### 17.1. Request Pengguna
+> *"I want to convert the existing Guppy application from a locally running application into a web-accessible application. Currently, the application runs locally through localhost:8501. The objective is to make Guppy accessible through a public web address so users can open it from different devices and locations using a web browser.*
+> *IMPORTANT: Web deployment and accessibility, NOT rebuilding the application. Continue using existing framework (Streamlit). STRICT PRESERVATION of all existing functionality, FORNAS search, drug info, restrictions, diagnosis matching, CDSS, justification, claim simulation, regulatory references, history/favorites.*
+> *Inspect project structure, dependencies, entry point, database access, paths, assets, environment variables. Follow 6 controlled stages. Create backup first. Do not publish publicly until user approves deployment configuration."*
+
+### 17.2. Tindakan Teknis & Evaluasi Kesiapan Cloud
+1. **Pencadangan Penuh Proyek (*Full Project Backup*):**
+   * Berkas arsip kompresi lengkap proyek dibuat di luar direktori kerja:
+     `backup_guppy_pre_deployment_20261107_022058.zip` (2,46 MB).
+2. **Audit Portabilitas & Keamanan Sistem:**
+   * **Bebas Jalur Absolut Localhost:** Seluruh pembacaan berkas basis data (`fornas_2025.json`, `pnpk_2025.json`, `regulations_db.json`), aset logo, banner, dan CSS menggunakan `pathlib.Path` relatif terhadap root proyek, bebas dari path hardcoded Windows (`C:\...` atau `H:\...`).
+   * **Bebas Ketergantungan Mesin Pengembang:** Aplikasi beroperasi mandiri (*self-contained*), tidak membutuhkan instalasi server basis data eksternal (PostgreSQL/MySQL), dan tidak memerlukan kredensial/API key rahasia untuk fungsionalitas inti CDSS.
+   * **Konfigurasi Container Universal (`Dockerfile` & `.dockerignore`):**
+     Disediakan `Dockerfile` berbasis `python:3.11-slim` dengan healthcheck endpoint Streamlit internal (`/_stcore/health`), serta `.dockerignore` untuk optimasi build cache dan keamanan.
+3. **Uji Validasi Fungsional Komprehensif:**
+   * Diuji secara menyeluruh 5 alur klinis utama (Search Fornas, Matching ICD-10 PNPK, Evaluasi Logika 3-Nilai CDSS, Kurasi Topik Scopus Q1-Q3, dan Generator Dokumen Word .docx).
+   * Seluruh 39 unit test pengujian CDSS, restriksi Fornas, classifier, dan sanitizer tetap lolos 100% (*1.65s*).
+
+---
+
+## 18. Matriks Commit Git & Status Validasi Unit Test
 
 | Hash Commit | Kategori | Komponen Berkas | Ringkasan Modifikasi |
 | :--- | :--- | :--- | :--- |
@@ -525,7 +548,8 @@ Setelah perubahan tema pada siklus sebelumnya, pengguna melaporkan aplikasi tida
 | `bedad72` | `fix(theme-contrast)` | `.streamlit/config.toml`, `guppy/frontend/assets/style.css` | Resolusi konflik tema Streamlit (paksa light theme baku, kontras teks tinggi, styling input/expander putih) |
 | `4ebc34f` | `fix(launcher-desktop)` | `.streamlit/config.toml`, `run_guppy.bat` | Eliminasi opsi headless & pemulihan otomatis peluncuran browser desktop Guppy |
 | `0b54c50` | `chore(assets)` | `assets/images/.gitkeep` | Pembuatan folder assets/images/ di root proyek sesuai preservasi ketat |
-| `(terbaru)` | `feat(banner)` | `assets/images/guppy-banner.svg`, `guppy/frontend/app.py` | Integrasi banner vektor resmi Guppy ke dashboard utama secara responsif |
+| `23f6fc3` | `feat(banner)` | `assets/images/guppy-banner.svg`, `guppy/frontend/app.py` | Integrasi banner vektor resmi Guppy ke dashboard utama secara responsif |
+| `(terbaru)` | `chore(deploy)` | `Dockerfile`, `.dockerignore` | Penyiapan konfigurasi containerisasi cloud deployment universal Guppy |
 
 ### Status Verifikasi Pengujian (Pytest):
 ```text
@@ -542,7 +566,7 @@ tests\test_gap_analyzer.py ..                                            [ 58%]
 tests\test_roadmap.py ...                                                [ 66%]
 tests\test_security.py .............                                     [100%]
 
-============================= 39 passed in 1.58s ==============================
+============================= 39 passed in 1.65s ==============================
 ```
 
 ---
