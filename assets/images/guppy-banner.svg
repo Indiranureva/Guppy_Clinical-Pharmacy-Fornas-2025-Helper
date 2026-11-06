@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="450" viewBox="0 0 1600 450" role="img" aria-labelledby="title desc">
+  <title id="title">GUPPY welcome banner</title>
+  <desc id="desc">Welcome banner for Guppy Clinical Pharmacy and Fornas Helper, with a cheerful orange and blue guppy fish.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFF9E8"/>
+      <stop offset=".55" stop-color="#FFF2C9"/>
+      <stop offset="1" stop-color="#F5F8E9"/>
+    </linearGradient>
+    <linearGradient id="finBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#59C7F5"/><stop offset="1" stop-color="#1976D2"/>
+    </linearGradient>
+    <linearGradient id="fishGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFD84D"/><stop offset=".6" stop-color="#FF9F16"/><stop offset="1" stop-color="#F47716"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#8B7B46" flood-opacity=".15"/>
+    </filter>
+    <clipPath id="clip"><rect width="1600" height="450" rx="30"/></clipPath>
+  </defs>
+  <g clip-path="url(#clip)">
+    <rect width="1600" height="450" fill="url(#bg)"/>
+    <path d="M0 38C170 115 236 5 402 40s240 117 390 45 228-86 365-27 240 95 443 4V0H0Z" fill="#FFFDF4" opacity=".58"/>
+    <path d="M0 365c175-83 268 57 440-6s270-52 400 3 262 68 390 9 234-40 370 8v71H0Z" fill="#FFF7D8" opacity=".65"/>
+    <!-- bubbles -->
+    <g fill="none" stroke="#55C8F0" stroke-width="4" opacity=".9">
+      <circle cx="1090" cy="105" r="13"/><circle cx="1150" cy="76" r="9"/><circle cx="1225" cy="244" r="11"/><circle cx="1010" cy="155" r="7"/>
+    </g>
+    <!-- aquatic plants -->
+    <g opacity=".85">
+      <path d="M1305 450Q1280 335 1320 250Q1358 340 1330 450Z" fill="#6ED6C5"/>
+      <path d="M1360 450Q1380 340 1440 265Q1427 365 1388 450Z" fill="#8ADFCB"/>
+      <path d="M1240 450Q1190 355 1210 300Q1260 370 1270 450Z" fill="#62C9E5"/>
+      <path d="M1490 450Q1455 345 1515 220Q1540 345 1515 450Z" fill="#75D7C4"/>
+      <path d="M1120 450Q1095 360 1135 305Q1165 375 1150 450Z" fill="#8EDFCB"/>
+      <path d="M1308 450Q1315 360 1295 298M1375 450Q1390 365 1430 290M1260 450Q1230 370 1218 326M1505 450Q1490 340 1510 260" fill="none" stroke="#2DAEAF" stroke-width="5" opacity=".65"/>
+      <path d="M1170 450Q1190 400 1220 380Q1210 430 1195 450M1435 450Q1450 395 1480 370Q1470 420 1455 450" fill="#48BDB8"/>
+    </g>
+    <!-- greeting copy -->
+    <text x="68" y="145" font-family="Inter, Arial, sans-serif" font-size="64" font-weight="800" fill="#102B59">Halo, dr. Andini!</text>
+    <text x="70" y="214" font-family="Inter, Arial, sans-serif" font-size="31" font-weight="400" fill="#18345F">GUPPY siap membantu memeriksa kesesuaian resep</text>
+    <text x="70" y="260" font-family="Inter, Arial, sans-serif" font-size="31" font-weight="400" fill="#18345F">dengan Fornas 2025, restriksi, diagnosa, dan justifikasi klinis.</text>
+    <!-- speech bubble -->
+    <g filter="url(#shadow)">
+      <path d="M1192 42Q1192 20 1220 20H1490Q1532 20 1532 62V157Q1532 195 1490 195H1335L1302 226L1305 195H1225Q1192 195 1192 160Z" fill="#FFFFFF"/>
+    </g>
+    <text x="1240" y="82" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700" fill="#102B59">Cek cepat</text>
+    <text x="1240" y="119" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700" fill="#102B59">kesesuaian terapi</text>
+    <text x="1240" y="156" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700" fill="#102B59">JKN di satu tempat!</text>
+    <!-- guppy tail -->
+    <path d="M1354 294Q1272 245 1288 333Q1300 391 1370 352Q1330 329 1354 294Z" fill="url(#finBlue)" stroke="#1476C7" stroke-width="4"/>
+    <path d="M1338 309Q1307 291 1305 270Q1348 279 1367 305M1340 338Q1302 365 1304 385Q1350 371 1372 344" fill="#79D4F6" opacity=".9"/>
+    <!-- dorsal fin -->
+    <path d="M1390 278Q1415 225 1470 235Q1518 247 1534 292Q1470 281 1390 305Z" fill="url(#finBlue)" stroke="#167ACB" stroke-width="4"/>
+    <path d="M1408 278Q1450 247 1500 268M1425 290Q1470 268 1518 286" fill="none" stroke="#A5E7FF" stroke-width="5" stroke-linecap="round"/>
+    <!-- body -->
+    <path d="M1345 310Q1370 260 1450 273Q1515 281 1530 328Q1515 378 1448 385Q1372 394 1340 348Q1328 330 1345 310Z" fill="url(#fishGold)" stroke="#E88712" stroke-width="4"/>
+    <path d="M1372 291Q1402 272 1442 279Q1407 302 1395 337Q1370 330 1372 291Z" fill="#FFE46A" opacity=".75"/>
+    <!-- lower fin -->
+    <path d="M1410 369Q1440 407 1492 389Q1465 366 1455 350Z" fill="#42B7EB" stroke="#1476C7" stroke-width="3"/>
+    <path d="M1427 371L1477 388M1440 365L1485 380" stroke="#B7EDFF" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <!-- face and markings -->
+    <circle cx="1380" cy="318" r="17" fill="#FFFFFF"/>
+    <circle cx="1385" cy="319" r="10" fill="#102B59"/>
+    <circle cx="1388" cy="315" r="4" fill="#FFFFFF"/>
+    <path d="M1350 342Q1367 357 1384 345" fill="none" stroke="#A83C20" stroke-width="5" stroke-linecap="round"/>
+    <g fill="#E76E13" opacity=".65"><circle cx="1430" cy="321" r="7"/><circle cx="1460" cy="344" r="6"/><circle cx="1490" cy="318" r="5"/><circle cx="1410" cy="355" r="5"/></g>
+    <!-- small sparkle -->
+    <g fill="#FFBD20"><path d="M1550 28l7 20 20 7-20 7-7 20-7-20-20-7 20-7Z"/><path d="M1518 18l4 12 12 4-12 4-4 12-4-12-12-4 12-4Z"/></g>
+    <!-- reference strip -->
+    <g filter="url(#shadow)">
+      <rect x="48" y="340" width="1110" height="78" rx="22" fill="#FFFDF7" opacity=".97"/>
+    </g>
+    <!-- document icon -->
+    <g transform="translate(76 359)" fill="none" stroke="#1765C5" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 2h24l13 13v34H5Z"/><path d="M29 2v14h13M13 27h20M13 36h20"/>
+    </g>
+    <text x="132" y="389" font-family="Inter, Arial, sans-serif" font-size="23" fill="#17315D"><tspan font-weight="700">Acuan:</tspan> KMK No. HK.01.07/MENKES/1199/2025</text>
+    <path d="M725 360V400" stroke="#2C83D8" stroke-width="2"/>
+    <!-- layers icon -->
+    <g transform="translate(755 360)" fill="none" stroke="#1765C5" stroke-width="3.5" stroke-linejoin="round">
+      <path d="M22 2L43 14 22 26 1 14Z"/><path d="M1 25l21 12 21-12M1 36l21 12 21-12"/>
+    </g>
+    <text x="810" y="389" font-family="Inter, Arial, sans-serif" font-size="23" font-weight="600" fill="#17315D">775+ Zat Aktif</text>
+    <path d="M1000 360V400" stroke="#2C83D8" stroke-width="2"/>
+    <!-- brain icon -->
+    <g transform="translate(1020 360)" fill="none" stroke="#1765C5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 5C10-2 2 6 5 15 0 23 6 34 15 33c2 8 13 8 16 1 9 1 14-9 9-16 3-9-6-17-15-12Z"/>
+      <path d="M20 5v31M9 15q8-2 8 6M31 13q-8 0-8 8M11 28q6-5 9 2M31 28q-6-5-8 2"/>
+    </g>
+    <text x="1070" y="389" font-family="Inter, Arial, sans-serif" font-size="23" font-weight="600" fill="#17315D">Logika Tiga Nilai (CDSS)</text>
+  </g>
+</svg>

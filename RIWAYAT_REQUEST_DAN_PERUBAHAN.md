@@ -24,7 +24,8 @@
 13. [Siklus 12: Resolusi Konflik Tema Streamlit (Dark vs Light) & Restorasi Kontras UI CDSS](#13-siklus-12-resolusi-konflik-tema-streamlit-dark-vs-light--restorasi-kontras-ui-cdss)
 14. [Siklus 13: Eliminasi Konfigurasi Server Headless & Pemulihan Peluncuran Otomatis Browser Desktop Guppy](#14-siklus-13-eliminasi-konfigurasi-server-headless--pemulihan-peluncuran-otomatis-browser-desktop-guppy)
 15. [Siklus 14: Penyediaan Direktori Aset Gambar (assets/images/) di Root Proyek](#15-siklus-14-penyediaan-direktori-aset-gambar-assetsimages-di-root-proyek)
-16. [Matriks Commit Git & Status Validasi Unit Test](#16-matriks-commit-git--status-validasi-unit-test)
+16. [Siklus 15: Integrasi Welcome Banner Vektor Resmi Guppy ke Dashboard Utama](#16-siklus-15-integrasi-welcome-banner-vektor-resmi-guppy-ke-dashboard-utama)
+17. [Matriks Commit Git & Status Validasi Unit Test](#17-matriks-commit-git--status-validasi-unit-test)
 
 ---
 
@@ -477,7 +478,36 @@ Setelah perubahan tema pada siklus sebelumnya, pengguna melaporkan aplikasi tida
 
 ---
 
-## 16. Matriks Commit Git & Status Validasi Unit Test
+## 16. SIKLUS 15: Integrasi Welcome Banner Vektor Resmi Guppy ke Dashboard Utama
+
+### 16.1. Request Pengguna
+> *"uploaded guppy banner location = 'H:\My Drive\Magister cumlaude\SMT 2_18SKS\Aplikasi AI dalam Industri Farmasi\Guppy_Clinical_Pharmacy_Fornas_2025_Ready\Mockup\guppy-banner.svg'*
+> *TASK: ADD GUPPY WELCOME BANNER TO EXISTING DASHBOARD*
+> *OBJECTIVE: I want to add the uploaded Guppy banner image to the existing application dashboard. The uploaded image must be used directly as a visual asset. This is a SMALL UI ENHANCEMENT, NOT a redesign or application reconstruction.*
+> *CRITICAL INSTRUCTION: PRESERVE THE EXISTING APPLICATION.*
+> *Requirements: Use original uploaded image, preserve aspect ratio (1600x450), no stretch/distortion, no cropping, preserve colors/typography/illustrations/text, maintain vector clarity, apply slightly rounded corners consistent with existing interface.*
+> *Position: Directly below existing navigation/header, above existing dashboard content.*
+> *Responsive: Uses available width of parent container, scales proportionally, does not overflow.*
+> *STRICT PRESERVATION: Preserve 100% of existing functionality, FORNAS search, drug info, restrictions, diagnosis matching, justification, claims, references, history/favorites."*
+
+### 16.2. Tindakan Teknis & Integrasi Visual Presisi
+1. **Penyalinan Aset Vektor Resmi:**
+   * Berkas `guppy-banner.svg` dari folder `Mockup/` disalin ke direktori aset proyek:
+     - `assets/images/guppy-banner.svg` (direktori aset root baru)
+     - `guppy/frontend/assets/guppy-banner.svg` (direktori aset frontend)
+2. **Implementasi Rendering Responsif & Preservasi Aspek Rasio:**
+   * Diintegrasikan langsung pada `guppy/frontend/app.py` tepat di bawah bilah pencarian & avatar pengguna (*header/navigation*), dan di atas metrik indikator eksekutif.
+   * Menggunakan format gambar vektor berbasis Base64 Data URI (`data:image/svg+xml;base64`) di dalam elemen `<img style="width: 100%; height: auto; max-width: 100%; display: block; border-radius: 16px; object-fit: contain;">`.
+   * Menjamin rasio aspek 1600:450 terpelihara sempurna tanpa distorsi, tanpa cropping, dan memiliki sudut melengkung halus (*rounded corners* 16px) yang serasi dengan kartu dashboard Guppy.
+3. **Dukungan Personalisasi Dinamis:**
+   * Jika pengguna mengubah nama profil pada popover bilah atas, teks sapaan pada banner secara otomatis menyesuaikan nama pengguna baru, sambil tetap menjaga seluruh tipografi, ilustrasi maskot ikan Guppy, speech bubble, dan strip acuan KMK 1199/2025 asli.
+4. **Preservasi 100% Fitur & Logika:**
+   * Tidak ada komponen klinis, database, endpoint, atau fungsi logika CDSS yang diubah atau dihapus.
+   * Seluruh 39 unit test pengujian CDSS, PNPK, Fornas, literatur, dan sanitizer tetap lolos 100%.
+
+---
+
+## 17. Matriks Commit Git & Status Validasi Unit Test
 
 | Hash Commit | Kategori | Komponen Berkas | Ringkasan Modifikasi |
 | :--- | :--- | :--- | :--- |
@@ -494,7 +524,8 @@ Setelah perubahan tema pada siklus sebelumnya, pengguna melaporkan aplikasi tida
 | `6e9b8ef` | `fix(audit-robust)` | `guppy/frontend/assets/guppy_logo.png`, `guppy/frontend/app.py` | Logo PNG resolusi tinggi, popover edit profil dr. Andini, universal justification & sinkronisasi search |
 | `bedad72` | `fix(theme-contrast)` | `.streamlit/config.toml`, `guppy/frontend/assets/style.css` | Resolusi konflik tema Streamlit (paksa light theme baku, kontras teks tinggi, styling input/expander putih) |
 | `4ebc34f` | `fix(launcher-desktop)` | `.streamlit/config.toml`, `run_guppy.bat` | Eliminasi opsi headless & pemulihan otomatis peluncuran browser desktop Guppy |
-| `(terbaru)` | `chore(assets)` | `assets/images/.gitkeep` | Pembuatan folder assets/images/ di root proyek sesuai preservasi ketat |
+| `0b54c50` | `chore(assets)` | `assets/images/.gitkeep` | Pembuatan folder assets/images/ di root proyek sesuai preservasi ketat |
+| `(terbaru)` | `feat(banner)` | `assets/images/guppy-banner.svg`, `guppy/frontend/app.py` | Integrasi banner vektor resmi Guppy ke dashboard utama secara responsif |
 
 ### Status Verifikasi Pengujian (Pytest):
 ```text
@@ -511,7 +542,7 @@ tests\test_gap_analyzer.py ..                                            [ 58%]
 tests\test_roadmap.py ...                                                [ 66%]
 tests\test_security.py .............                                     [100%]
 
-============================= 39 passed in 1.63s ==============================
+============================= 39 passed in 1.58s ==============================
 ```
 
 ---

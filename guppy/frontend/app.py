@@ -14,6 +14,7 @@ Nilai Utama & Esensi Klinis:
 import sys
 from pathlib import Path
 import json
+import base64
 
 # Add project root to sys.path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -258,34 +259,61 @@ with col_actions:
             st.toast("✅ Nama pengguna diperbarui!", icon="👤")
             st.rerun()
 
-# Welcome Banner with Guppy Mascot
-mascot_speech = get_welcome_banner_mascot_html()
-render_html(
-    f"""
-    <div class="welcome-banner">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
-            <div style="flex: 1; min-width: 280px;">
-                <div class="welcome-title">Halo, {st.session_state['user_name']}!</div>
-                <div class="welcome-subtitle">
-                    GUPPY siap membantu memeriksa kesesuaian resep dengan Formularium Nasional 2025, restriksi obat, indikasi diagnosis, dan penyusunan justifikasi klinis KFT.
+# ─────────────────────────────────────────────────────────────
+# HERO WELCOME BANNER (GUPPY OFFICIAL VECTOR ASSET)
+# ─────────────────────────────────────────────────────────────
+banner_path = PROJECT_ROOT / "assets" / "images" / "guppy-banner.svg"
+if not banner_path.exists():
+    banner_path = Path(__file__).parent / "assets" / "guppy-banner.svg"
+
+if banner_path.exists():
+    with open(banner_path, "r", encoding="utf-8") as f:
+        banner_content = f.read()
+
+    # Dynamic user greeting if user customizes profile name
+    current_user = st.session_state.get("user_name", "dr. Andini")
+    if current_user and current_user != "dr. Andini":
+        banner_content = banner_content.replace("Halo, dr. Andini!", f"Halo, {current_user}!")
+
+    b64_banner = base64.b64encode(banner_content.encode("utf-8")).decode("utf-8")
+    render_html(
+        f"""
+        <div style="margin-bottom: 20px; width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid #E2EAF3; box-shadow: 0 1px 3px rgba(18, 52, 90, 0.04); line-height: 0;">
+            <img src="data:image/svg+xml;base64,{b64_banner}" 
+                 alt="GUPPY Welcome Banner — KMK No. HK.01.07/MENKES/1199/2025" 
+                 style="width: 100%; height: auto; max-width: 100%; display: block; border-radius: 16px; object-fit: contain;" />
+        </div>
+        """
+    )
+else:
+    # Graceful fallback to HTML welcome banner
+    mascot_speech = get_welcome_banner_mascot_html()
+    render_html(
+        f"""
+        <div class="welcome-banner">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+                <div style="flex: 1; min-width: 280px;">
+                    <div class="welcome-title">Halo, {st.session_state['user_name']}!</div>
+                    <div class="welcome-subtitle">
+                        GUPPY siap membantu memeriksa kesesuaian resep dengan Formularium Nasional 2025, restriksi obat, indikasi diagnosis, dan penyusunan justifikasi klinis KFT.
+                    </div>
+                    <div class="welcome-meta-pill">
+                        <span>🏛️ KMK No. HK.01.07/MENKES/1199/2025</span>
+                        <span>•</span>
+                        <span>💊 775+ Zat Aktif &amp; 1.238 Sediaan</span>
+                        <span>•</span>
+                        <span>⚖️ Logika Tiga Nilai (CDSS)</span>
+                        <span>•</span>
+                        <span>📑 Ekspor Memo Word (.docx)</span>
+                    </div>
                 </div>
-                <div class="welcome-meta-pill">
-                    <span>🏛️ KMK No. HK.01.07/MENKES/1199/2025</span>
-                    <span>•</span>
-                    <span>💊 775+ Zat Aktif &amp; 1.238 Sediaan</span>
-                    <span>•</span>
-                    <span>⚖️ Logika Tiga Nilai (CDSS)</span>
-                    <span>•</span>
-                    <span>📑 Ekspor Memo Word (.docx)</span>
+                <div style="flex-shrink: 0;">
+                    {mascot_speech}
                 </div>
-            </div>
-            <div style="flex-shrink: 0;">
-                {mascot_speech}
             </div>
         </div>
-    </div>
-    """
-)
+        """
+    )
 
 # Executive pastel metric indicators
 col_m1, col_m2, col_m3, col_m4 = st.columns(4)
