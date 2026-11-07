@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="450" height="1200" viewBox="0 0 450 1200">
+<title>Guppy expanded sidebar background</title>
+<desc>Deep navy aquatic sidebar background with orange and blue guppy fish and teal underwater plants. No text or icons.</desc>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#193E66"/><stop offset=".55" stop-color="#102F53"/><stop offset="1" stop-color="#092746"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFE16B"/><stop offset=".55" stop-color="#FFB52E"/><stop offset="1" stop-color="#F47D19"/></linearGradient>
+<linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#80DDF8"/><stop offset="1" stop-color="#1976C5"/></linearGradient>
+<linearGradient id="plant" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#60D0C1"/><stop offset="1" stop-color="#176D86"/></linearGradient>
+<radialGradient id="glow"><stop stop-color="#4AA5BE" stop-opacity=".22"/><stop offset="1" stop-color="#4AA5BE" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="450" height="1200" fill="url(#bg)"/>
+<ellipse cx="225" cy="1050" rx="280" ry="300" fill="url(#glow)"/>
+<path d="M0 850Q110 800 220 855T450 850V1200H0Z" fill="#1B5270" opacity=".2"/>
+<g fill="none" stroke="#8ADFF0" stroke-width="3" opacity=".23"><circle cx="76" cy="810" r="9"/><circle cx="116" cy="865" r="5"/><circle cx="365" cy="780" r="7"/><circle cx="330" cy="900" r="11"/><circle cx="55" cy="1010" r="5"/></g>
+<!-- underwater plants -->
+<g fill="url(#plant)" opacity=".92">
+<path d="M0 1200Q20 1085 78 1025Q91 1120 56 1200Z"/>
+<path d="M28 1200Q76 1090 136 1065Q121 1150 83 1200Z"/>
+<path d="M110 1200Q105 1080 151 1008Q180 1115 151 1200Z"/>
+<path d="M320 1200Q302 1090 349 1012Q381 1115 365 1200Z"/>
+<path d="M365 1200Q383 1095 435 1050Q432 1145 407 1200Z"/>
+<path d="M245 1200Q218 1115 252 1040Q286 1122 278 1200Z"/>
+</g>
+<g fill="none" stroke="#9AE6D6" stroke-width="5" stroke-linecap="round" opacity=".3"><path d="M47 1200Q72 1110 76 1050"/><path d="M92 1200Q112 1120 135 1090"/><path d="M145 1200Q148 1100 154 1032"/><path d="M343 1200Q339 1100 354 1040"/><path d="M395 1200Q410 1110 428 1080"/></g>
+<!-- fish tail -->
+<path d="M128 1011Q47 943 51 1034Q57 1111 139 1068Q111 1043 128 1011Z" fill="url(#blue)" stroke="#176AAE" stroke-width="5"/>
+<path d="M112 1020Q80 987 65 970Q72 1021 118 1044M113 1051Q78 1084 75 1100Q121 1083 139 1061" fill="none" stroke="#B7EEFF" stroke-width="6" stroke-linecap="round" opacity=".85"/>
+<!-- upper fin -->
+<path d="M177 976Q202 909 269 921Q321 931 346 981Q275 965 191 1004Z" fill="url(#blue)" stroke="#176AAE" stroke-width="5"/>
+<path d="M205 970Q252 936 313 957M224 986Q279 956 333 978" fill="none" stroke="#B7EEFF" stroke-width="5" stroke-linecap="round"/>
+<!-- lower fin -->
+<path d="M194 1080Q220 1147 296 1120Q267 1081 251 1057Z" fill="url(#blue)" stroke="#176AAE" stroke-width="5"/>
+<path d="M216 1090L278 1114M231 1080L289 1100" fill="none" stroke="#B7EEFF" stroke-width="5" stroke-linecap="round"/>
+<!-- body -->
+<path d="M118 1006Q151 951 238 959Q319 963 350 1021Q340 1085 265 1100Q174 1117 124 1067Q105 1040 118 1006Z" fill="url(#gold)" stroke="#D97917" stroke-width="5"/>
+<path d="M145 989Q187 959 242 966Q207 990 198 1031Q156 1029 145 989Z" fill="#FFF18A" opacity=".7"/>
+<g fill="#E77C1A" opacity=".68"><circle cx="229" cy="1007" r="8"/><circle cx="276" cy="1032" r="7"/><circle cx="310" cy="1007" r="6"/><circle cx="190" cy="1064" r="6"/></g>
+<circle cx="151" cy="1022" r="19" fill="#FFF"/><circle cx="156" cy="1023" r="11" fill="#102B59"/><circle cx="160" cy="1018" r="4.5" fill="#FFF"/>
+<path d="M119 1051Q138 1068 158 1054" fill="none" stroke="#A84624" stroke-width="6" stroke-linecap="round"/>
+<path d="M0 1200Q10 1138 54 1112Q61 1167 32 1200Z" fill="#48B7AC" opacity=".85"/><path d="M450 1200Q430 1135 393 1110Q388 1167 414 1200Z" fill="#49B9AD" opacity=".8"/>
+</svg>

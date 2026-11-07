@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="1200" viewBox="0 0 96 1200" role="img" aria-labelledby="title desc">
+<title id="title">Guppy collapsed sidebar background</title>
+<desc id="desc">Slim deep navy aquatic background with subtle teal underwater plants and bubbles near the bottom. No text, logos, or navigation icons.</desc>
+<defs>
+  <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#193E66"/>
+    <stop offset=".55" stop-color="#102F53"/>
+    <stop offset="1" stop-color="#092746"/>
+  </linearGradient>
+  <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#60D0C1"/>
+    <stop offset="1" stop-color="#176D86"/>
+  </linearGradient>
+  <radialGradient id="glow">
+    <stop offset="0" stop-color="#4AA5BE" stop-opacity=".2"/>
+    <stop offset="1" stop-color="#4AA5BE" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<rect width="96" height="1200" fill="url(#navy)"/>
+<ellipse cx="48" cy="1100" rx="90" ry="190" fill="url(#glow)"/>
+<path d="M0 1035Q25 1015 48 1036T96 1030V1200H0Z" fill="#1B5270" opacity=".22"/>
+<!-- subtle bubbles -->
+<g fill="none" stroke="#8ADFF0" stroke-width="2" opacity=".2">
+  <circle cx="22" cy="1000" r="4"/>
+  <circle cx="69" cy="1044" r="3"/>
+  <circle cx="45" cy="965" r="2.5"/>
+</g>
+<!-- compact aquatic plants at the base -->
+<g fill="url(#teal)" opacity=".9">
+  <path d="M0 1200Q3 1134 29 1090Q42 1155 24 1200Z"/>
+  <path d="M9 1200Q29 1128 56 1110Q52 1170 34 1200Z"/>
+  <path d="M39 1200Q36 1127 62 1078Q79 1152 67 1200Z"/>
+  <path d="M67 1200Q69 1140 94 1102L96 1200Z"/>
+</g>
+<g fill="none" stroke="#9AE6D6" stroke-width="2.5" stroke-linecap="round" opacity=".3">
+  <path d="M12 1200Q22 1150 29 1110"/>
+  <path d="M37 1200Q46 1154 56 1125"/>
+  <path d="M67 1200Q68 1148 64 1095"/>
+  <path d="M82 1200Q86 1150 94 1120"/>
+</g>
+<!-- small soft current shapes -->
+<path d="M0 1175Q24 1158 48 1173T96 1170V1200H0Z" fill="#247E91" opacity=".35"/>
+</svg>

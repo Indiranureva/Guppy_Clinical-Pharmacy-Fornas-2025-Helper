@@ -26,7 +26,8 @@
 15. [Siklus 14: Penyediaan Direktori Aset Gambar (assets/images/) di Root Proyek](#15-siklus-14-penyediaan-direktori-aset-gambar-assetsimages-di-root-proyek)
 16. [Siklus 15: Integrasi Welcome Banner Vektor Resmi Guppy ke Dashboard Utama](#16-siklus-15-integrasi-welcome-banner-vektor-resmi-guppy-ke-dashboard-utama)
 17. [Siklus 16: Penyiapan Aplikasi untuk Deployment Cloud & Akses Web Publik (Docker, Backup, & Panduan Hosting)](#17-siklus-16-penyiapan-aplikasi-untuk-deployment-cloud--akses-web-publik-docker-backup--panduan-hosting)
-18. [Matriks Commit Git & Status Validasi Unit Test](#18-matriks-commit-git--status-validasi-unit-test)
+18. [Siklus 17: Penerapan Latar Belakang SVG Resmi Sidebar (Expanded & Collapsed) & Optimalisasi Kontras Tipografi](#18-siklus-17-penerapan-latar-belakang-svg-resmi-sidebar-expanded--collapsed--optimalisasi-kontras-tipografi)
+19. [Matriks Commit Git & Status Validasi Unit Test](#19-matriks-commit-git--status-validasi-unit-test)
 
 ---
 
@@ -530,7 +531,31 @@ Setelah perubahan tema pada siklus sebelumnya, pengguna melaporkan aplikasi tida
 
 ---
 
-## 18. Matriks Commit Git & Status Validasi Unit Test
+## 18. SIKLUS 17: Penerapan Latar Belakang SVG Resmi Sidebar (Expanded & Collapsed) & Optimalisasi Kontras Tipografi
+
+### 18.1. Request Pengguna
+> *"ganti backgroundnya saja dan pertahankan semuanya dengan background format svg :*
+> *saat expand : 'H:\My Drive\Magister cumlaude\SMT 2_18SKS\Aplikasi AI dalam Industri Farmasi\Guppy_Clinical_Pharmacy_Fornas_2025_Ready\Mockup\guppy-sidebar-background expanded.svg'*
+> *saat collapse : 'H:\My Drive\Magister cumlaude\SMT 2_18SKS\Aplikasi AI dalam Industri Farmasi\Guppy_Clinical_Pharmacy_Fornas_2025_Ready\Mockup\guppy-sidebar-collapsed-background.svg'"*
+
+### 18.2. Tindakan Teknis & Integrasi Visual Presisi
+1. **Penyalinan Aset Latar Vektor Sidebar:**
+   * Dua berkas SVG resmi disalin ke direktori aset:
+     - `guppy-sidebar-background expanded.svg` -> `assets/images/guppy-sidebar-expanded.svg` & `guppy/frontend/assets/guppy-sidebar-expanded.svg`.
+     - `guppy-sidebar-collapsed-background.svg` -> `assets/images/guppy-sidebar-collapsed.svg` & `guppy/frontend/assets/guppy-sidebar-collapsed.svg`.
+2. **Penerapan Dynamic SVG Background di CSS (`guppy/frontend/assets/style.css`):**
+   * **Saat Sidebar Terbuka (*Expanded*):** Diterapkan `background-image` berbasis Base64 SVG `guppy-sidebar-expanded.svg` (`background-size: cover; background-position: center bottom`) menampilkan gradien deep navy, efek glow radial, tanaman bawah air, gelembung akuatik, dan ilustrasi ikan Guppy berenang di dasar sidebar.
+   * **Saat Sidebar Tertutup (*Collapsed*):** Diterapkan `background-image` berbasis Base64 SVG `guppy-sidebar-collapsed.svg` pada `section[data-testid="stSidebar"][aria-expanded="false"]` dan tombol pengembang `div[data-testid="stSidebarCollapsedControl"]`.
+3. **Penyelesaian Kendala Kontras Teks (*Typography Contrast Fix*):**
+   * Teks tombol expander *Profil Pengguna (Ganti Nama)* diatur dengan warna navy tua `#12345A` berbobot tebal (`font-weight: 700`) di atas kontainer kartu putih bersih, mengeliminasi teks pucat/tak terbaca yang dilaporkan sebelumnya.
+   * Seluruh teks butir regulasi (*Fornas 2025, UU 17/2023, 9 PNPK Kemenkes 2025*) diatur menggunakan warna putih terang `#F1F5F9` dan biru pastel `#BAE6FD` dengan kontras tinggi di atas latar navy.
+4. **Preservasi 100% Seluruh Elemen Sidebar:**
+   * Seluruh komponen sidebar dipertahankan utuh: Logo resmi Guppy, expander profil pengguna, sumber acuan resmi, status proteksi sistem 3 lampu, dan pencarian cepat zat aktif Fornas.
+   * Seluruh 39 unit test pengujian CDSS, restriksi Fornas, classifier, dan sanitizer tetap lolos 100% (*2.55s*).
+
+---
+
+## 19. Matriks Commit Git & Status Validasi Unit Test
 
 | Hash Commit | Kategori | Komponen Berkas | Ringkasan Modifikasi |
 | :--- | :--- | :--- | :--- |
@@ -549,7 +574,8 @@ Setelah perubahan tema pada siklus sebelumnya, pengguna melaporkan aplikasi tida
 | `4ebc34f` | `fix(launcher-desktop)` | `.streamlit/config.toml`, `run_guppy.bat` | Eliminasi opsi headless & pemulihan otomatis peluncuran browser desktop Guppy |
 | `0b54c50` | `chore(assets)` | `assets/images/.gitkeep` | Pembuatan folder assets/images/ di root proyek sesuai preservasi ketat |
 | `23f6fc3` | `feat(banner)` | `assets/images/guppy-banner.svg`, `guppy/frontend/app.py` | Integrasi banner vektor resmi Guppy ke dashboard utama secara responsif |
-| `(terbaru)` | `chore(deploy)` | `Dockerfile`, `.dockerignore` | Penyiapan konfigurasi containerisasi cloud deployment universal Guppy |
+| `fbb9a61` | `chore(deploy)` | `Dockerfile`, `.dockerignore` | Penyiapan konfigurasi containerisasi cloud deployment universal Guppy |
+| `(terbaru)` | `feat(sidebar-bg)` | `assets/images/guppy-sidebar-*.svg`, `assets/style.css` | Penerapan background SVG resmi saat expand & collapse serta perbaikan kontras teks |
 
 ### Status Verifikasi Pengujian (Pytest):
 ```text
@@ -566,7 +592,7 @@ tests\test_gap_analyzer.py ..                                            [ 58%]
 tests\test_roadmap.py ...                                                [ 66%]
 tests\test_security.py .............                                     [100%]
 
-============================= 39 passed in 1.65s ==============================
+============================= 39 passed in 2.55s ==============================
 ```
 
 ---
