@@ -28,7 +28,8 @@
 17. [Siklus 16: Penyiapan Aplikasi untuk Deployment Cloud & Akses Web Publik (Docker, Backup, & Panduan Hosting)](#17-siklus-16-penyiapan-aplikasi-untuk-deployment-cloud--akses-web-publik-docker-backup--panduan-hosting)
 18. [Siklus 17: Penerapan Latar Belakang SVG Resmi Sidebar (Expanded & Collapsed) & Optimalisasi Kontras Tipografi](#18-siklus-17-penerapan-latar-belakang-svg-resmi-sidebar-expanded--collapsed--optimalisasi-kontras-tipografi)
 19. [Siklus 18: Diagnosa Masalah & Perbaikan Kontras Warna Expander Profil & Tombol Simpan di Sidebar](#19-siklus-18-diagnosa-masalah--perbaikan-kontras-warna-expander-profil--tombol-simpan-di-sidebar)
-20. [Matriks Commit Git & Status Validasi Unit Test](#20-matriks-commit-git--status-validasi-unit-test)
+20. [Siklus 19: Penggantian Bentuk Tombol Buka Sidebar dengan Karakter Maskot Vektor Guppy ("Klik aku!")](#20-siklus-19-penggantian-bentuk-tombol-buka-sidebar-dengan-karakter-maskot-vektor-guppy-klik-aku)
+21. [Matriks Commit Git & Status Validasi Unit Test](#21-matriks-commit-git--status-validasi-unit-test)
 
 ---
 
@@ -589,7 +590,38 @@ Setelah perubahan tema pada siklus sebelumnya, pengguna melaporkan aplikasi tida
 
 ---
 
-## 20. Matriks Commit Git & Status Validasi Unit Test
+## 20. Siklus 19: Penggantian Bentuk Tombol Buka Sidebar dengan Karakter Maskot Vektor Guppy ("Klik aku!")
+
+### 💬 Request Pengguna:
+> *"ganti bentuk tombolnya dengan ini : 'H:\My Drive\...\guppy-sidebar-expand-button.svg' ganti bentuknya saja, keep fungsi dan lain-lainnya."*  
+> *(Pengguna ingin mengganti ikon chevron panah ganda >> pembuka sidebar yang tertutup dengan ilustrasi vektor maskot Guppy resmi yang memuat balon teks "Klik aku!")*
+
+### 🎨 Analisis Aset & Desain Vektor:
+* **Identitas Aset:** Berkas guppy-sidebar-expand-button.svg (dimensi viewBox: 220 x 92).
+* **Visual:** Ilustrasi maskot ikan Guppy (gradien kuning ke oranye dan biru ke teal) dengan balon teks ucapan putih bulat berbayangan lembut dan tulisan tebal **"Klik aku!"** bergradien navy pekat.
+* **Tujuan Interaksi:** Mengubah tombol pembuka sidebar yang awalnya hanya berupa ikon panah teknis (>>) menjadi tombol interaktif yang ramah, menarik, dan selaras dengan identitas visual master Guppy, dengan menjaga seluruh fungsionalitas klik bawaan Streamlit.
+
+### 🛠️ Tindakan Teknis & Penataan Selektor Streamlit:
+1. **Penyimpanan Aset Vektor:**
+   * Berkas SVG disimpan ke ssets/images/guppy-sidebar-expand-button.svg dan guppy/frontend/assets/guppy-sidebar-expand-button.svg.
+   * Di-embed ke berkas CSS melalui Data URI Base64 berkinerja tinggi (3.1 KB) sehingga memuat instan tanpa request HTTP eksternal.
+2. **Dukungan Multi-Selektor DOM (Streamlit 1.64+ & Universal):**
+   * Menargetkan tombol expand bawaan:
+     * utton[data-testid="stExpandSidebarButton"] (Streamlit versi 1.64 terbaru pada header toolbar).
+     * [data-testid="stSidebarCollapsedControl"] button (Streamlit versi terdahulu / kontrol mengambang).
+   * Menghilangkan ikon bawaan chevron panah >> (svg { display: none !important; }).
+   * Mengatur proporsi visual yang presisi: width: 176px !important; height: 74px !important; background-size: contain; background-repeat: no-repeat; background-position: center;.
+3. **Preservasi Penuh Fungsi & Aksi:**
+   * Tombol mempertahankan elemen <button> bawaan Streamlit secara murni bersama seluruh event handler onClick.
+   * Saat maskot atau balon teks diklik di area mana saja, sidebar Guppy seketika meluncur membuka (*expand*) secara mulus.
+   * Ditambahkan efek mikro animasi *hover* yang lembut: 	ransform: scale(1.06) translateY(-2px) dengan filter bayangan bernuansa teal drop-shadow(0 6px 14px rgba(15, 159, 147, 0.35)).
+4. **Preservasi Ketat Logika Aplikasi:**
+   * Tidak ada kode logika Python, kalkulasi CDSS, basis data Fornas 2025, atau arsitektur sistem yang disentuh.
+   * Seluruh 39 unit test tetap lulus 100% (*2.06s*).
+
+---
+
+## 21. Matriks Commit Git & Status Validasi Unit Test
 
 | Hash Commit | Kategori | Komponen Berkas | Ringkasan Modifikasi |
 | :--- | :--- | :--- | :--- |
