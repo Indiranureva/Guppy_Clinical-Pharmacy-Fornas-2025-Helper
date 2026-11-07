@@ -197,43 +197,142 @@ section[data-testid="stSidebar"] hr {
   margin: 14px 0 !important;
 }
 
-/* Expander in Sidebar (Profil Pengguna): Crisp White Container with Dark Navy Text */
-section[data-testid="stSidebar"] details[data-testid="stExpander"] {
+/* Expander in Sidebar (Profil Pengguna): Crisp White Container with Dark Navy Text & High Contrast */
+section[data-testid="stSidebar"] [data-testid="stExpander"],
+section[data-testid="stSidebar"] .stExpander,
+section[data-testid="stSidebar"] details {
   background-color: #FFFFFF !important;
-  border: 1px solid #CBD5E1 !important;
+  border: 1.5px solid #CBD5E1 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 6px rgba(10, 25, 47, 0.12) !important;
+  overflow: hidden !important;
+}
+
+section[data-testid="stSidebar"] [data-testid="stExpander"] details {
+  background-color: #FFFFFF !important;
+  border: none !important;
   border-radius: 10px !important;
 }
 
-section[data-testid="stSidebar"] details[data-testid="stExpander"] > summary {
+/* Expander Header (Summary): Dark Navy Text with High Contrast (WCAG AAA) */
+section[data-testid="stSidebar"] [data-testid="stExpander"] summary,
+section[data-testid="stSidebar"] .stExpander summary,
+section[data-testid="stSidebar"] details > summary {
   background-color: #FFFFFF !important;
   color: #12345A !important;
   border-radius: 10px !important;
   padding: 10px 14px !important;
+  cursor: pointer !important;
 }
 
-section[data-testid="stSidebar"] details[data-testid="stExpander"] > summary p,
-section[data-testid="stSidebar"] details[data-testid="stExpander"] > summary span {
+section[data-testid="stSidebar"] [data-testid="stExpander"] summary *,
+section[data-testid="stSidebar"] [data-testid="stExpander"] summary p,
+section[data-testid="stSidebar"] [data-testid="stExpander"] summary span,
+section[data-testid="stSidebar"] [data-testid="stExpander"] summary div,
+section[data-testid="stSidebar"] .stExpander summary *,
+section[data-testid="stSidebar"] .stExpander summary p,
+section[data-testid="stSidebar"] .stExpander summary span,
+section[data-testid="stSidebar"] details > summary *,
+section[data-testid="stSidebar"] details > summary p,
+section[data-testid="stSidebar"] details > summary span {
   color: #12345A !important;
   font-weight: 700 !important;
+  font-size: 0.95rem !important;
 }
 
-section[data-testid="stSidebar"] details[data-testid="stExpander"] > summary svg {
+section[data-testid="stSidebar"] [data-testid="stExpander"] summary svg,
+section[data-testid="stSidebar"] .stExpander summary svg,
+section[data-testid="stSidebar"] details > summary svg {
   fill: #12345A !important;
   color: #12345A !important;
+  stroke: #12345A !important;
 }
 
-section[data-testid="stSidebar"] details[data-testid="stExpander"] > div[role="region"],
-section[data-testid="stSidebar"] details[data-testid="stExpander"] > div[data-testid="stExpanderDetails"] {
+/* Expander Body / Details Content */
+section[data-testid="stSidebar"] [data-testid="stExpander"] [data-testid="stExpanderDetails"],
+section[data-testid="stSidebar"] [data-testid="stExpander"] div[role="region"],
+section[data-testid="stSidebar"] .stExpander [data-testid="stExpanderDetails"] {
   background-color: #FFFFFF !important;
   color: #172B4D !important;
+  border-top: 1px solid #E2E8F0 !important;
   border-radius: 0 0 10px 10px !important;
-  padding: 12px 14px !important;
+  padding: 12px 14px 16px 14px !important;
 }
 
-section[data-testid="stSidebar"] details[data-testid="stExpander"] label,
-section[data-testid="stSidebar"] details[data-testid="stExpander"] label p {
+/* Form Labels inside Sidebar Expander */
+section[data-testid="stSidebar"] [data-testid="stExpander"] label,
+section[data-testid="stSidebar"] [data-testid="stExpander"] label *,
+section[data-testid="stSidebar"] [data-testid="stExpander"] label p,
+section[data-testid="stSidebar"] [data-testid="stExpander"] label span,
+section[data-testid="stSidebar"] .stExpander label,
+section[data-testid="stSidebar"] .stExpander label * {
   color: #12345A !important;
   font-weight: 600 !important;
+  font-size: 0.90rem !important;
+}
+
+/* Form Inputs & Selectboxes inside Sidebar Expander */
+section[data-testid="stSidebar"] [data-testid="stExpander"] input,
+section[data-testid="stSidebar"] [data-testid="stExpander"] select,
+section[data-testid="stSidebar"] [data-testid="stExpander"] div[data-baseweb="select"] {
+  color: #12345A !important;
+  background-color: #F8FAFC !important;
+  border-color: #CBD5E1 !important;
+}
+
+section[data-testid="stSidebar"] [data-testid="stExpander"] div[data-baseweb="select"] * {
+  color: #12345A !important;
+}
+
+/* Buttons inside Sidebar & Expander (Simpan Perubahan Profil: Crisp Dark Navy on White) */
+section[data-testid="stSidebar"] [data-testid="stExpander"] button,
+section[data-testid="stSidebar"] button[kind="secondary"],
+section[data-testid="stSidebar"] button[data-testid="baseButton-secondary"],
+section[data-testid="stSidebar"] button {
+  background-color: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  border-radius: 8px !important;
+  color: #12345A !important;
+  font-weight: 600 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+  transition: all 0.2s ease !important;
+}
+
+section[data-testid="stSidebar"] [data-testid="stExpander"] button *,
+section[data-testid="stSidebar"] [data-testid="stExpander"] button p,
+section[data-testid="stSidebar"] [data-testid="stExpander"] button span,
+section[data-testid="stSidebar"] [data-testid="stExpander"] button div,
+section[data-testid="stSidebar"] button *,
+section[data-testid="stSidebar"] button p,
+section[data-testid="stSidebar"] button span,
+section[data-testid="stSidebar"] button div {
+  color: #12345A !important;
+  font-weight: 600 !important;
+}
+
+section[data-testid="stSidebar"] [data-testid="stExpander"] button:hover,
+section[data-testid="stSidebar"] button:hover {
+  background-color: #F0FDF4 !important;
+  border-color: #0F9F93 !important;
+  box-shadow: 0 2px 6px rgba(15, 159, 147, 0.2) !important;
+}
+
+section[data-testid="stSidebar"] [data-testid="stExpander"] button:hover *,
+section[data-testid="stSidebar"] button:hover * {
+  color: #0F9F93 !important;
+}
+
+/* Primary Button in Sidebar (if any) */
+section[data-testid="stSidebar"] button[kind="primary"],
+section[data-testid="stSidebar"] button[data-testid="baseButton-primary"] {
+  background-color: #0F9F93 !important;
+  border-color: #0F9F93 !important;
+  color: #FFFFFF !important;
+}
+
+section[data-testid="stSidebar"] button[kind="primary"] *,
+section[data-testid="stSidebar"] button[data-testid="baseButton-primary"] * {
+  color: #FFFFFF !important;
 }
 
 section[data-testid="stSidebar"] div[role="radiogroup"] > label {

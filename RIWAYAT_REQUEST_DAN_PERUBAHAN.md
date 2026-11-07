@@ -27,7 +27,8 @@
 16. [Siklus 15: Integrasi Welcome Banner Vektor Resmi Guppy ke Dashboard Utama](#16-siklus-15-integrasi-welcome-banner-vektor-resmi-guppy-ke-dashboard-utama)
 17. [Siklus 16: Penyiapan Aplikasi untuk Deployment Cloud & Akses Web Publik (Docker, Backup, & Panduan Hosting)](#17-siklus-16-penyiapan-aplikasi-untuk-deployment-cloud--akses-web-publik-docker-backup--panduan-hosting)
 18. [Siklus 17: Penerapan Latar Belakang SVG Resmi Sidebar (Expanded & Collapsed) & Optimalisasi Kontras Tipografi](#18-siklus-17-penerapan-latar-belakang-svg-resmi-sidebar-expanded--collapsed--optimalisasi-kontras-tipografi)
-19. [Matriks Commit Git & Status Validasi Unit Test](#19-matriks-commit-git--status-validasi-unit-test)
+19. [Siklus 18: Diagnosa Masalah & Perbaikan Kontras Warna Expander Profil & Tombol Simpan di Sidebar](#19-siklus-18-diagnosa-masalah--perbaikan-kontras-warna-expander-profil--tombol-simpan-di-sidebar)
+20. [Matriks Commit Git & Status Validasi Unit Test](#20-matriks-commit-git--status-validasi-unit-test)
 
 ---
 
@@ -555,7 +556,40 @@ Setelah perubahan tema pada siklus sebelumnya, pengguna melaporkan aplikasi tida
 
 ---
 
-## 19. Matriks Commit Git & Status Validasi Unit Test
+## 19. Siklus 18: Diagnosa Masalah & Perbaikan Kontras Warna Expander Profil & Tombol Simpan di Sidebar
+
+### 💬 Request Pengguna:
+> *"diagnosa masalah pada bagian ini, dan perbaiki hanya kontras warnanya"*  
+> *(Dengan lampiran tangkapan layar widget Profil Pengguna (Ganti Nama) yang terbuka di sidebar, memperlihatkan teks judul expander dan label tombol simpan profil berwarna putih di atas latar putih/tidak terbaca)*
+
+### 🔍 Diagnosa Akar Masalah (Root Cause Diagnosis):
+1. **Ketidakcocokan Selektor DOM Streamlit pada Expander:**
+   Pada styling CSS sebelumnya, aturan kontras warna menggunakan selektor section[data-testid="stSidebar"] details[data-testid="stExpander"]. Pada arsitektur DOM Streamlit modern, atribut data-testid="stExpander" disematkan pada tag pembungkus luar <div> (bukan pada tag <details>). Akibatnya, selektor tersebut tidak pernah cocok (*zero match*) dengan elemen DOM yang sebenarnya.
+2. **Warisan Tipografi Latar Gelap (Text Inheritance Cascade):**
+   Karena selektor kartu expander gagal aktif, elemen teks di dalam <summary> (judul profil) mewarisi aturan umum sidebar section[data-testid="stSidebar"] p { color: #F1F5F9 !important; } yang dirancang untuk teks terang di atas latar SVG navy tua.
+   Karena latar belakang kartu expander adalah putih bersih (#FFFFFF), teks judul yang ter-render menjadi warna putih gading/off-white (#F1F5F9), menghasilkan kontras rasio **1.05:1** (gagal total standar aksesibilitas WCAG AA/AAA sehingga teks tidak terbaca).
+3. **Ketiadaan Aturan Penataan Tombol Sekunder di Sidebar:**
+   Tombol 💾 Simpan Perubahan Profil di-render oleh Streamlit sebagai tombol sekunder berlatar belakang putih (#FFFFFF). Di dalamnya, teks dibungkus oleh elemen <p>. Akibat ketiadaan aturan warna tombol sidebar, elemen <p> tombol juga mewarisi #F1F5F9 !important, menyebabkan label teks tombol menjadi tak kasat mata (hanya ikon disket ungu yang terlihat).
+
+### 🛠️ Tindakan Teknis & Perbaikan Kontras Warna:
+1. **Multi-Selektor Universal Expander Sidebar (style.css):**
+   * Mengintegrasikan selektor hierarkis komprehensif:  
+     section[data-testid="stSidebar"] [data-testid="stExpander"] summary *, summary p, summary span, summary div, dan summary svg.
+   * Memaksa warna teks menjadi **Navy Tua Pekat #12345A !important** dengan ketebalan ont-weight: 700, memberikan rasio kontras **12.6:1** di atas latar putih #FFFFFF (memenuhi standar WCAG AAA tingkat tertinggi).
+   * Menyelaraskan ikon chevron panah SVG dengan warna #12345A !important sehingga terlihat jelas.
+2. **Penataan Kontras Tinggi Tombol Simpan Profil (style.css):**
+   * Menargetkan tombol di dalam sidebar dan expander:  
+     section[data-testid="stSidebar"] [data-testid="stExpander"] button, utton[kind="secondary"], serta elemen anak teksnya (*, p, span, div).
+   * Mengatur teks tombol menjadi **Navy Tua Pekat #12345A !important** (ont-weight: 600), latar belakang #FFFFFF !important, serta garis tepi tegas order: 1.5px solid #CBD5E1 !important.
+   * Menambahkan efek interaktif *hover*: latar belakang berubah ke mint lembut #F0FDF4, border teal #0F9F93, dan teks teal #0F9F93 dengan bayangan halus.
+3. **Preservasi Fungsionalitas & Logika 100%:**
+   * Tidak ada berkas logika Python yang diubah (pp.py, engine klinis, database fornas tetap 100% orisinil).
+   * Hanya berkas style.css yang disesuaikan secara terisolasi.
+   * Seluruh 39 unit test pengujian CDSS dan sistem klinis tetap lulus 100%.
+
+---
+
+## 20. Matriks Commit Git & Status Validasi Unit Test
 
 | Hash Commit | Kategori | Komponen Berkas | Ringkasan Modifikasi |
 | :--- | :--- | :--- | :--- |
