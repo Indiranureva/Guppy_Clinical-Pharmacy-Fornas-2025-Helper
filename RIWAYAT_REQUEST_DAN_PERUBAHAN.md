@@ -29,7 +29,8 @@
 18. [Siklus 17: Penerapan Latar Belakang SVG Resmi Sidebar (Expanded & Collapsed) & Optimalisasi Kontras Tipografi](#18-siklus-17-penerapan-latar-belakang-svg-resmi-sidebar-expanded--collapsed--optimalisasi-kontras-tipografi)
 19. [Siklus 18: Diagnosa Masalah & Perbaikan Kontras Warna Expander Profil & Tombol Simpan di Sidebar](#19-siklus-18-diagnosa-masalah--perbaikan-kontras-warna-expander-profil--tombol-simpan-di-sidebar)
 20. [Siklus 19: Penggantian Bentuk Tombol Buka Sidebar dengan Karakter Maskot Vektor Guppy ("Klik aku!")](#20-siklus-19-penggantian-bentuk-tombol-buka-sidebar-dengan-karakter-maskot-vektor-guppy-klik-aku)
-21. [Matriks Commit Git & Status Validasi Unit Test](#21-matriks-commit-git--status-validasi-unit-test)
+21. [Siklus 20: Pembaruan Menyeluruh Tutorial Aplikasi & Panduan Klinis pada Berkas README.md](#21-siklus-20-pembaruan-menyeluruh-tutorial-aplikasi--panduan-klinis-pada-berkas-readmemd)
+22. [Matriks Commit Git & Status Validasi Unit Test](#22-matriks-commit-git--status-validasi-unit-test)
 
 ---
 
@@ -621,7 +622,36 @@ Setelah perubahan tema pada siklus sebelumnya, pengguna melaporkan aplikasi tida
 
 ---
 
-## 21. Matriks Commit Git & Status Validasi Unit Test
+## 21. Siklus 20: Pembaruan Menyeluruh Tutorial Aplikasi & Panduan Klinis pada Berkas README.md
+
+### 💬 Request Pengguna:
+> *"update tutorial aplikasi dalam file "README""*
+
+### 📖 Analisis Dokumen & Tujuan Pembaruan:
+* **Kondisi Sebelumnya:** Berkas README.md utama masih memuat teks konsep awal (Regulatory Affairs & dossier gap analysis) yang belum merefleksikan fungsionalitas mutakhir aplikasi sebagai **Clinical Pharmacy & Fornas 2025 Helper**.
+* **Kebutuhan Pengguna:** Menyediakan panduan praktis (*practical step-by-step tutorial*) yang jelas, komprehensif, dan mudah dipahami oleh dokter, apoteker klinis, maupun dosen penguji mengenai cara menjalankan dan memanfaatkan seluruh fitur Guppy dari awal hingga akhir.
+
+### 🛠️ Tindakan Teknis & Penyusunan Tutorial:
+1. **Pembaruan Menyeluruh Berkas README.md:**
+   * **Identitas & Branding:** Menyematkan banner resmi Guppy (ssets/images/guppy-banner.svg), badge status pengujian, dan landasan Kepmenkes Fornas 2025.
+   * **Tujuh Langkah Panduan Praktis (Step-by-Step User Tutorial):**
+     * **Langkah 1 (Peluncuran Aplikasi):** Panduan satu klik tanpa jendela hitam CMD menggunakan Buka_Guppy.vbs, skrip 
+un_guppy.bat, serta tautan akses peramban cloud.
+     * **Langkah 2 (Pengaturan Profil Pengguna):** Tata cara penyesuaian nama tenaga medis (DPJP / Apoteker) melalui tombol karakter maskot Guppy *"Klik aku!"* dan expander profil di sidebar.
+     * **Langkah 3 (Penelusuran Zat Aktif Fornas 2025 - Tab 1):** Pemanfaatan *Deep Search* bilingual, pengecekan restriksi faskes, kuota peresepan maksimal, dan penandaan obat favorit.
+     * **Langkah 4 (Evaluasi Resep CDSS Tiga Nilai - Tab 2):** Simulasi telaah resep dengan parameter diagnosis ICD-10 dan interpretasi status inferensi (🟢 Terpenuhi, 🟡 Butuh Justifikasi Tambahan, 🔴 Tidak Terpenuhi).
+     * **Langkah 5 (Generator Memo Justifikasi Klinis KFT Word .docx - Tab 3):** Penyusunan justifikasi medis berbasis bukti Scopus Q1–Q3 dan ekspor langsung ke format Microsoft Word (.docx) siap tanda tangan.
+     * **Langkah 6 (Simulasi Klaim INA-CBG & Audit Dispute - Tab 4):** Validasi kesesuaian resep dengan paket tarif JKN dan pencegahan *dispute claim* BPJS.
+     * **Langkah 7 (Referensi Regulasi & Indikator LinkGuard - Tab 5):** Pengecekan kutipan pasal KMK Fornas 2025, 9 PNPK Kemenkes, serta indikator keamanan 3 lampu.
+   * **Struktur Direktori Proyek Terkini:** Diagram pohon direktori lengkap yang mencakup aset gambar baru, modul backend, dan tes unit.
+   * **Panduan Pengujian Otomatis & Deployment Cloud:** Dokumentasi perintah pytest tests dan tata cara peluncuran container Docker.
+2. **Preservasi Logika & Fungsionalitas:**
+   * Tidak ada kode sistem, logika inferensi CDSS, maupun database yang diubah.
+   * Seluruh 39 unit test tetap lulus 100%.
+
+---
+
+## 22. Matriks Commit Git & Status Validasi Unit Test
 
 | Hash Commit | Kategori | Komponen Berkas | Ringkasan Modifikasi |
 | :--- | :--- | :--- | :--- |
